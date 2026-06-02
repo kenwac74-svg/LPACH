@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LONGRISE AI - Investment Pitch Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            page-break-after: always;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(197, 168, 128, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(197, 168, 128, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 14px;
+            color: rgba(197, 168, 128, 0.5);
+            font-weight: 700;
+        }
+
+        .slide-title {
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(to right, #c5a880, #fcf6ba);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.2;
+            z-index: 1;
+        }
+
+        .slide-subtitle {
+            font-size: 24px;
+            color: #e5e5e5;
+            text-align: center;
+            margin-bottom: 50px;
+            z-index: 1;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .logo-slide {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(to right, #c5a880, #fcf6ba, #c5a880);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .logo-tagline {
+            font-size: 20px;
+            color: #c5a880;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+        }
+
+        .logo-info {
+            font-size: 16px;
+            color: #e5e5e5;
+            line-height: 2;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #c5a880;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: #e5e5e5;
+            line-height: 1.8;
+        }
+
+        .stat-box {
+            background: rgba(197, 168, 128, 0.1);
+            border: 2px solid #c5a880;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 72px;
+            font-weight: 900;
+            color: #c5a880;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #e5e5e5;
+            font-weight: 700;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            font-size: 20px;
+            color: #e5e5e5;
+            line-height: 2;
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .bullet-list li::before {
+            content: '▶';
+            color: #c5a880;
+            font-size: 16px;
+            position: absolute;
+            left: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th {
+            background: rgba(197, 168, 128, 0.2);
+            color: #c5a880;
+            font-size: 18px;
+            font-weight: 900;
+            padding: 15px;
+            text-align: left;
+            border: 1px solid rgba(197, 168, 128, 0.3);
+        }
+
+        td {
+            color: #e5e5e5;
+            font-size: 16px;
+            padding: 15px;
+            border: 1px solid rgba(197, 168, 128, 0.2);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(197, 168, 128, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+            border-left: 4px solid #c5a880;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .highlight-text {
+            font-size: 24px;
+            color: #fff;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .flow-chart {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .flow-box {
+            background: rgba(197, 168, 128, 0.1);
+            border: 2px solid #c5a880;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .flow-arrow {
+            color: #c5a880;
+            font-size: 40px;
+            margin: 0 20px;
+        }
+
+        .cta-button {
+            background: linear-gradient(90deg, #c5a880 0%, #fcf6ba 100%);
+            color: #0a0a0a;
+            font-size: 24px;
+            font-weight: 900;
+            padding: 20px 60px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media print {
+            .slide { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation">
+        
+        <!-- SLIDE 01: COVER -->
+        <div class="slide logo-slide">
+            <div class="logo-text">LONGRISE AI</div>
+            <div class="logo-tagline">Investment Pitch Deck</div>
+            <div class="logo-info">
+                Global Casino AI Auto-Betting Platform<br>
+                V7.7 Final | 2026
+            </div>
+            <div class="slide-number">01</div>
+        </div>
+
+        <!-- SLIDE 02: THE PROBLEM -->
+        <div class="slide">
+            <div class="slide-title">문제 정의</div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">💸 낮은 예금 금리</div>
+                        <div class="card-text">
+                            전통 금융: 연 1~3% 금리<br>
+                            인플레이션 대비 실질 수익 마이너스<br>
+                            자산 증식 불가능
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">📉 높은 투자 리스크</div>
+                        <div class="card-text">
+                            주식/코인: 극심한 변동성<br>
+                            일반 투자자의 80%가 손실<br>
+                            전문 지식 필요
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">🎰 카지노 하우스 우위</div>
+                        <div class="card-text">
+                            개인 도박: 장기적 손실 확정<br>
+                            카지노 수학적 우위 2~5%<br>
+                            개인은 접근 불가
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">⏰ 시간 부족</div>
+                        <div class="card-text">
+                            직장인의 투자 시간 부족<br>
+                            24시간 시장 모니터링 불가<br>
+                            수동 관리의 한계
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">02</div>
+        </div>
+
+        <!-- SLIDE 03: THE SOLUTION -->
+        <div class="slide">
+            <div class="slide-title">솔루션: LONGRISE AI</div>
+            <div class="slide-subtitle">카지노 하우스 우위를 투자자에게</div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <div class="highlight-text">
+                        러시아·에스토니아 AI 전문가들이 개발한 알고리즘으로<br>
+                        글로벌 카지노의 수학적 우위를 활용,<br>
+                        일반 투자자에게 안정적 수익 제공
+                    </div>
+                </div>
+                <div class="flow-chart">
+                    <div class="flow-box">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🤖</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #c5a880;">AI 알고리즘</div>
+                        <div style="font-size: 14px; color: #e5e5e5; margin-top: 10px;">HFT 스캘핑<br>감성 AI</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🎰</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #c5a880;">글로벌 카지노</div>
+                        <div style="font-size: 14px; color: #e5e5e5; margin-top: 10px;">6개국 허브<br>24시간 베팅</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <div style="font-size: 48px; margin-bottom: 15px;">💰</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #c5a880;">일일 배당</div>
+                        <div style="font-size: 14px; color: #e5e5e5; margin-top: 10px;">USDT 자동 입금<br>투명한 정산</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">03</div>
+        </div>
+
+        <!-- SLIDE 04: BUSINESS MODEL -->
+        <div class="slide">
+            <div class="slide-title">비즈니스 모델</div>
+            <div class="slide-content">
+                <ul class="bullet-list">
+                    <li><strong>수익원 1:</strong> 글로벌 카지노 AI 오토 베팅 (하우스 우위 2~5% 활용)</li>
+                    <li><strong>수익원 2:</strong> 암호화폐 선물 AI 퀀트 트레이딩 (차익거래)</li>
+                    <li><strong>수익 분배:</strong> 고객에게 일일 USDT 배당 (월 4~18%)</li>
+                    <li><strong>추가 수익:</strong> CNYT 토큰 월별 배당 (카지노 자산 기반)</li>
+                    <li><strong>네트워크:</strong> 추천 수당 1~7% + 롤업 수당 25대 체감</li>
+                </ul>
+                <div class="grid-2" style="margin-top: 50px;">
+                    <div class="stat-box">
+                        <div class="stat-value">$112M</div>
+                        <div class="stat-label">월 베팅 풀 규모</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">70만+</div>
+                        <div class="stat-label">글로벌 활성 회원</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">04</div>
+        </div>
+
+        <!-- SLIDE 05: MARKET SIZE -->
+        <div class="slide">
+            <div class="slide-title">시장 규모</div>
+            <div class="slide-content">
+                <div class="grid-3">
+                    <div class="stat-box">
+                        <div class="stat-value">$262B</div>
+                        <div class="stat-label">글로벌 카지노 시장<br>(2025)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">$2.3T</div>
+                        <div class="stat-label">암호화폐 시장 규모<br>(2026)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">$184B</div>
+                        <div class="stat-label">AI 핀테크 시장<br>(2030 전망)</div>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <div class="highlight-text">
+                        TAM (Total Addressable Market): $450B+<br>
+                        SAM (Serviceable Available Market): $85B<br>
+                        SOM (Serviceable Obtainable Market): $12B (목표 2030)
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">05</div>
+        </div>
+
+        <!-- SLIDE 06: TECHNOLOGY -->
+        <div class="slide">
+            <div class="slide-title">기술 우위</div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">🎰 겜블 특화 AI</div>
+                        <div class="card-text">
+                            • 카지노 게임별 최적 전략 DB<br>
+                            • 하우스 우위 역이용 알고리즘<br>
+                            • 감성 AI 패턴 분석<br>
+                            • 러시아·에스토니아 수학자 개발
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">📊 퀀트 알고리즘</div>
+                        <div class="card-text">
+                            • HFT 스캘핑 전략<br>
+                            • 암호화폐 선물 차익거래<br>
+                            • 통계적 모델링 & 백테스팅<br>
+                            • 머신러닝 자동 최적화
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">⚡ 실시간 처리</div>
+                        <div class="card-text">
+                            • 24시간 자동 베팅<br>
+                            • 초단위 의사결정<br>
+                            • 글로벌 6개 허브<br>
+                            • 일일 UTC 06:00 정산
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">🔒 리스크 관리</div>
+                        <div class="card-text">
+                            • 15% 유동성 하한선<br>
+                            • B2B 예치 계약<br>
+                            • ZKP 투명성 보장<br>
+                            • 멀티 카지노 분산
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">06</div>
+        </div>
+
+        <!-- SLIDE 07: PRODUCTS -->
+        <div class="slide">
+            <div class="slide-title">투자 상품 라인업</div>
+            <div class="slide-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>상품</th>
+                            <th>가격</th>
+                            <th>약정</th>
+                            <th>월 수익률</th>
+                            <th>CNYT 보너스</th>
+                            <th>연 수익률</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Flexible</strong></td>
+                            <td>$100</td>
+                            <td>무약정</td>
+                            <td>~4%</td>
+                            <td>없음</td>
+                            <td>~48%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Basic</strong></td>
+                            <td>$200</td>
+                            <td>12개월</td>
+                            <td>~7%</td>
+                            <td>+2%</td>
+                            <td>~84%</td>
+                        </tr>
+                        <tr style="background: rgba(197, 168, 128, 0.2);">
+                            <td><strong>Standard ⭐</strong></td>
+                            <td>$500</td>
+                            <td>12개월</td>
+                            <td>~9%</td>
+                            <td>+4%</td>
+                            <td>~108%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Premium</strong></td>
+                            <td>$1,000</td>
+                            <td>12개월</td>
+                            <td>~11%</td>
+                            <td>+6%</td>
+                            <td>~132%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VIP</strong></td>
+                            <td>$5,000</td>
+                            <td>12개월</td>
+                            <td>~18%</td>
+                            <td>+10%</td>
+                            <td>~216%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slide-number">07</div>
+        </div>
+
+        <!-- SLIDE 08: CNYT PARTNERSHIP -->
+        <div class="slide">
+            <div class="slide-title">CNYT 전략적 파트너십</div>
+            <div class="slide-subtitle">Horizon Capital Foundation</div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <div class="stat-box" style="margin-bottom: 30px;">
+                            <div class="stat-value">$1B+</div>
+                            <div class="stat-label">카지노 자산 포트폴리오</div>
+                        </div>
+                        <ul class="bullet-list">
+                            <li>조지아 프리미엄 카지노</li>
+                            <li>베트남 리조트 허브</li>
+                            <li>필리핀 마닐라 센터</li>
+                            <li>캄보디아·루마니아 거점</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="card">
+                            <div class="card-title">💎 CNYT 토큰</div>
+                            <div class="card-text" style="margin-bottom: 20px;">
+                                • Security Token (ERC-20/BEP-20)<br>
+                                • 카지노 RWA 담보<br>
+                                • 2026년 상장 예정<br>
+                                • LONGRISE 회원 월별 배당
+                            </div>
+                        </div>
+                        <div class="card" style="margin-top: 20px;">
+                            <div class="card-title">🤝 협력 구조</div>
+                            <div class="card-text">
+                                CNYT 재단 → 카지노 접근 권한 제공<br>
+                                LONGRISE → AI 베팅 실행<br>
+                                고객 → 듀얼 수익 (USDT + CNYT)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">08</div>
+        </div>
+
+        <!-- SLIDE 09: TRACTION -->
+        <div class="slide">
+            <div class="slide-title">트랙션 & 성과</div>
+            <div class="slide-subtitle">2025년 4월 런칭 이후 1년간</div>
+            <div class="slide-content">
+                <div class="grid-3">
+                    <div class="stat-box">
+                        <div class="stat-value">70만+</div>
+                        <div class="stat-label">글로벌 활성 회원</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">$112M</div>
+                        <div class="stat-label">월 베팅 풀 규모</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">6개국</div>
+                        <div class="stat-label">카지노 허브 운영</div>
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-top: 40px;">
+                    <div class="card">
+                        <div class="card-title">📈 성장률</div>
+                        <div class="card-text">
+                            • 월평균 신규 회원: 58,000명<br>
+                            • 런칭 후 12개월 회원 증가율: 700만% (0→70만)<br>
+                            • 평균 Body Value: $850<br>
+                            • 회원 유지율: 89%
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">💰 재무 성과</div>
+                        <div class="card-text">
+                            • 2025 연매출: $680M (추정, 8개월 기준)<br>
+                            • 플랫폼 수수료: 베팅의 3~8%<br>
+                            • 순익률: 22%<br>
+                            • EBITDA: $150M (2025 추정)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">09</div>
+        </div>
+
+        <!-- SLIDE 10: COMPETITIVE ADVANTAGE -->
+        <div class="slide">
+            <div class="slide-title">경쟁 우위</div>
+            <div class="slide-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>LONGRISE AI</th>
+                            <th>전통 투자</th>
+                            <th>일반 카지노</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>수익률</strong></td>
+                            <td style="color: #16a34a; font-weight: 900;">월 4~18%</td>
+                            <td>연 1~3%</td>
+                            <td>마이너스</td>
+                        </tr>
+                        <tr>
+                            <td><strong>리스크</strong></td>
+                            <td style="color: #16a34a; font-weight: 900;">15% 하한선</td>
+                            <td>변동성 높음</td>
+                            <td>100% 손실</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자동화</strong></td>
+                            <td style="color: #16a34a; font-weight: 900;">AI 24시간</td>
+                            <td>수동 관리</td>
+                            <td>수동 베팅</td>
+                        </tr>
+                        <tr>
+                            <td><strong>진입 장벽</strong></td>
+                            <td style="color: #16a34a; font-weight: 900;">$100부터</td>
+                            <td>고액 필요</td>
+                            <td>제한 없음</td>
+                        </tr>
+                        <tr>
+                            <td><strong>투명성</strong></td>
+                            <td style="color: #16a34a; font-weight: 900;">ZKP 온체인</td>
+                            <td>부분 공개</td>
+                            <td>불투명</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slide-number">10</div>
+        </div>
+
+        <!-- SLIDE 11: TEAM -->
+        <div class="slide">
+            <div class="slide-title">팀 & 개발진</div>
+            <div class="slide-subtitle">러시아·에스토니아 AI 전문가팀</div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">👔 경영진</div>
+                        <div class="card-text">
+                            <strong>Giorgi Beridze</strong> - CEO<br>
+                            • Caucasus & Balkans 카지노 5개 론칭<br>
+                            • Tbilisi State University<br><br>
+                            
+                            <strong>Alexei Sokolov</strong> - CSO<br>
+                            • Baltic FinTech 3개 엑싯 ($45M)<br>
+                            • Saint Petersburg State Univ.<br><br>
+                            
+                            <strong>Petr Novák</strong> - CMO<br>
+                            • 5개 암호화폐 프로젝트 런칭 ($120M)<br>
+                            • Charles University, Prague
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">🧑‍💻 기술팀</div>
+                        <div class="card-text">
+                            <strong>Dr. Sergei Petrov</strong> - CTO<br>
+                            • HFT 알고리즘 전문가 (12년)<br>
+                            • Lomonosov Moscow State Univ. 박사<br><br>
+                            
+                            <strong>Ivan Morozov</strong> - Lead AI Engineer<br>
+                            • Moscow AI Research Lab<br>
+                            • 러시아 AI 경진대회 2회 우승<br><br>
+                            
+                            <strong>Nikolai Volkov</strong> - Quant Developer<br>
+                            • 암호화폐 차익거래 8년 (월 15% 수익)<br><br>
+                            
+                            <strong>Andrei Lebedev</strong> - Blockchain Architect<br>
+                            • Tallinn Univ. / Ethereum Foundation<br><br>
+                            
+                            <strong>Maxim Kozlov</strong> - Backend Engineer<br>
+                            • 前 Yandex / MIPT 석사
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <div class="highlight-text">
+                        <strong>Advisory Board:</strong><br>
+                        Giorgio Bellini (Caucasus·Balkans 카지노 30년) | Dr. Elena Kovácsová (Budapest Univ. RWA 토큰화 전문가) | Markus Weber (前 Liechtenstein FMA 심사역) | Katerina Pavlenko (Baltic & Central Europe VC 파트너)
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">11</div>
+        </div>
+
+        <!-- SLIDE 12: ROADMAP -->
+        <div class="slide">
+            <div class="slide-title">로드맵 2026-2028</div>
+            <div class="slide-subtitle">카지노 자산 포트폴리오 확장 전략</div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">2026 Q1-Q2</div>
+                        <div class="card-text">
+                            ✅ 회원 100만 달성<br>
+                            ✅ Caucasus 지역 카지노 지분 10% 인수<br>
+                            ✅ 마카오 정켓(Junket) 파트너십 체결<br>
+                            ✅ AI 알고리즘 최적화
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">2026 Q3-Q4</div>
+                        <div class="card-text">
+                            ✅ 베트남 복합 리조트 식음료 영업권 투자<br>
+                            ✅ 몬테네그로 카지노 환전소 영업권 매입<br>
+                            ✅ AI 알고리즘 v2.0 업그레이드<br>
+                            ✅ 루마니아 카지노 레스토랑 점포 2개 매입
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">2027</div>
+                        <div class="card-text">
+                            ⏳ 회원 150만 목표<br>
+                            ⏳ 필리핀 리조트 호텔 지분 15% 인수<br>
+                            ⏳ <strong>대규모 온라인 카지노 런칭</strong> (Curacao 라이센스)<br>
+                            ⏳ Balkans 지역 쇼핑몰·식당 영업권 확보<br>
+                            ⏳ 마카오 VIP 정켓 독점 계약
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">2028</div>
+                        <div class="card-text">
+                            ⏳ 회원 250만 목표<br>
+                            ⏳ Balkans 복합 리조트 공동 개발 (30% 지분)<br>
+                            ⏳ 온라인 카지노 아시아 확장 (필리핀·캄보디아)<br>
+                            ⏳ 카지노 자산 포트폴리오 $500M 달성<br>
+                            ⏳ 환전·식음료·정켓 통합 수익 모델 완성
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">12</div>
+        </div>
+
+        <!-- SLIDE 13: FINANCIAL PROJECTION -->
+        <div class="slide">
+            <div class="slide-title">재무 전망</div>
+            <div class="slide-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>2025 (실적)</th>
+                            <th>2026 (전망)</th>
+                            <th>2027 (전망)</th>
+                            <th>2028 (전망)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>활성 회원</strong></td>
+                            <td>70만</td>
+                            <td>120만</td>
+                            <td>200만</td>
+                            <td>350만</td>
+                        </tr>
+                        <tr>
+                            <td><strong>월 베팅 풀</strong></td>
+                            <td>$112M</td>
+                            <td>$192M</td>
+                            <td>$340M</td>
+                            <td>$600M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>연매출</strong></td>
+                            <td>$680M</td>
+                            <td>$1.4B</td>
+                            <td>$2.8B</td>
+                            <td>$5.2B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EBITDA</strong></td>
+                            <td>$150M</td>
+                            <td>$308M</td>
+                            <td>$616M</td>
+                            <td>$1.14B</td>
+                        </tr>
+                        <tr style="background: rgba(197, 168, 128, 0.2);">
+                            <td><strong>순이익</strong></td>
+                            <td>$112M</td>
+                            <td>$231M</td>
+                            <td>$462M</td>
+                            <td>$858M</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box">
+                    <div class="highlight-text">
+                        3년 CAGR: 회원 수 +145% | 매출 +198% | 순이익 +209%
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">13</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
