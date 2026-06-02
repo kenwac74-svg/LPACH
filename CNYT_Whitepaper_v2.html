@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNYT 백서 - Horizon Capital Foundation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* 표지 */
+        .cover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 100px 60px;
+            text-align: center;
+        }
+
+        .cover h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .cover .subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 60px;
+        }
+
+        .cover .version {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cover .disclaimer {
+            font-size: 12px;
+            opacity: 0.8;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 본문 페이지 */
+        .page {
+            padding: 60px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0f172a;
+            border-left: 6px solid #2563eb;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #475569;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        strong {
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        /* 테이블 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            background: white;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        /* 하이라이트 박스 */
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+
+        /* 목차 */
+        .toc {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 16px;
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-title {
+            font-weight: 500;
+        }
+
+        .toc-page {
+            color: #64748b;
+        }
+
+        /* 페이지 구분선 */
+        .page-divider {
+            height: 2px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+            margin: 60px 0;
+        }
+
+        /* 인쇄 버튼 */
+        .print-button {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .print-button:active {
+            transform: translateY(0);
+        }
+
+        /* 인쇄 스타일 */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .page { page-break-after: always; }
+            .print-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">📥 PDF 저장</button>
+    <div class="container">
+        <!-- 표지 -->
+        <div class="cover">
+            <h1>CNYT</h1>
+            <div class="subtitle">카지노 네트워크 수익률 토큰</div>
+            <div class="version">
+                <strong>백서 버전 1.0</strong><br>
+                Horizon Capital Foundation<br>
+                2025년 1월
+            </div>
+            <div class="disclaimer">
+                본 문서는 정보 제공 목적으로만 작성되었으며 증권 판매 제안이나 권유를 구성하지 않습니다.<br>
+                투자 결정은 독립적인 전문가 자문을 기반으로 이루어져야 합니다.
+            </div>
+        </div>
+
+        <!-- 목차 -->
+        <div class="page">
+            <h1>목차</h1>
+            <div class="toc">
+                <div class="toc-item">
+                    <span class="toc-title">1. 요약</span>
+                    <span class="toc-page">3</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">2. 비전과 미션</span>
+                    <span class="toc-page">4</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">3. 문제 정의</span>
+                    <span class="toc-page">5</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">4. 포트폴리오 자산</span>
+                    <span class="toc-page">6</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">5. 토큰 경제학</span>
+                    <span class="toc-page">8</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">6. CNYT-CND 듀얼 토큰 시스템</span>
+                    <span class="toc-page">10</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">7. 거버넌스 모델</span>
+                    <span class="toc-page">12</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">8. 로드맵</span>
+                    <span class="toc-page">13</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">9. 위험 요소</span>
+                    <span class="toc-page">14</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-title">10. 결론</span>
+                    <span class="toc-page">15</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 1. 요약 -->
+        <div class="page">
+            <h1>1. 요약</h1>
+            
+            <p>Horizon Capital Foundation(HCF)은 1억 달러 이상의 실물 자산을 기반으로 한 종합 카지노 산업 투자 플랫폼인 CNYT(Casino Network Yield Token)를 소개합니다. CNYT는 조지아, 캄보디아, 시아누크빌, 필리핀 전역의 프리미엄 카지노 자산, 정켓 테이블 라이선스, 전략적 게이밍 벤처의 분산 포트폴리오에 대한 분할 소유권을 나타냅니다.</p>
+
+            <div class="highlight-box">
+                <h3 style="margin-top: 0;">핵심 하이라이트</h3>
+                <table>
+                    <tr>
+                        <td style="width: 40%; font-weight: 700;">총 토큰 공급량</td>
+                        <td>10,000,000,000 CNYT</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">초기 가격</td>
+                        <td>$0.01 (2024년 9월)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">목표 가격</td>
+                        <td>$1.00 (100배 잠재력)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">포트폴리오 가치</td>
+                        <td>$100M+ (검증된 자산)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">TGE 일자</td>
+                        <td>2026년 12월</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">CEX 상장</td>
+                        <td>2027년 4월 (목표)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 2. 비전과 미션 -->
+        <div class="page">
+            <h1>2. 비전과 미션</h1>
+
+            <h2>2.1 비전</h2>
+            <p>제도권 수준의 거버넌스와 자산 검증 기준을 유지하면서 고수익 게이밍 자산에 대한 투명하고 접근 가능한 노출을 제공하는 최고의 토큰화된 카지노 산업 투자 플랫폼이 되는 것입니다.</p>
+
+            <h2>2.2 미션</h2>
+            <ul>
+                <li>프리미엄 카지노 산업 투자에 대한 접근 민주화</li>
+                <li>엄격한 자산 검증 및 감사 기준 유지</li>
+                <li>다각화된 게이밍 포트폴리오를 통한 지속 가능한 가치 제공</li>
+                <li>전통적인 카지노 운영과 블록체인 기술 연결</li>
+                <li>업계 최고 수준의 거버넌스 및 투명성 제공</li>
+            </ul>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 3. 문제 정의 -->
+        <div class="page">
+            <h1>3. 문제 정의</h1>
+
+            <h2>3.1 산업 과제</h2>
+            <ul>
+                <li><strong>제한된 접근성:</strong> 프리미엄 카지노 투자는 전통적으로 최소 1,000만 달러 이상의 자본이 필요하여 소매 투자자를 배제합니다.</li>
+                <li><strong>불투명성:</strong> 민간 카지노 거래는 자산 성과 및 소유권 구조에 대한 가시성이 제한적입니다.</li>
+                <li><strong>비유동성:</strong> 카지노 지분 포지션은 일반적으로 7-10년의 보유 기간으로 매우 비유동적입니다.</li>
+                <li><strong>지리적 장벽:</strong> 국경을 넘는 카지노 투자는 규제 복잡성과 환율 위험에 직면합니다.</li>
+            </ul>
+
+            <h2>3.2 CNYT 솔루션</h2>
+            <ul>
+                <li><strong>분할 소유권:</strong> 토큰 단위화로 10달러부터 투자 가능, 글로벌 소매 투자자에게 프리미엄 자산을 개방합니다.</li>
+                <li><strong>실시간 투명성:</strong> 온체인 거버넌스와 분기별 감사 보고서로 전례 없는 가시성을 제공합니다.</li>
+                <li><strong>향상된 유동성:</strong> 주요 거래소에서 토큰 거래 가능으로 유동적인 2차 시장을 생성합니다.</li>
+                <li><strong>간소화된 접근:</strong> 단일 토큰으로 다국적 카지노 포트폴리오에 노출되며 규제 복잡성을 제거합니다.</li>
+            </ul>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 4. 포트폴리오 자산 -->
+        <div class="page">
+            <h1>4. 포트폴리오 자산</h1>
+
+            <p>Horizon Capital Foundation은 전략적 게이밍 관할 구역 전역에 1억 달러 이상의 다각화된 프리미엄 카지노 자산 포트폴리오를 유지합니다. 모든 자산은 분기별 독립 검증을 받습니다.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>자산 카테고리</th>
+                        <th>위치</th>
+                        <th>가치</th>
+                        <th>소유권</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Golden Palace Tbilisi</td>
+                        <td>조지아, 트빌리시</td>
+                        <td>$25M</td>
+                        <td>25% 지분</td>
+                    </tr>
+                    <tr>
+                        <td>Ocean Star Resort</td>
+                        <td>시아누크빌</td>
+                        <td>$15M</td>
+                        <td>30% 지분</td>
+                    </tr>
+                    <tr>
+                        <td>정켓 테이블 라이선스</td>
+                        <td>다국적</td>
+                        <td>$20M</td>
+                        <td>40 테이블</td>
+                    </tr>
+                    <tr>
+                        <td>LONGRISE AI 플랫폼</td>
+                        <td>전략적 투자</td>
+                        <td>$10M</td>
+                        <td>파트너 지분</td>
+                    </tr>
+                    <tr>
+                        <td>VIP 게이밍 라운지</td>
+                        <td>4개 위치</td>
+                        <td>$5M</td>
+                        <td>완전 소유</td>
+                    </tr>
+                    <tr>
+                        <td>현금 및 준비금</td>
+                        <td>운영 버퍼</td>
+                        <td>$25M</td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>4.1 Golden Palace Tbilisi</h2>
+            <p>조지아 수도의 프리미엄 카지노 리조트로 150개 이상의 게이밍 테이블, 500개 이상의 슬롯머신, 럭셔리 호텔 시설을 보유합니다. 전략적으로 코카서스 지역에 위치하여 러시아, 터키, 중동의 하이롤러 시장을 서비스합니다. HCF는 분기별 배당금 분배와 함께 25% 지분을 보유합니다.</p>
+
+            <h2>4.2 Ocean Star Resort & Casino</h2>
+            <p>캄보디아 시아누크빌의 통합 리조트로 200개 이상의 게이밍 테이블, 해변가 위치, VIP 정켓 운영을 갖추고 있습니다. 성장하는 동남아시아 게이밍 시장을 포착할 수 있는 위치에 있습니다. HCF는 VIP 서비스 전략에 대한 운영 영향력과 함께 30% 소유권을 유지합니다.</p>
+
+            <h2>4.3 정켓 테이블 라이선스</h2>
+            <p>조지아, 캄보디아, 필리핀, 베트남 전역의 40개 라이선스 정켓 테이블 포트폴리오입니다. 정켓 운영은 VIP 플레이어 커미션과 롤링 칩 약정으로부터 일관된 고마진 수익을 창출합니다. 평균 테이블당 연간 순수수료 50만 달러를 창출합니다.</p>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 5. 토큰 경제학 -->
+        <div class="page">
+            <h1>5. 토큰 경제학</h1>
+
+            <h2>5.1 토큰 배분</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>배분처</th>
+                        <th>토큰</th>
+                        <th>비율</th>
+                        <th>락업</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>창립 멤버</td>
+                        <td>4,000,000,000</td>
+                        <td>40%</td>
+                        <td>24개월</td>
+                    </tr>
+                    <tr>
+                        <td>생태계 개발</td>
+                        <td>2,000,000,000</td>
+                        <td>20%</td>
+                        <td>베스팅</td>
+                    </tr>
+                    <tr>
+                        <td>전략적 파트너</td>
+                        <td>1,500,000,000</td>
+                        <td>15%</td>
+                        <td>12개월</td>
+                    </tr>
+                    <tr>
+                        <td>- LONGRISE AI</td>
+                        <td>500,000,000</td>
+                        <td>5%</td>
+                        <td>12개월</td>
+                    </tr>
+                    <tr>
+                        <td>- Golden Palace Tbilisi</td>
+                        <td>500,000,000</td>
+                        <td>5%</td>
+                        <td>12개월</td>
+                    </tr>
+                    <tr>
+                        <td>- Ocean Star Resort</td>
+                        <td>500,000,000</td>
+                        <td>5%</td>
+                        <td>12개월</td>
+                    </tr>
+                    <tr>
+                        <td>운영 및 개발</td>
+                        <td>1,000,000,000</td>
+                        <td>10%</td>
+                        <td>없음</td>
+                    </tr>
+                    <tr>
+                        <td>재단 준비금</td>
+                        <td>1,000,000,000</td>
+                        <td>10%</td>
+                        <td>통제됨</td>
+                    </tr>
+                    <tr>
+                        <td>마케팅 및 자문</td>
+                        <td>500,000,000</td>
+                        <td>5%</td>
+                        <td>6개월</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>5.2 가격 궤적</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>마일스톤</th>
+                        <th>일자</th>
+                        <th>가격</th>
+                        <th>배수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HCF 설립</td>
+                        <td>2024년 9월</td>
+                        <td>$0.01</td>
+                        <td>1x</td>
+                    </tr>
+                    <tr>
+                        <td>LONGRISE 파트너십</td>
+                        <td>2025년 1월</td>
+                        <td>$0.02</td>
+                        <td>2x</td>
+                    </tr>
+                    <tr>
+                        <td>프라이빗 라운드</td>
+                        <td>2025년 1-8월</td>
+                        <td>$0.02-$0.045</td>
+                        <td>2-4.5x</td>
+                    </tr>
+                    <tr>
+                        <td>대중 인지도</td>
+                        <td>2025년 9-12월</td>
+                        <td>$0.08-$0.20</td>
+                        <td>8-20x</td>
+                    </tr>
+                    <tr>
+                        <td>Pre-TGE 단계</td>
+                        <td>2026년 1-11월</td>
+                        <td>$0.50-$0.80</td>
+                        <td>50-80x</td>
+                    </tr>
+                    <tr style="background: #fef3c7;">
+                        <td><strong>TGE 이벤트</strong></td>
+                        <td><strong>2026년 12월</strong></td>
+                        <td><strong>$1.00</strong></td>
+                        <td><strong>100x</strong></td>
+                    </tr>
+                    <tr>
+                        <td>CEX 상장</td>
+                        <td>2027년 4월</td>
+                        <td>시장 주도</td>
+                        <td>TBD</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 6. CNYT-CND 듀얼 토큰 시스템 -->
+        <div class="page">
+            <h1>6. CNYT-CND 듀얼 토큰 시스템</h1>
+
+            <p>TGE 이후 HCF는 투자 노출(CNYT)과 거래 유틸리티(CND)를 모두 제공하는 듀얼 토큰 아키텍처를 배포하며, 강력한 담보화를 통해 향상된 안정성을 제공합니다.</p>
+
+            <h2>6.1 토큰 사양</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>특징</th>
+                        <th>CNYT (변동)</th>
+                        <th>CND (안정)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>유형</td>
+                        <td>증권형 토큰</td>
+                        <td>알고리즘 스테이블코인</td>
+                    </tr>
+                    <tr>
+                        <td>가격</td>
+                        <td>시장 결정</td>
+                        <td>1 CND = $1 USD</td>
+                    </tr>
+                    <tr>
+                        <td>기능</td>
+                        <td>투자, 거버넌스</td>
+                        <td>결제, 정산</td>
+                    </tr>
+                    <tr>
+                        <td>변동성</td>
+                        <td>높음 (투기적)</td>
+                        <td>없음 (알고리즘 페그)</td>
+                    </tr>
+                    <tr>
+                        <td>배당금</td>
+                        <td>없음 (가치 상승)</td>
+                        <td>없음</td>
+                    </tr>
+                    <tr>
+                        <td>거버넌스 권리</td>
+                        <td>있음 (1 토큰 = 1 투표)</td>
+                        <td>없음</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>6.2 민팅 및 소각 메커니즘</h2>
+            <p>사용자는 시장 결정 비율로 CNYT와 CND 간 스왑이 가능합니다:</p>
+            
+            <div class="highlight-box">
+                <p><strong>CND 민팅:</strong> 현재 시장 가격으로 CNYT를 소각하여 동등한 USD 가치의 CND를 민팅</p>
+                <p><strong>CND 소각:</strong> CND를 소각하여 시장 가격으로 동등한 USD 가치의 CNYT를 민팅</p>
+                <p><strong>예시:</strong> CNYT가 $0.50일 때, 200 CNYT를 소각하면 $100 CND를 민팅합니다 (200 × $0.50 = $100). 반대로 $100 CND를 소각하면 200 CNYT를 민팅합니다.</p>
+            </div>
+
+            <h2>6.3 안정화 메커니즘</h2>
+            <ul>
+                <li><strong>담보 준비금:</strong> 1억 달러 이상의 검증된 카지노 자산이 기본 가치 지원을 제공하며, 알고리즘 스테이블코인 표준을 크게 초과합니다.</li>
+                <li><strong>일일 민팅 한도:</strong> 24시간당 총 CND 공급량의 최대 1%를 민팅하여 과도한 확장을 방지합니다.</li>
+                <li><strong>재단 개입:</strong> HCF는 극심한 변동성(페그에서 ±5%) 시 민팅/소각을 일시 중단할 권한을 보유합니다.</li>
+                <li><strong>차익거래 인센티브:</strong> 자동화된 시장 조성자가 수익성 있는 거래를 통해 페그 균형을 복원할 기회를 창출합니다.</li>
+            </ul>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 7. 거버넌스 모델 -->
+        <div class="page">
+            <h1>7. 거버넌스 모델</h1>
+
+            <p>HCF는 토큰 보유자 참여에 맞게 조정된 전통적인 기업 거버넌스 구조를 채택합니다. 이 하이브리드 모델은 운영 효율성과 이해관계자 의견의 균형을 맞춥니다.</p>
+
+            <h2>7.1 투표권</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>투표 사안</th>
+                        <th>최소 보유량</th>
+                        <th>정족수</th>
+                        <th>승인</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>자산 인수 (>$10M)</td>
+                        <td>10,000 CNYT</td>
+                        <td>30%</td>
+                        <td>과반수</td>
+                    </tr>
+                    <tr>
+                        <td>전략적 파트너십</td>
+                        <td>10,000 CNYT</td>
+                        <td>30%</td>
+                        <td>과반수</td>
+                    </tr>
+                    <tr>
+                        <td>포트폴리오 자산 매각</td>
+                        <td>10,000 CNYT</td>
+                        <td>40%</td>
+                        <td>특별 다수결 (67%)</td>
+                    </tr>
+                    <tr>
+                        <td>수수료 구조 변경</td>
+                        <td>10,000 CNYT</td>
+                        <td>30%</td>
+                        <td>과반수</td>
+                    </tr>
+                    <tr>
+                        <td>재단 이사회 선거</td>
+                        <td>10,000 CNYT</td>
+                        <td>50%</td>
+                        <td>다수득표</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>7.2 수익 모델</h2>
+            <p>재단 수익은 카지노 운영에서 발생하며 토큰 보유자에게 배당금을 분배하지 <strong>않습니다</strong>. 모든 수익은 다음 항목에 재투자됩니다:</p>
+            <ul>
+                <li>추가 정켓 테이블 라이선스 인수</li>
+                <li>기존 카지노 자산의 지분 확대</li>
+                <li>새로운 게이밍 관할 구역으로의 확장</li>
+                <li>운영 인프라 강화</li>
+            </ul>
+            <p>투자자는 배당금 지급이 아닌 확장되는 포트폴리오 가치에 의한 CNYT 가격 상승을 통해 수익을 실현합니다.</p>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 8. 로드맵 -->
+        <div class="page">
+            <h1>8. 로드맵</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">단계</th>
+                        <th style="width: 25%;">시간</th>
+                        <th>주요 마일스톤</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1: 설립</strong></td>
+                        <td>2024년 9-12월</td>
+                        <td>
+                            • HCF 설립<br>
+                            • 초기 포트폴리오 인수<br>
+                            • CNYT 토큰 발행<br>
+                            • 창립 멤버 온보딩
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2: 파트너십</strong></td>
+                        <td>2025년 1-6월</td>
+                        <td>
+                            • LONGRISE AI 파트너십<br>
+                            • 전략적 투자자 라운드<br>
+                            • 포트폴리오 확장<br>
+                            • 감사 프레임워크 수립
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3: 성장</strong></td>
+                        <td>2025년 7-12월</td>
+                        <td>
+                            • 대중 인지도 캠페인<br>
+                            • 추가 카지노 지분 확보<br>
+                            • 정켓 라이선스 확장<br>
+                            • 커뮤니티 구축
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 4: Pre-TGE</strong></td>
+                        <td>2026년 1-11월</td>
+                        <td>
+                            • 스마트 컨트랙트 개발<br>
+                            • 보안 감사<br>
+                            • 거래소 파트너십<br>
+                            • 규제 준수
+                        </td>
+                    </tr>
+                    <tr style="background: #dcfce7;">
+                        <td><strong>Phase 5: 론칭</strong></td>
+                        <td><strong>2026년 12월</strong></td>
+                        <td>
+                            <strong>• 토큰 생성 이벤트 (TGE)<br>
+                            • 블록체인 마이그레이션<br>
+                            • CND 스테이블코인 배포<br>
+                            • 거버넌스 활성화</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 6: 확장</strong></td>
+                        <td>2027년+</td>
+                        <td>
+                            • 주요 CEX 상장<br>
+                            • 지리적 확장<br>
+                            • 포트폴리오 다각화<br>
+                            • 향상된 유동성 풀
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 9. 위험 요소 -->
+        <div class="page">
+            <h1>9. 위험 요소</h1>
+
+            <ul>
+                <li><strong>규제 위험:</strong> 카지노 및 게이밍 규제는 관할 구역마다 다르며 변경될 수 있습니다. 불리한 규제 발전은 포트폴리오 자산 가치나 운영 능력에 영향을 미칠 수 있습니다.</li>
+                
+                <li><strong>시장 변동성:</strong> CNYT 가격은 암호화폐 시장 역학의 영향을 받으며 기본 자산 성과와 무관한 상당한 변동성을 경험할 수 있습니다.</li>
+                
+                <li><strong>유동성 위험:</strong> 토큰화는 전통적인 카지노 투자에 비해 유동성을 향상시키지만, 특히 초기 거래 단계에서 2차 시장 깊이가 제한될 수 있습니다.</li>
+                
+                <li><strong>운영 위험:</strong> 카지노 운영은 경쟁 압력, 게이밍 수익에 영향을 미치는 경제 침체, 자산별 운영 과제를 포함한 고유한 위험에 직면합니다.</li>
+                
+                <li><strong>스테이블코인 위험:</strong> CND 페그 유지는 알고리즘 메커니즘에 의존합니다. 강력한 담보화와 개입 권한이 위험을 완화하지만, 어떤 스테이블코인도 완전히 위험이 없는 것은 아닙니다.</li>
+                
+                <li><strong>기술 위험:</strong> 스마트 컨트랙트 취약점, 블록체인 네트워크 문제, 또는 사이버 보안 침해가 토큰 기능이나 자산 보안에 영향을 미칠 수 있습니다.</li>
+                
+                <li><strong>지정학적 위험:</strong> 신흥 시장의 카지노 자산은 정치적 불안정, 통화 변동, 자본 통제를 포함한 지정학적 불확실성에 직면합니다.</li>
+            </ul>
+
+            <div class="warning-box">
+                <h3 style="margin-top: 0;">투자 면책 조항</h3>
+                <p style="margin-bottom: 0;">본 백서는 투자 자문, 금융 자문, 거래 자문 또는 기타 종류의 자문을 구성하지 않습니다. CNYT 토큰은 전액 손실의 상당한 위험을 수반하는 투기 상품입니다. 잠재적 투자자는 투자 결정을 내리기 전에 독립적인 실사를 수행하고 자격을 갖춘 전문가와 상담해야 합니다. 과거 성과가 미래 결과를 보장하지 않습니다. 토큰 가치는 크게 하락하거나 무가치해질 수 있습니다.</p>
+            </div>
+        </div>
+
+        <div class="page-divider"></div>
+
+        <!-- 10. 결론 -->
+        <div class="page">
+            <h1>10. 결론</h1>
+
+            <p>CNYT는 카지노 산업 투자 접근성의 패러다임 전환을 나타냅니다. 실물 자산 지원과 블록체인 투명성 및 분할 소유권을 결합하여, Horizon Capital Foundation은 글로벌 소매 투자자에게 제도권 수준의 카지노 노출을 제공합니다.</p>
+
+            <p>1억 달러 이상의 검증된 포트폴리오 자산, 4개 관할 구역에 걸친 입증된 정켓 운영, 선도적인 게이밍 플랫폼과의 전략적 파트너십을 통해 HCF는 전통적인 게이밍과 블록체인 혁신의 성장하는 교차점을 포착할 수 있는 위치에 있습니다.</p>
+
+            <p>듀얼 토큰 아키텍처(CNYT/CND)는 투기적 상승 잠재력과 거래 유틸리티를 모두 제공하며, 강력한 담보화와 거버넌스 메커니즘은 지속 가능한 장기 가치 창출을 보장합니다.</p>
+
+            <p>카지노 산업이 글로벌 확장을 계속하고 토큰화가 주류 채택을 얻음에 따라, CNYT는 초기 참여자에게 투명하고 검증 가능하며 유동적인 투자 수단을 통해 이러한 수렴에 대한 노출을 제공합니다.</p>
+
+            <div class="success-box" style="margin-top: 40px; text-align: center;">
+                <h3 style="margin-top: 0;">연락처</h3>
+                <p style="margin-bottom: 0;">
+                    <strong>Horizon Capital Foundation</strong><br>
+                    웹사이트: www.horizoncapital.foundation<br>
+                    이메일: info@horizoncapital.foundation<br>
+                    텔레그램: @HCF_Official<br>
+                    트위터: @HorizonCapitalHCF
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

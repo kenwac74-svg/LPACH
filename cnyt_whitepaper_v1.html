@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNYT (HCF) OFFICIAL WHITEPAPER v1.0</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700;900&family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Print & Base Setup */
+        :root {
+            --bg-base: #0a0a0a;
+            --bg-alt: #141414;
+            --gold: #c5a880;
+            --text-main: #e5e5e5;
+            --text-sub: #a3a3a3;
+            --border: #262626;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #000;
+            font-family: 'Noto Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            margin: 0;
+            color: var(--text-sub);
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        @media print {
+            body { padding: 0; gap: 0; background-color: var(--bg-base); }
+            @page { size: 16in 9in; margin: 0; }
+            .slide { 
+                page-break-after: always; 
+                margin: 0 !important; 
+                border: none !important; 
+                border-radius: 0 !important; 
+                box-shadow: none !important; 
+            }
+        }
+
+        /* Slide Structure */
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, .font-serif { 
+            font-family: 'Noto Serif', serif; 
+            color: var(--text-main); 
+            word-break: keep-all; 
+            margin: 0; 
+        }
+        
+        p, li, td, th { 
+            font-size: 20px; 
+            line-height: 1.6; 
+            word-break: keep-all; 
+            margin: 0; 
+        }
+        
+        .slide-title {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+            letter-spacing: -1px;
+        }
+
+        /* Layout Utilities */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .text-center { text-align: center; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .z-10 { z-index: 10; }
+        .gap-6 { gap: 24px; }
+        .gap-8 { gap: 32px; }
+        .gap-12 { gap: 48px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mb-10 { margin-bottom: 40px; }
+        .mt-4 { margin-top: 16px; }
+        .mt-6 { margin-top: 24px; }
+        .mt-8 { margin-top: 32px; }
+        .mt-16 { margin-top: 64px; }
+        .p-6 { padding: 24px; }
+        .p-8 { padding: 32px; }
+        .p-10 { padding: 40px; }
+        .w-full { width: 100%; }
+
+        /* Grid */
+        .grid { display: grid; }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* Colors */
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .text-main { color: var(--text-main); }
+
+        /* Background Pattern */
+        .bg-pattern { 
+            background-image: radial-gradient(var(--gold) 1px, transparent 1px); 
+            background-size: 30px 30px; 
+            opacity: 0.05; 
+        }
+
+        /* Box Styles */
+        .box {
+            background-color: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .box-gold-border {
+            background-color: var(--bg-alt);
+            border-left: 4px solid var(--gold);
+        }
+
+        /* Table */
+        .table-custom { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        
+        .table-custom th, .table-custom td { 
+            border-bottom: 1px solid var(--border); 
+            padding: 22px 24px; 
+            text-align: left; 
+        }
+        
+        .table-custom th { 
+            background-color: var(--bg-alt); 
+            color: var(--gold); 
+            font-weight: 700; 
+        }
+        
+        .table-custom tr:last-child td { 
+            border-bottom: none; 
+        }
+
+        /* Stats Card */
+        .stat-card {
+            background-color: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Feature Box */
+        .feature-box {
+            background-color: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-title i {
+            margin-right: 12px;
+        }
+
+        /* List */
+        ul.icon-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.icon-list li {
+            position: relative;
+            padding-left: 48px;
+            margin-bottom: 24px;
+        }
+
+        ul.icon-list li i {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            font-size: 28px;
+            color: var(--gold);
+        }
+
+        /* Timeline */
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .timeline-line { 
+            background-color: var(--border); 
+            height: 4px; 
+            width: 100%; 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-2px); 
+            z-index: 0; 
+        }
+
+        .timeline-item {
+            width: 25%;
+            position: relative;
+            text-align: center;
+        }
+
+        .timeline-node { 
+            width: 20px; 
+            height: 20px; 
+            background: var(--bg-base); 
+            border: 4px solid var(--gold); 
+            border-radius: 50%; 
+            position: absolute; 
+            left: 50%; 
+            top: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 1; 
+        }
+
+        .timeline-card {
+            background-color: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+        }
+
+        .timeline-card.top {
+            top: 40px;
+        }
+
+        .timeline-card.bottom {
+            bottom: 40px;
+        }
+
+        .timeline-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 16px;
+        }
+
+        /* Pie Chart */
+        .pie-chart {
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--gold) 0% 40%,
+                #404040 40% 70%,
+                #1f1f1f 70% 100%
+            );
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 32px;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            margin-right: 16px;
+        }
+
+        /* Quote */
+        .quote-container {
+            width: 85%;
+            text-align: center;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .quote-mark-open {
+            position: absolute;
+            left: -20px;
+            top: 10px;
+            font-size: 100px;
+            color: var(--border);
+            font-family: sans-serif;
+            line-height: 1;
+        }
+
+        .quote-mark-close {
+            position: absolute;
+            right: -20px;
+            bottom: -40px;
+            font-size: 100px;
+            color: var(--border);
+            font-family: sans-serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-main);
+            font-family: 'Noto Serif', serif;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .quote-author {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Cover Specific */
+        .cover-title {
+            font-size: 80px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: var(--gold);
+            font-family: 'Noto Serif', serif;
+            letter-spacing: -2px;
+        }
+
+        .cover-subtitle {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 40px;
+        }
+
+        .cover-org {
+            font-size: 24px;
+            color: var(--text-sub);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .cover-footer {
+            margin-top: 64px;
+            border-top: 1px solid var(--border);
+            padding-top: 32px;
+        }
+
+        .cover-date {
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Text Sizes */
+        .text-lg { font-size: 22px; line-height: 1.7; }
+        .text-xl { font-size: 24px; }
+        .text-2xl { font-size: 26px; }
+        strong { color: var(--text-main); }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+    <div class="absolute" style="inset: 0; background-image: radial-gradient(#c5a880 1px, transparent 1px); background-size: 30px 30px; opacity: 0.05;"></div>
+    <div class="relative z-10">
+        <h1 class="cover-title">CNYT (HCF)</h1>
+        <p class="cover-subtitle">OFFICIAL WHITEPAPER v1.0</p>
+        <p class="cover-org">Horizon Capital Foundation</p>
+        <div class="cover-footer">
+            <p class="cover-date">Last Updated: April 2025</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Abstract -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 1. Abstract</h2>
+    <div class="flex-1 flex flex-col" style="justify-content: center;">
+        <p class="mb-6 text-lg">In the modern global financial markets, premium casino investments have been monopolized by a small number of large capital holders and institutional investors.</p>
+        <p class="mb-6 text-lg">Simultaneously, while massive cross-border capital movements occur annually in the global integrated resort (IR) and offline casino industry, tens of trillions of won in <strong>capital friction costs</strong> are wasted due to outdated foreign exchange systems and broker fees.</p>
+        <div class="box p-8 mt-6">
+            <p class="text-xl" style="font-weight: 700; color: var(--text-main); line-height: 1.6;">Horizon Capital Foundation (HCF) is a protocol that addresses these market inefficiencies through the blockchain-based utility token <span class="text-gold">CNYT (Casino Network Yield Token)</span>.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Legal Disclaimer -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 2. Legal Disclaimer</h2>
+    <div class="flex-1 flex flex-col" style="justify-content: center;">
+        <div class="box-gold-border p-8 mb-6">
+            <p class="mb-4" style="font-size: 21px;">This whitepaper is written solely for the purpose of providing information about the CNYT token ecosystem and does not constitute any form of investment solicitation or financial or legal advice.</p>
+        </div>
+        <p class="mb-4">Cryptocurrency and blockchain assets are exposed to changes in the regulatory environment and market volatility. The roadmap and expected revenue models included in this document are simulation results based on the current system architecture and market environment, and do not legally guarantee future definitive returns.</p>
+        <p>Participants are responsible for complying with the laws of their jurisdiction, and all risks associated with platform participation are attributed to the participants themselves.</p>
+    </div>
+</div>
+
+<!-- Slide 4: Portfolio Overview -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 3. Real Asset Portfolio</h2>
+    <p class="mb-8">Horizon Capital Foundation maintains a diversified premium casino asset portfolio of over $100 million across strategic gaming jurisdictions.</p>
+    <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="stat-card">
+            <span class="stat-number">$100M+</span>
+            <div class="stat-label">Total Portfolio Value</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">7 Countries</span>
+            <div class="stat-label">Global Asset Distribution</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">40+</span>
+            <div class="stat-label">Junket Tables</div>
+        </div>
+    </div>
+    <table class="table-custom" style="font-size: 18px;">
+        <thead>
+            <tr>
+                <th>Asset Category</th>
+                <th>Location</th>
+                <th>Value</th>
+                <th>Ownership</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong class="text-main">Golden Palace Tbilisi</strong></td><td>Tbilisi, Georgia</td><td class="text-gold">$25M</td><td>25% Stake</td></tr>
+            <tr><td><strong class="text-main">Ocean Star Resort</strong></td><td>Sihanoukville, Cambodia</td><td class="text-gold">$15M</td><td>30% Stake</td></tr>
+            <tr><td><strong class="text-main">Junket Table Licenses</strong></td><td>Multinational (40 Tables)</td><td class="text-gold">$20M</td><td>Full Ownership</td></tr>
+            <tr><td><strong class="text-main">LONGRISE AI Platform</strong></td><td>Strategic Investment</td><td class="text-gold">$10M</td><td>Partner Stake</td></tr>
+            <tr><td><strong class="text-main">VIP Gaming Lounges</strong></td><td>4 Locations</td><td class="text-gold">$5M</td><td>Full Ownership</td></tr>
+            <tr><td><strong class="text-main">Cash & Reserves</strong></td><td>Operating Buffer</td><td class="text-gold">$25M</td><td>100%</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Slide 5: Portfolio Details -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 4. Portfolio Details</h2>
+    <div class="grid grid-cols-2 gap-8 flex-1">
+        <div class="box p-8">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">Golden Palace Tbilisi</h3>
+            <p class="mb-4">Premium casino resort in Georgia's capital with over 150 gaming tables and 500+ slot machines.</p>
+            <p>Strategically located in the Caucasus region, serving high-roller markets from Russia, Turkey, and the Middle East.</p>
+        </div>
+        <div class="box p-8">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">Ocean Star Resort & Casino</h3>
+            <p class="mb-4">Integrated resort in Sihanoukville, Cambodia, with 200+ gaming tables, beachfront location, and VIP junket operations.</p>
+            <p>Positioned to capture the growing Southeast Asian gaming market.</p>
+        </div>
+        <div class="box p-8">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">Junket Table Licenses</h3>
+            <p class="mb-4">Exclusive licenses to operate 40+ VIP junket tables across 7 jurisdictions.</p>
+            <p>Core infrastructure for high-roller gaming, generating stable annual commission revenue.</p>
+        </div>
+        <div class="box p-8">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">LONGRISE AI Strategic Investment</h3>
+            <p class="mb-4">$10 million strategic investment in AI-based trading platform securing additional revenue streams.</p>
+            <p>Maximizing ecosystem value through bilateral synergy.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Tokenomics -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 5. Tokenomics Overview</h2>
+    <div class="flex gap-12 flex-1">
+        <div class="flex-1">
+            <table class="table-custom" style="font-size: 18px;">
+                <tbody>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Token Name</td><td>CNYT (Casino Network Yield Token)</td></tr>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Total Supply</td><td class="text-gold">10,000,000,000 CNYT</td></tr>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Token Standard</td><td>ERC-20 / BEP-20 (Multi-chain)</td></tr>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Initial Price</td><td class="text-gold">$0.01 (Sept 2024)</td></tr>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Target Price</td><td class="text-gold">$1.00 (Dec 2026 TGE)</td></tr>
+                    <tr><td style="font-weight: 700; color: var(--text-main);">Key Functions</td><td>Value exchange, resort payments, reward distribution</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex-1 flex flex-col" style="justify-content: center;">
+            <div class="box p-8">
+                <h3 class="text-xl mb-6 text-gold font-serif" style="font-weight: 700;">Value Linkage Structure</h3>
+                <p class="mb-4">The token's intrinsic value is supported not by mere market expectations, but by the actual <strong>cash flow</strong> generated by the system.</p>
+                <p>Token value is directly linked to portfolio returns and savings from global resort offline exchange fees.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Real-World Integration -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 6. Real-World Integration</h2>
+    <p class="mb-8 text-lg">CNYT tokens function as a <strong>medium of exchange</strong> immediately usable in the global offline casino and integrated resort ecosystem, beyond mere value storage.</p>
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-building"></i>Singapore (Marina Bay Sands)</h4>
+            <p>Asia's largest integrated resort</p>
+        </div>
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-dice"></i>Macau</h4>
+            <p>World's largest gaming hub</p>
+        </div>
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-umbrella-beach"></i>Vietnam (Da Nang)</h4>
+            <p>Growing Southeast Asian gaming market</p>
+        </div>
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-landmark"></i>Philippines (Manila)</h4>
+            <p>Entertainment City</p>
+        </div>
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-water"></i>Cambodia (Sihanoukville)</h4>
+            <p>Emerging casino region</p>
+        </div>
+        <div class="feature-box">
+            <h4 class="feature-title"><i class="fa-solid fa-mountain"></i>Georgia (Tbilisi)</h4>
+            <p>Caucasus gaming hub</p>
+        </div>
+    </div>
+    <div class="box-gold-border p-6">
+        <p class="text-lg" style="font-weight: 700; color: var(--text-main);">Zero-Fee Swap: Powerful offline payment network infrastructure enabling instant CNYT swaps to local casino chips or currency without massive exchange fees</p>
+    </div>
+</div>
+
+<!-- Slide 8: Dual Token System -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 7. CNYT-CND Dual Token System</h2>
+    <table class="table-custom mb-8">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>CNYT (Variable)</th>
+                <th>CND (Stable)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td style="font-weight: 700; color: var(--text-main);">Type</td><td>Security Token</td><td>Algorithmic Stablecoin</td></tr>
+            <tr><td style="font-weight: 700; color: var(--text-main);">Price</td><td>Market Determined</td><td class="text-gold">1 CND = $1 USD</td></tr>
+            <tr><td style="font-weight: 700; color: var(--text-main);">Function</td><td>Investment, Governance</td><td>Payment, Settlement</td></tr>
+            <tr><td style="font-weight: 700; color: var(--text-main);">Volatility</td><td>High (Speculative)</td><td>None (Algorithmic Peg)</td></tr>
+            <tr><td style="font-weight: 700; color: var(--text-main);">Governance</td><td>Yes (1 token = 1 vote)</td><td>No</td></tr>
+        </tbody>
+    </table>
+    <div class="grid grid-cols-2 gap-8">
+        <div class="box p-8">
+            <h3 class="text-xl font-serif mb-4 text-main" style="font-weight: 700;">Minting Mechanism</h3>
+            <p class="mb-4" style="margin-bottom: 12px;"><strong class="text-gold">CND Minting:</strong> Burn CNYT at current market price to mint equivalent USD value of CND</p>
+            <p><strong class="text-gold">CND Burning:</strong> Burn CND to mint equivalent USD value of CNYT at market price</p>
+        </div>
+        <div class="box p-8">
+            <h3 class="text-xl font-serif mb-4 text-main" style="font-weight: 700;">Collateral Reserves</h3>
+            <p>Over $100 million in verified casino assets provide fundamental value support, far exceeding algorithmic stablecoin standards.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: VVIP Infrastructure -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 8. Global VVIP Infrastructure</h2>
+    <p class="mb-8 text-lg">CNYT holders and top-tier node operators enjoy real-world high-end service benefits beyond mere trading profits. HCF operates <strong>dedicated VIP lounges</strong> within partnered resorts across 7 countries.</p>
+    <div class="flex-1 flex flex-col" style="justify-content: center;">
+        <ul class="icon-list">
+            <li><i class="fa-solid fa-chess-king"></i><strong>Private Table Access:</strong> Immediate VVIP-exclusive gaming environment with no waiting</li>
+            <li><i class="fa-solid fa-hotel"></i><strong>5-Star Hotel Suites:</strong> Complimentary premium accommodation based on tier level</li>
+            <li><i class="fa-solid fa-utensils"></i><strong>Premium F&B Service:</strong> Fine dining and beverage discounts within resorts</li>
+            <li><i class="fa-solid fa-car"></i><strong>Airport Concierge:</strong> Premium vehicle-based arrival and departure pickup</li>
+            <li><i class="fa-solid fa-concierge-bell"></i><strong>Dedicated Concierge:</strong> 24-hour premium concierge service</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 10: Governance -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 9. Financial Soundness & Governance</h2>
+    <div class="flex gap-12 flex-1 items-center">
+        <div class="pie-chart"></div>
+        <div class="flex-1 flex flex-col gap-8">
+            <div class="legend-item">
+                <div class="legend-color bg-gold"></div>Investment Pool (40%)
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #404040;"></div>Ecosystem Development (30%)
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #1f1f1f;"></div>Operations & Reserves (30%)
+            </div>
+            <p class="mt-4 text-main" style="font-weight: 700; font-size: 20px; line-height: 1.7;">The most critical element to prevent protocol collapse is strict fund segregation. Investment Pool is used exclusively for actual asset acquisition and never diverted to marketing expenses.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Voting Rights -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 10. Governance Voting Rights</h2>
+    <div class="flex-1 flex flex-col" style="justify-content: center;">
+        <table class="table-custom" style="font-size: 19px;">
+            <thead>
+                <tr>
+                    <th>Voting Matter</th>
+                    <th>Minimum Holdings</th>
+                    <th>Quorum</th>
+                    <th>Approval</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 700; color: var(--text-main);">Asset Acquisition (>$10M)</td>
+                    <td class="text-gold">10,000 CNYT</td>
+                    <td>30%</td>
+                    <td>Simple Majority (51%)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700; color: var(--text-main);">Strategic Partnership</td>
+                    <td class="text-gold">10,000 CNYT</td>
+                    <td>30%</td>
+                    <td>Simple Majority (51%)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700; color: var(--text-main);">Portfolio Asset Sale</td>
+                    <td class="text-gold">10,000 CNYT</td>
+                    <td>40%</td>
+                    <td>Supermajority (67%)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700; color: var(--text-main);">Tokenomics Changes</td>
+                    <td class="text-gold">50,000 CNYT</td>
+                    <td>50%</td>
+                    <td>Absolute Majority (75%)</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="box-gold-border p-8 mt-8">
+            <p class="text-lg text-main" style="font-weight: 700;">All major decisions are made through token holder voting, preventing centralized authority abuse through transparent on-chain governance.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Security -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 11. Security & Audit</h2>
+    <p class="mb-10 w-full" style="text-align: left;">We build top-tier security infrastructure to ensure privacy and prevent fund tracking for high-net-worth individuals and global liquidity providers.</p>
+    <div class="grid grid-cols-2 flex-1" style="gap: 50px;">
+        <div class="box p-10">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">Multi-Sig Mixing</h3>
+            <p class="mb-4">All on-chain transactions pass through proprietary mixing protocols, <strong>technically and completely blocking fund sender-receiver tracking</strong>.</p>
+            <p>Core blockchain security layer that conceals asset movement paths to maximize privacy.</p>
+        </div>
+        <div class="box p-10">
+            <h3 class="text-2xl font-serif mb-6 text-main" style="font-weight: 700;">Global Audit Execution</h3>
+            <p class="mb-4">Regular verification by top-tier blockchain security audit firms such as CertiK for smart contract and asset custody transparency.</p>
+            <p>Quarterly independent audit reports published to ensure transparency.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Risk Hedging -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 12. Risk Hedging & Factors</h2>
+    <div class="flex-1 flex flex-col" style="justify-content: center;">
+        <ul class="icon-list">
+            <li><i class="fa-solid fa-shield-halved"></i><strong>Maximum Loss Limitation:</strong> Max Drawdown Circuit Breaker applied to prepare for unexpected market shocks.</li>
+            <li><i class="fa-solid fa-life-ring"></i><strong>Black Swan Defense:</strong> In the event of unprecedented macroeconomic crisis, protection mechanisms immediately activate to liquidate all positions and shelter assets in safe stablecoins.</li>
+            <li><i class="fa-solid fa-balance-scale"></i><strong>Regulatory Risk:</strong> Casino and gaming regulations vary by jurisdiction and may change. Unfavorable regulatory developments may impact portfolio asset values or operational capabilities.</li>
+            <li><i class="fa-solid fa-chart-line"></i><strong>Market Volatility:</strong> CNYT prices are affected by cryptocurrency market dynamics and may experience significant volatility unrelated to underlying asset performance.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 14: Roadmap -->
+<div class="slide">
+    <h2 class="slide-title">PAGE 13-14. Protocol Milestones (Roadmap)</h2>
+    <div class="flex-1 flex items-center w-full relative" style="padding-top: 40px;">
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-card bottom">
+                <h3 class="timeline-title">Q3 2024 (Foundation)</h3>
+                <p class="timeline-desc">HCF establishment, initial portfolio acquisition, CNYT token issuance</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-card top">
+                <h3 class="timeline-title">Q1 2025 (Partnership)</h3>
+                <p class="timeline-desc">LONGRISE AI partnership, strategic investor round, portfolio expansion</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-card bottom">
+                <h3 class="timeline-title">Q4 2026 (TGE Launch)</h3>
+                <p class="timeline-desc">Token Generation Event, CND deployment, governance activation</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-card top">
+                <h3 class="timeline-title">Q2 2027 (Ecosystem Complete)</h3>
+                <p class="timeline-desc">Major CEX listing ($1.00 target), 7-country payment network completion</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 15: Conclusion -->
+<div class="slide" style="justify-content: center; align-items: center;">
+    <div class="quote-container">
+        <span class="quote-mark-open">"</span>
+        <p class="quote-text">
+            The 'profitability' generated by the portfolio, the 'usability' of tokens created by offline resort infrastructure, and the meticulously designed 'tokenomics' form a trinity to provide a new standard for stable asset growth.
+        </p>
+        <span class="quote-mark-close">"</span>
+        <p class="quote-author">Horizon Capital Foundation</p>
+    </div>
+</div>
+
+</body></html>
