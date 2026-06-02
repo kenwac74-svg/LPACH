@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutu 투자 제안서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 80px;
+        }
+
+        /* Cover */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+        }
+
+        .cover h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .cover .subtitle {
+            font-size: 28px;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .cover .tagline {
+            font-size: 18px;
+            font-weight: 300;
+            opacity: 0.6;
+            margin-top: 40px;
+        }
+
+        /* Section */
+        .section {
+            min-height: 100vh;
+            padding: 80px 0;
+        }
+
+        .section h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 40px;
+            border-bottom: 3px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0 20px 0;
+            color: #60a5fa;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        /* Content Box */
+        .content-box {
+            background: rgba(255,255,255,0.05);
+            padding: 30px 40px;
+            border-radius: 12px;
+            border-left: 4px solid #60a5fa;
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .content-box.highlight {
+            background: rgba(96,165,250,0.1);
+            border-left-color: #3b82f6;
+        }
+
+        .content-box strong {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card.premium {
+            border: 2px solid #60a5fa;
+            background: rgba(96,165,250,0.1);
+        }
+
+        .card h4 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #60a5fa;
+        }
+
+        .card .metric {
+            margin: 15px 0;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card .metric:last-child {
+            border-bottom: none;
+        }
+
+        .card .metric-label {
+            font-size: 13px;
+            opacity: 0.6;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card .metric-value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .card .result {
+            background: rgba(34,197,94,0.15);
+            border: 2px solid #22c55e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .card .result .value {
+            font-size: 36px;
+            font-weight: 900;
+            color: #22c55e;
+        }
+
+        .card .result .label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* KPI Card */
+        .kpi-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .kpi-card .kpi-value {
+            font-size: 40px;
+            font-weight: 900;
+            color: #60a5fa;
+            margin-bottom: 8px;
+        }
+
+        .kpi-card .kpi-label {
+            font-size: 14px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: rgba(255,255,255,0.05);
+            padding: 25px 30px;
+            border-radius: 10px;
+            border-left: 4px solid #60a5fa;
+            margin: 15px 0;
+        }
+
+        .key-point h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        .key-point p, .key-point ul {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .key-point ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        thead {
+            background: rgba(255,255,255,0.1);
+        }
+
+        th {
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        tr.highlight td {
+            background: rgba(96,165,250,0.15);
+            font-weight: 700;
+        }
+
+        /* Conclusion */
+        .conclusion {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .conclusion h3 {
+            font-size: 40px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .conclusion p {
+            font-size: 22px;
+            color: white;
+            opacity: 0.95;
+        }
+
+        /* Generation Badge */
+        .gen-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1a1a1a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        /* Chart */
+        .chart-svg {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        /* Flow Box */
+        .flow-box {
+            background: rgba(96,165,250,0.1);
+            padding: 25px 35px;
+            border-radius: 10px;
+            border: 2px solid rgba(96,165,250,0.3);
+            margin: 20px 0;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 32px;
+            color: #60a5fa;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Cover -->
+        <div class="cover">
+            <h1>Tutu</h1>
+            <div class="subtitle">전략적 투자 제안서</div>
+            <div class="subtitle" style="font-size: 22px; margin-top: 10px;">실물 카지노 AI 자동 베팅 플랫폼</div>
+            <div class="tagline">전략적 투자자 전용 | 기밀</div>
+        </div>
+
+        <!-- Section 1: KPI 대시보드 (경영 요약 대체) -->
+        <div class="section">
+            <h2>핵심 성과 지표 (KPI)</h2>
+            <div class="grid-4">
+                <div class="kpi-card">
+                    <div class="kpi-value">40배+</div>
+                    <div class="kpi-label">투자 수익률</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">9개월</div>
+                    <div class="kpi-label">목표 최적화 시점</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">1,000억</div>
+                    <div class="kpi-label">리저브 정점</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">50:50</div>
+                    <div class="kpi-label">사업비:투자자</div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="content-box">
+                    <strong>비즈니스 모델</strong><br>
+                    실물 카지노 AI 자동 베팅 플랫폼<br>
+                    배당 재분배 시스템
+                </div>
+                <div class="content-box highlight">
+                    <strong>투자 수익 (6억원 지분 기준)</strong><br><br>
+                    초기 투자: 6억원<br>
+                    지분율: 50.0% (총 12억 중)<br>
+                    투자자 몫 리저브: 250억원<br>
+                    <hr style="margin: 20px 0; opacity: 0.3;">
+                    <strong style="font-size: 24px; color: #22c55e;">순수익: 244억원 (40.7배)</strong>
+                </div>
+            </div>
+
+            <div class="content-box" style="margin-top: 20px;">
+                <strong>수익 최적화 전략</strong><br>
+                목표 시점: M9 (리저브 정점 1,000억)<br>
+                방법: 공지, 언론 보도, 재단 상황 시뮬레이션<br>
+                <span style="font-size: 15px; opacity: 0.8;">(카지노 단속, 베팅 실패, 자금 도주, 해킹 등 문제 발생 시 대응)</span>
+            </div>
+        </div>
+
+        <!-- Section 2: 4.5세대 자동베팅 플랫폼 -->
+        <div class="section">
+            <h2>왜 Tutu는 4.5세대 자동베팅 플랫폼인가?</h2>
+            <span class="gen-badge">4.5세대 = 물리적 서사 × AXNT 듀얼 토큰</span>
+            
+            <div class="content-box" style="margin-top: 30px; font-size: 17px;">
+                <strong style="color: #fbbf24;">자동베팅 플랫폼 진화 역사:</strong><br><br>
+                <strong>3세대 (2017-2019):</strong> 온라인 지갑 + 암호화폐 (하이프, 비트커넥트)<br>
+                → 문제: 너무 단순, 쉽게 노출<br><br>
+                
+                <strong>4세대 (2019-2021):</strong> AI 트레이딩 봇 + 알고리즘 (플러스토큰)<br>
+                → 문제: 이제 모두가 AI 트레이딩 = 사기로 인식<br><br>
+                
+                <strong style="color: #22c55e; font-size: 20px;">4.5세대 (2024-2026):</strong> 물리적 서사 + AXNT 듀얼 토큰<br>
+                → 혁신: "온라인 AI" 서사를 "카지노 AI 대리 베팅" 서사로 대체
+            </div>
+
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="key-point">
+                    <h4>🎭 물리적 서사의 힘</h4>
+                    <p><strong>"어딘가에서 누군가 내 대신 패를 쪼고 있다"</strong><br><br>
+                    • 기존: "AI 알고리즘이 자동 트레이딩" (대부분 사기)<br>
+                    • 4.5세대: "조지아/베트남 등 거점국가의 카지노에서 AI 지시를 따르는 직원이 직접 베팅"<br>
+                    • 효과: 물리적 실체감 = 신뢰도 급증<br>
+                    • 실제: 실행 영상제작 예정</p>
+                </div>
+                <div class="key-point">
+                    <h4>🪙 AXNT 듀얼 토큰 시스템</h4>
+                    <p><strong>Armeda Capital Foundation</strong><br><br>
+                    • AXNT: AI-eXecutive Network Token<br>
+                    • 카지노 자산 포트폴리오 ($1B+) 기반<br>
+                    • Security Token (ERC-20/BEP-20)<br>
+                    • XDD: eXecutive Digital Dividend<br>
+                    • 효과: "1조원 카지노 자산 증권" = 합법성 마련</p>
+                </div>
+                <div class="key-point">
+                    <h4>⚖️ 법적 분리 구조</h4>
+                    <p><strong>Tutu</strong> (해외 법인)<br>
+                    • AI 플랫폼 운영<br>
+                    • 법적 책임 최소화<br><br>
+                    <strong>AXNT/ACF</strong> (독립 재단)<br>
+                    • Armeda Capital Foundation<br>
+                    • 사고 시 리스크 분산</p>
+                </div>
+                <div class="key-point">
+                    <h4>🎯 니치 마켓 타겟</h4>
+                    <p><strong>"다단계를 이미 경험한 중산층"</strong><br><br>
+                    • "너무 높은 수익 = 사기"라고 생각함<br>
+                    • 하지만 "그레이 영역 규제 차익" 논리는 이해함<br>
+                    • 잘만든 플랫폼 = 완성도가 높고 오래 버틸 수 있는 실제 사업<br>
+                    • 다단계지만 진짜 사업임 = 최소 1년은 버틸 것이고 돈을 벌수 있다고 판단<br>
+                    • 이후 글로벌 유저 대상으로 확장</p>
+                </div>
+            </div>
+
+            <div class="flow-box" style="margin-top: 30px;">
+                <strong style="color: #60a5fa; font-size: 20px;">공식 스토리 (대외용)</strong><br><br>
+                Tutu는 글로벌 카지노 자산에 투자하는 AI 자동 베팅 플랫폼입니다. 이용자들은 Tutu에 베팅하고, AI는 3가지 전략(Pool/Betting/Futures)으로 수익을 창출합니다.
+                <div class="flow-arrow">↓</div>
+                AXNT는 독립적인 Armeda Capital Foundation이 발행한 카지노 자산 포트폴리오 증권 토큰입니다. $1B+ (1조원 이상) 카지노 자산을 기반으로 하며, Tutu와는 별도 법인입니다.
+                <div class="flow-arrow">↓</div>
+                <strong style="color: #fbbf24;">"이용자들은 안정적인 현금(USDT)과 장기 자산 성장(AXNT)을 동시에 얻습니다."</strong>
+            </div>
+        </div>
+
+        <!-- Section 3: 초기 자본 배분 -->
+        <div class="section">
+            <h2>초기 자본 배분 및 성과 분석</h2>
+            
+            <div class="content-box" style="margin-bottom: 25px;">
+                <strong>총 투자금 구조:</strong> 목표 12억원 (2억 + 4억 + 6억)<br>
+                <strong>초기 자금 용도: 사업비</strong><br>
+                • 영업 활동비<br>
+                • 시스템/인프라 설치 및 유지보수<br>
+                • 돌발 해지 시 이용자 원금 지급<br>
+                • 직원 인건비 및 운영비<br><br>
+                <strong>최적화 성공 시:</strong> 리저브 1,000억원 5:5 → 사업비 50% (500억) : 투자자 50% (500억)
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h4>투자자 A</h4>
+                    <div class="metric">
+                        <div class="metric-label">초기 투자</div>
+                        <div class="metric-value">2억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분율</div>
+                        <div class="metric-value">16.7%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">투자자 몫 (50%)</div>
+                        <div class="metric-value">500억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분 배분</div>
+                        <div class="metric-value">83.5억원</div>
+                    </div>
+                    <div class="result">
+                        <div class="value">81.5억원</div>
+                        <div class="label">순수익 (40.7배)</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4>투자자 B</h4>
+                    <div class="metric">
+                        <div class="metric-label">초기 투자</div>
+                        <div class="metric-value">4억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분율</div>
+                        <div class="metric-value">33.3%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">투자자 몫 (50%)</div>
+                        <div class="metric-value">500억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분 배분</div>
+                        <div class="metric-value">166.5억원</div>
+                    </div>
+                    <div class="result">
+                        <div class="value">162.5억원</div>
+                        <div class="label">순수익 (40.6배)</div>
+                    </div>
+                </div>
+
+                <div class="card premium">
+                    <h4>투자자 C ⭐</h4>
+                    <div class="metric">
+                        <div class="metric-label">초기 투자</div>
+                        <div class="metric-value">6억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분율</div>
+                        <div class="metric-value">50.0%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">투자자 몫 (50%)</div>
+                        <div class="metric-value">500억원</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">지분 배분</div>
+                        <div class="metric-value">250억원</div>
+                    </div>
+                    <div class="result">
+                        <div class="value">244억원</div>
+                        <div class="label">순수익 (40.7배)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conclusion" style="margin-top: 25px; padding: 25px;">
+                <h3 style="font-size: 28px;">지분율 동일 = 수익 배수 동일 (40배 이상)</h3>
+                <p style="font-size: 16px;">투자 규모와 무관하게 모든 투자자가 동일한 수익률 확보</p>
+            </div>
+        </div>
+
+        <!-- Section 4: 리저브 추이 -->
+        <div class="section">
+            <h2>리저브 풀 추이 (천억 목표 기준)</h2>
+            <div class="chart-svg">
+                <svg width="100%" height="350" viewBox="0 0 1000 350">
+                    <!-- Grid Lines -->
+                    <line x1="50" y1="300" x2="950" y2="300" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <line x1="50" y1="250" x2="950" y2="250" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <line x1="50" y1="200" x2="950" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <line x1="50" y1="150" x2="950" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="950" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <line x1="50" y1="50" x2="950" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    
+                    <!-- Y-axis Labels -->
+                    <text x="30" y="305" fill="#a3a3a3" font-size="12">0</text>
+                    <text x="10" y="255" fill="#a3a3a3" font-size="12">250억</text>
+                    <text x="10" y="205" fill="#a3a3a3" font-size="12">500억</text>
+                    <text x="10" y="155" fill="#a3a3a3" font-size="12">750억</text>
+                    <text x="5" y="105" fill="#a3a3a3" font-size="12">1000억</text>
+                    
+                    <!-- Bars -->
+                    <rect x="70" y="276" width="55" height="24" fill="#60a5fa" rx="3"/>
+                    <text x="97" y="260" fill="white" font-size="11" text-anchor="middle">36억</text>
+                    <text x="97" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M1</text>
+                    
+                    <rect x="140" y="264" width="55" height="36" fill="#60a5fa" rx="3"/>
+                    <text x="167" y="248" fill="white" font-size="11" text-anchor="middle">81억</text>
+                    <text x="167" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M2</text>
+                    
+                    <rect x="210" y="230" width="55" height="70" fill="#60a5fa" rx="3"/>
+                    <text x="237" y="214" fill="white" font-size="11" text-anchor="middle">158억</text>
+                    <text x="237" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M3</text>
+                    
+                    <rect x="280" y="184" width="55" height="116" fill="#60a5fa" rx="3"/>
+                    <text x="307" y="168" fill="white" font-size="11" text-anchor="middle">262억</text>
+                    <text x="307" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M4</text>
+                    
+                    <rect x="350" y="124" width="55" height="176" fill="#60a5fa" rx="3"/>
+                    <text x="377" y="108" fill="white" font-size="11" text-anchor="middle">398억</text>
+                    <text x="377" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M5</text>
+                    
+                    <rect x="420" y="64" width="55" height="236" fill="#60a5fa" rx="3"/>
+                    <text x="447" y="48" fill="white" font-size="11" text-anchor="middle">534억</text>
+                    <text x="447" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M6</text>
+                    
+                    <rect x="490" y="24" width="55" height="276" fill="#60a5fa" rx="3"/>
+                    <text x="517" y="15" fill="white" font-size="11" text-anchor="middle" font-weight="bold">688억</text>
+                    <text x="517" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M7</text>
+                    
+                    <rect x="560" y="4" width="55" height="296" fill="#60a5fa" rx="3"/>
+                    <text x="587" y="15" fill="white" font-size="11" text-anchor="middle" font-weight="bold">862억</text>
+                    <text x="587" y="325" fill="#a3a3a3" font-size="12" text-anchor="middle">M8</text>
+                    
+                    <!-- M9 Peak -->
+                    <rect x="630" y="4" width="55" height="296" fill="#22c55e" rx="3"/>
+                    <text x="657" y="15" fill="white" font-size="12" text-anchor="middle" font-weight="bold">1000억</text>
+                    <text x="657" y="325" fill="#22c55e" font-size="12" text-anchor="middle" font-weight="bold">M9 ⭐</text>
+                    
+                    <rect x="700" y="10" width="55" height="290" fill="#ef4444" rx="3"/>
+                    <text x="727" y="15" fill="white" font-size="11" text-anchor="middle">975억</text>
+                    <text x="727" y="325" fill="#ef4444" font-size="12" text-anchor="middle">M10</text>
+                    
+                    <rect x="770" y="24" width="55" height="276" fill="#ef4444" rx="3"/>
+                    <text x="797" y="15" fill="white" font-size="11" text-anchor="middle">871억</text>
+                    <text x="797" y="325" fill="#ef4444" font-size="12" text-anchor="middle">M11</text>
+                    
+                    <rect x="840" y="54" width="55" height="246" fill="#ef4444" rx="3"/>
+                    <text x="867" y="48" fill="white" font-size="11" text-anchor="middle">681억</text>
+                    <text x="867" y="325" fill="#ef4444" font-size="12" text-anchor="middle">M12</text>
+                    
+                    <!-- Target Line -->
+                    <line x1="630" y1="4" x2="630" y2="330" stroke="#22c55e" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="640" y="340" fill="#22c55e" font-size="13" font-weight="bold">최적화 목표</text>
+                </svg>
+            </div>
+
+            <div class="content-box highlight" style="margin-top: 30px;">
+                <strong>수익과 비용 구조</strong><br><br>
+                <strong style="color: #22c55e;">Reserve 83%:</strong> 배당, 롤업, 원금 반환, 영업재투자 33억원 제외 하면 투자자 수익<br>
+                <strong>추천 수당 12%:</strong> 직접 추천 (1회성, 비용)<br>
+                <strong>글로벌 풀 3%:</strong> Red/Black 직급 보너스 (비용)<br>
+                <strong>운영비 2%:</strong> 고정 비용<br><br>
+                <strong>💡 핵심:</strong> 최적화시 1000억 (천억 기준) 에서 영업비 (50%) 와 투자자 (50%)로 배분<br>
+                Reserve 83%는 배당/롤업 비용을 제하고 최적화 시 투자자와 나누는 수익 적립금입니다.<br>
+                추천 수당 12%, 글로벌 풀 3%, 운영비 2%는 고정 비용으로 소모됩니다.
+            </div>
+        </div>
+
+        <!-- Section 5: 최적화 전략 -->
+        <div class="section">
+            <h2>최적화 전략 및 타임라인 (천억 기준)</h2>
+            <div class="key-point">
+                <h4>1. 리저브 정점 예측 및 모니터링</h4>
+                <p>리저브 정점 1-2개월 전에 미리 예측<br>
+                일일 리저브 잔액 추적 → 전일 대비 감소 확인 시 리스크 대응 실행<br>
+                시뮬레이션: M9 예상 (1,000억원 정점)</p>
+            </div>
+            <div class="key-point">
+                <h4>2. 상황별 리스크 헷징 방안 마련</h4>
+                <p>예상 리스크에 맞는 적절한 대응 방안 선택:<br><br>
+                • <strong>카지노 단속:</strong> "협력 카지노가 현지 정부의 갑작스런 단속으로 폐쇄"<br>
+                • <strong>베팅 실패:</strong> "글로벌 선물 시장의 예상치 못한 움직임으로 대규모 손실"<br>
+                • <strong>자금 도주:</strong> "자금 관리 책임자의 횡령 및 도주"<br>
+                • <strong>해킹:</strong> "시스템 해킹으로 인한 자금 탈취"<br><br>
+                <strong style="color: #fbbf24;">→ 상황에 맞게 유연하게 대응하여 위기 극복</strong></p>
+            </div>
+            <div class="key-point">
+                <h4>3. 리저브 목표 달성 시 배분</h4>
+                <p><strong>사업 성공 기준:</strong><br>
+                • M9 리저브 1,000억원 달성 시<br>
+                • 투자자 50%: 500억원 (오프라인에서 환전 후 지분별 배분)<br>
+                • AXNT로 연착륙 돌입</p>
+            </div>
+            <div class="key-point">
+                <h4>4. 초기 투자금 회수</h4>
+                <p><strong>투자자별 회수액:</strong><br>
+                • A (2억 구좌): 83.5억원 회수 → 순수익 81.5억원 (40.7배)<br>
+                • B (4억 구좌): 166.5억원 회수 → 순수익 162.5억원 (40.6배)<br>
+                • C (6억 구좌): 250억원 회수 → 순수익 244억원 (40.7배)</p>
+            </div>
+        </div>
+
+        <!-- Section 6: 최종 요약 -->
+        <div class="section">
+            <h2 style="text-align: center; font-size: 56px; margin-bottom: 40px;">투자 요약</h2>
+            <div class="conclusion" style="background: rgba(255,255,255,0.95); margin-top: 0; padding: 50px;">
+                <h3 style="font-size: 48px; color: #1e3a8a;">총 투자 12억원 → 500억원 회수</h3>
+                <p style="margin-top: 20px; font-size: 28px; color: #1e3a8a; font-weight: 700;">모든 투자자 40배 이상 수익 | 영업 시작 후 9개월 예측, 최대 13개월 내 최적화</p>
+            </div>
+            <div style="margin-top: 50px; font-size: 20px; line-height: 2.2; max-width: 900px; margin-left: auto; margin-right: auto;">
+                <div>✓ <strong>4.5세대 자동베팅 플랫폼:</strong> 물리적 서사 × AXNT 듀얼 토큰</div>
+                <div>✓ <strong>투자금 반환:</strong> 사업성공 시 총 수익의 50%를 투자자에게 배당. 투자금 대비 40배 이상 예측</div>
+                <div>✓ <strong>최적화 타이밍:</strong> 영업 시작 후 9개월 차 리저브 정점, 마지노선은 영업 시작 후 13개월 내 최적화</div>
+                <div>✓ <strong>최적화 방법:</strong> 상황별 위기 대응 (카지노 단속/베팅 실패/도주/해킹)</div>
+                <div>✓ <strong>공평 배분:</strong> 모든 투자자 40배 이상 동일</div>
+                <div>✓ <strong>안전 우선:</strong> 해외 거점에서 준비 및 운영</div>
+                <div>✓ <strong>AXNT 자산:</strong> $1B+ (1조원 이상) 카지노 포트폴리오</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
