@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LONGRISE AI — DB 세팅 미리보기</title>
+<!-- 검색 엔진 및 AI 봇 크롤링/인덱싱 원천 차단 메타 태그 -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="slurp" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="duckduckbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="baiduspider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="yandex" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="GPTBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="ChatGPT-User" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="OAI-SearchBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="ClaudeBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="CCBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta name="PerplexityBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<meta http-equiv="X-Robots-Tag" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f172a; font-family: 'Segoe UI', sans-serif; color: #e2e8f0; padding: 30px; }
+  h1 { font-size: 28px; color: #fbbf24; margin-bottom: 6px; }
+  h2 { font-size: 16px; background: #1e293b; color: #fbbf24; padding: 10px 16px; margin: 24px 0 12px; border-left: 4px solid #fbbf24; border-radius: 4px; }
+  h3 { font-size: 13px; color: #94a3b8; margin: 16px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
+  p, li { font-size: 12px; color: #cbd5e1; line-height: 1.7; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 11px; }
+  th { background: #1e293b; border: 1px solid #334155; padding: 8px 10px; color: #fbbf24; text-align: left; }
+  td { border: 1px solid #1e293b; padding: 7px 10px; vertical-align: top; }
+  tr:hover td { background: #1a2942; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; }
+  .blue  { background: #1d4ed8; color: white; }
+  .green { background: #15803d; color: white; }
+  .gold  { background: #92400e; color: #fbbf24; border: 1px solid #fbbf24; }
+  .red   { background: #991b1b; color: #fca5a5; }
+  .gray  { background: #334155; color: #94a3b8; }
+  .card  { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .card-title { font-size: 13px; font-weight: bold; color: #fbbf24; margin-bottom: 8px; }
+  .stat { display: inline-block; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 8px 16px; margin: 4px; text-align: center; }
+  .stat-num { font-size: 22px; font-weight: bold; color: #fbbf24; display: block; }
+  .stat-label { font-size: 10px; color: #64748b; text-transform: uppercase; }
+  code { background: #0f172a; color: #34d399; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-family: monospace; }
+  .tree-line { font-family: monospace; font-size: 11px; color: #4ade80; line-height: 1.8; padding: 12px; background: #0f172a; border-radius: 6px; margin: 8px 0; }
+  .warning { background: #451a03; border: 1px solid #f59e0b; border-radius: 6px; padding: 12px; color: #fcd34d; font-size: 11px; }
+  .toolbar { position: sticky; top: 0; background: #0f172a; border-bottom: 1px solid #1e293b; padding: 12px 0; margin-bottom: 24px; z-index: 100; display: flex; gap: 12px; align-items: center; }
+  .btn { background: #1e40af; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+  .btn:hover { background: #2563eb; }
+  .section { max-width: 1200px; margin: 0 auto; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media(max-width:768px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
+  .progress-bar { background: #1e293b; border-radius: 4px; height: 8px; margin: 4px 0; }
+  .progress-fill { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #fbbf24, #f97316); }
+  .rank-blue   { color: #60a5fa; font-weight: bold; }
+  .rank-white  { color: #e2e8f0; font-weight: bold; }
+  .file-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e293b; }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; }
+  .file-name { font-size: 13px; font-weight: bold; color: #38bdf8; }
+  .file-desc { font-size: 11px; color: #64748b; }
+</style>
+</head>
+<body>
+
+<div class="section">
+
+  <div class="toolbar">
+    <h1>🐉 LONGRISE AI — DB 세팅 미리보기</h1>
+    <button class="btn" onclick="window.print()">📄 PDF 출력</button>
+  </div>
+
+  <!-- 파일 구성 -->
+  <h2>📁 생성된 파일 목록</h2>
+  <div class="card">
+    <div class="file-row">
+      <div class="file-icon">📘</div>
+      <div>
+        <div class="file-name">README.md</div>
+        <div class="file-desc">개발자 실행 가이드 + 보류 질문 3가지 포함 — 개발자이사님께 전달</div>
+      </div>
+    </div>
+    <div class="file-row">
+      <div class="file-icon">🗄️</div>
+      <div>
+        <div class="file-name">01_schema.sql</div>
+        <div class="file-desc">CREATE TABLE 6개 — users / packages / daily_returns / transactions / referral_tree / usdt_transfers</div>
+      </div>
+    </div>
+    <div class="file-row">
+      <div class="file-icon">👤</div>
+      <div>
+        <div class="file-name">02_static_data.sql</div>
+        <div class="file-desc">10개 주계정 + 22개 패키지 이력 + 30건 USDT 이체 내역 INSERT</div>
+      </div>
+    </div>
+    <div class="file-row">
+      <div class="file-icon">🌳</div>
+      <div>
+        <div class="file-name">03_referral_tree.sql</div>
+        <div class="file-desc">10개 계정 전체 조직도 ~220명 INSERT (V8.8 현실감 재설계 — Blue Dragon 3개 / White Dragon 7개 / 하부 Standard $500 Purple 불가 서사 반영)</div>
+      </div>
+    </div>
+    <div class="file-row">
+      <div class="file-icon">⚙️</div>
+      <div>
+        <div class="file-name">04_seed_generator.js</div>
+        <div class="file-desc">Node.js 실행 → 일일수익 3,650행 + 트랜잭션 자동 생성 (Page 11 알고리즘)</div>
+      </div>
+    </div>
+    <div class="file-row">
+      <div class="file-icon">📱</div>
+      <div>
+        <div class="file-name">05_mockData_update.ts</div>
+        <div class="file-desc">프론트엔드 shared/mockData.ts 교체파일 — 백엔드 연동 전 즉시 시연 가능</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 통계 -->
+  <h2>📊 데이터 규모 요약</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
+    <div class="stat"><span class="stat-num">10</span><span class="stat-label">주계정</span></div>
+    <div class="stat"><span class="stat-num">22</span><span class="stat-label">패키지 이력</span></div>
+    <div class="stat"><span class="stat-num">~220</span><span class="stat-label">조직도 멤버</span></div>
+    <div class="stat"><span class="stat-num">3,650</span><span class="stat-label">일일수익 행</span></div>
+    <div class="stat"><span class="stat-num">~5,000</span><span class="stat-label">트랜잭션 행</span></div>
+    <div class="stat"><span class="stat-num">30</span><span class="stat-label">USDT 이체 내역</span></div>
+  </div>
+
+  <!-- 10개 계정 -->
+  <h2>👤 10개 시연 계젔 스펙</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>닉네임</th>
+        <th>Gmail (임시)</th>
+        <th>가입일</th>
+        <th>업그레이드일</th>
+        <th>USDT 잔고</th>
+        <th>CNYT 잔고</th>
+        <th>팀 인원</th>
+        <th>팀 매출</th>
+        <th>현재 직급</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>⭐ Kim_Dragon88</td><td><code>kim88@gmail.com</code></td><td>2025-02-05</td><td>2025-05-10</td><td>$2,597</td><td>4,897</td><td>108명</td><td>$28,500</td><td><span class="badge blue">Blue Dragon</span></td></tr>
+      <tr><td>2</td><td>Lee_Profit99</td><td><code>lee99@gmail.com</code></td><td>2025-02-10</td><td>2025-05-17</td><td>$2,157</td><td>4,824</td><td>35명</td><td>$10,200</td><td><span class="badge blue">Blue Dragon</span></td></tr>
+      <tr><td>3</td><td>Park_Alpha77</td><td><code>park77@gmail.com</code></td><td>2025-02-15</td><td>2025-05-22</td><td>$2,100</td><td>4,771</td><td>22명</td><td>$6,400</td><td><span class="badge blue">Blue Dragon</span></td></tr>
+      <tr><td>4</td><td>Choi_Rise12</td><td><code>choi12@gmail.com</code></td><td>2025-02-18</td><td>2025-05-28</td><td>$1,564</td><td>4,714</td><td>17명</td><td>$4,200</td><td><span class="badge gray">White Dragon</span></td></tr>
+      <tr><td>5</td><td>Han_Node34</td><td><code>han34@gmail.com</code></td><td>2025-02-22</td><td>2025-06-03</td><td>$1,549</td><td>4,664</td><td>12명</td><td>$3,000</td><td><span class="badge gray">White Dragon</span></td></tr>
+      <tr><td>6</td><td>Jung_Bull56</td><td><code>jung56@gmail.com</code></td><td>2025-02-26</td><td>2025-06-08</td><td>$1,481</td><td>4,611</td><td>8명</td><td>$2,000</td><td><span class="bade gray">White Dragon</span></td></tr>
+      <tr><td>7</td><td>Yoon_Gold78</td><td><code>yoon78@gmail.com</code></td><td>2025-03-02</td><td>2025-06-14</td><td>$1,462</td><td>4,551</td><td>6명</td><td>$1,500</td><td><span class="badge gray">White Dragon</span></td></tr>
+      <tr><td>8</td><td>Song_Wave90</td><td><code>song90@gmail.com</code></td><td>2025-03-07</td><td>2025-06-19</td><td>$1,445</td><td>4,498</td><td>5명</td><td>$1,250</td><td><span class="badge gray">White Dragon</span></td></tr>
+      <tr><td>9</td><td>Lim_Eagle23</td><td><code>lim23@gmail.com</code></td><td>2025-03-12</td><td>2025-06-24</td><td>$1,426</td><td>4,442</td><td>4명</td><td>$900</td><td><span class="badge gray">White Dragon</span></td></tr>
+      <tr><td>10</td><td>Ko_Titan45</td><td><code>ko45@gmail.com</code></td><td>2025-03-17</td><td>2025-06-29</td><td>$1,407</td><td>4,386</td><td>3명</td><td>$600</td><td><span class="badge gray">White Dragon</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px; color:#64748b; margin-bottom:24px;">
+    ※ 거래 비밀번호: <code>Longrise1!</code> (전 계정 통일일)
