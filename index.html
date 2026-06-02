@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 통합 관리 대시보드</title>
+    
+    <!-- 🛡️ 검색 엔진 및 AI 봇 크롤링/인덱싱 원천 차단 메타 태그 -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow, noarchive">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #334155;
+        }
+        
+        .bg-white-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .link-badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: monospace;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .link-badge:hover {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+        
+        .link-badge.inactive {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Table Styles */
+        .status-table th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .status-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+        .status-table tr:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-black text-slate-800 tracking-tight">
+                    프로젝트 산출물 관리 대시보드
+                </h1>
+                <p class="text-xs text-slate-500 mt-1 font-medium">Master Deliverables Status Board</p>
+            </div>
+            <div class="text-right">
+                <div class="flex items-center gap-4">
+                    <span class="text-sm font-bold text-slate-600">총 진척도</span>
+                    <div class="w-48 bg-slate-100 rounded-full h-3 border border-slate-200 overflow-hidden">
+                        <div class="bg-blue-600 h-3 rounded-full" style="width: 78%"></div>
+                    </div>
+                    <span class="text-blue-600 font-black text-xl">78%</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto mt-8 px-6">
+
+        <div class="bg-white-card rounded-xl overflow-hidden">
+            <table class="w-full status-table text-sm">
+                <thead>
+                    <tr>
+                        <th class="w-16 text-center">NO</th>
+                        <th class="w-[30%]">문서 및 산출물 명칭</th>
+                        <th class="w-24 text-center">진행률</th>
+                        <th class="w-32 text-center">상태</th>
+                        <th class="w-48 text-center">결과보기 (Links)</th>
+                        <th>업데이트 메모</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- 00 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">00</td>
+                        <td>
+                            <div class="font-bold text-slate-800">업무 진척 타임라인</div>
+                            <div class="text-xs text-slate-500 mt-1">그랜드 오픈 마스터 스케줄</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-emerald-600">100%</td>
+                        <td class="text-center"><span class="status-badge bg-emerald-100 text-emerald-700">STABLE</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="LONGRISE_Grand_Open_Schedule.html" target="_blank" class="link-badge">#01</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">스케줄 확정 완료.</td>
+                    </tr>
+
+                    <!-- 01 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">01</td>
+                        <td>
+                            <div class="font-bold text-slate-800">마스터플랜 설계서 (V8.7)</div>
+                            <div class="text-xs text-slate-500 mt-1">통합 수당 체계 및 자금 순환 로직</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">95%</td>
+                        <td class="text-center"><span class="status-badge bg-emerald-100 text-emerald-700">STABLE</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="LONGRISE_MasterPlan_V8_7_KO.html" target="_blank" class="link-badge">#01</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 font-bold">시뮬레이터 검증 대기중</td>
+                    </tr>
+                    
+                    <!-- 02 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">02</td>
+                        <td>
+                            <div class="font-bold text-slate-800">재무 스트레스 시뮬레이터</div>
+                            <div class="text-xs text-slate-500 mt-1">현금 고갈 시점 예측 및 런웨이 모델</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">80%</td>
+                        <td class="text-center"><span class="status-badge bg-blue-100 text-blue-700">UPDATING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="Simulator.html" target="_blank" class="link-badge">#01</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 text-red-600 font-medium">8.7 마스터 플랜 반영 재작성 필요로 수정</td>
+                    </tr>
+
+                    <!-- 03 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">03</td>
+                        <td>
+                            <div class="font-bold text-slate-800">공식 홈페이지 UI/UX</div>
+                            <div class="text-xs text-slate-500 mt-1">대외 공개용 글로벌 프론트엔드</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">90%</td>
+                        <td class="text-center"><span class="status-badge bg-blue-100 text-blue-700">UPDATING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="LongriseHomepage.html" target="_blank" class="link-badge">#01</a>
+                                <a href="LongriseHomepage_EN.html" target="_blank" class="link-badge">#02</a>
+                                <a href="index_cn.html" target="_blank" class="link-badge">#03</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 font-medium">로고 반영 및 피드백 대기중</td>
+                    </tr>
+
+                    <!-- 04 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">04</td>
+                        <td>
+                            <div class="font-bold text-slate-800">내부 투자제안서 (Pitch Deck)</div>
+                            <div class="text-xs text-slate-500 mt-1">Seed 투자자 및 최상위 리더 영입용</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">80%</td>
+                        <td class="text-center"><span class="status-badge bg-blue-100 text-blue-700">UPDATING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="tut_investment_proposal.html" target="_blank" class="link-badge">#01</a>
+                                <a href="longrise_seed_pitch_v8_7.html" target="_blank" class="link-badge">#02</a>
+                                <span class="link-badge inactive">#03</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 text-orange-600 font-bold">검수 및 피드백 필요</td>
+                    </tr>
+
+                    <!-- 05 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">05</td>
+                        <td>
+                            <div class="font-bold text-slate-800">일반인 대상 홍보 브로셔</div>
+                            <div class="text-xs text-slate-500 mt-1">대중 배포용 마케팅 요약 자료</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">70%</td>
+                        <td class="text-center"><span class="status-badge bg-blue-100 text-blue-700">UPDATING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="longrise_public_brochure_v8_7.html" target="_blank" class="link-badge">#01</a>
+                                <span class="link-badge inactive">#02</span>
+                                <span class="link-badge inactive">#03</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 text-orange-600 font-bold">검수 및 피드백 필요</td>
+                    </tr>
+
+                    <!-- 06 -->
+                    <tr class="bg-amber-50/30">
+                        <td class="text-amber-600 font-mono text-center font-bold">06</td>
+                        <td>
+                            <div class="font-bold text-slate-800">영업자 매뉴얼</div>
+                            <div class="text-xs text-slate-500 mt-1">현장 영업 스크립트 및 응대 가이드</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-emerald-600">100%</td>
+                        <td class="text-center"><span class="status-badge bg-emerald-100 text-emerald-700">STABLE</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="V7.8_개선_영업자메뉴얼.html" target="_blank" class="link-badge">#01</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">완료.</td>
+                    </tr>
+
+                    <!-- 07 -->
+                    <tr class="bg-amber-50/30">
+                        <td class="text-amber-600 font-mono text-center font-bold">07</td>
+                        <td>
+                            <div class="font-bold text-slate-800">운영자 가이드</div>
+                            <div class="text-xs text-slate-500 mt-1">백오피스 관리 및 CS 처리 지침서</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-slate-400">0%</td>
+                        <td class="text-center"><span class="status-badge bg-slate-100 text-slate-600">PENDING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <span class="link-badge inactive">#01</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">작성 대기중</td>
+                    </tr>
+
+                    <!-- 08 -->
+                    <tr class="bg-amber-50/30">
+                        <td class="text-amber-600 font-mono text-center font-bold">08</td>
+                        <td>
+                            <div class="font-bold text-slate-800">관리툴 매뉴얼</div>
+                            <div class="text-xs text-slate-500 mt-1">어드민 시스템 기술 매뉴얼</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-slate-400">0%</td>
+                        <td class="text-center"><span class="status-badge bg-slate-100 text-slate-600">PENDING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <span class="link-badge inactive">#01</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">작성 대기중</td>
+                    </tr>
+
+                    <!-- 09 -->
+                    <tr class="bg-amber-50/30">
+                        <td class="text-amber-600 font-mono text-center font-bold">09</td>
+                        <td>
+                            <div class="font-bold text-slate-800">전략적 투자제안</div>
+                            <div class="text-xs text-slate-500 mt-1">기관/VC 대상 커스텀 제안서</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-emerald-600">100%</td>
+                        <td class="text-center"><span class="status-badge bg-emerald-100 text-emerald-700">STABLE</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="Investment_Proposal_1000B_Revised.html" target="_blank" class="link-badge">#01</a>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">완료.</td>
+                    </tr>
+
+                    <!-- 10 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">10</td>
+                        <td>
+                            <div class="font-bold text-slate-800">CNYT 공식 백서</div>
+                            <div class="text-xs text-slate-500 mt-1">토큰 이코노미 및 생태계 비전 문서</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-blue-600">70%</td>
+                        <td class="text-center"><span class="status-badge bg-blue-100 text-blue-700">UPDATING</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="cnyt_whitepaper_v1.html" target="_blank" class="link-badge">#01</a>
+                                <span class="link-badge inactive">#02</span>
+                                <span class="link-badge inactive">#03</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 text-red-600 font-medium">사업 개발 내용 반영 필요</td>
+                    </tr>
+
+                    <!-- 11 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">11</td>
+                        <td>
+                            <div class="font-bold text-slate-800">CNYT 재단 홈페이지</div>
+                            <div class="text-xs text-slate-500 mt-1">독립 플랫폼 구축 (외형적 분리)</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-emerald-600">80%</td>
+                        <td class="text-center"><span class="status-badge bg-emerald-100 text-emerald-700">STABLE</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <a href="CNYT_Homepage_Final_v2%20(1).html" target="_blank" class="link-badge">#01</a>
+                                <span class="link-badge inactive">#02</span>
+                                <span class="link-badge inactive">#03</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600">사업 개발 내용 반영 및 피드백 대기중</td>
+                    </tr>
+
+                    <!-- 12 -->
+                    <tr>
+                        <td class="text-slate-400 font-mono text-center font-bold">12</td>
+                        <td>
+                            <div class="font-bold text-slate-800">개발결과물 수령</div>
+                            <div class="text-xs text-slate-500 mt-1">외주/개발팀 결과물 인도 및 세팅</div>
+                        </td>
+                        <td class="text-center font-mono font-bold text-amber-600">10%</td>
+                        <td class="text-center"><span class="status-badge bg-amber-100 text-amber-700">IN PROGRESS</span></td>
+                        <td class="text-center">
+                            <div class="flex gap-2 justify-center flex-wrap">
+                                <span class="link-badge inactive">#00</span>
+                                <span class="link-badge inactive">#01</span>
+                            </div>
+                        </td>
+                        <td class="text-xs text-slate-600 font-medium">개발결과물 수령 대기중</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>
