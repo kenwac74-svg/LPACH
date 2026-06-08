@@ -1,78 +1,677 @@
-Web3 패키지 플랫폼 입출금 및 운영 통제 정책서 (v2.0)
+Web3 패키지 플랫폼 입출금 및 운영 통제 정책서 (v2.1)
 
-문서 분류: 기획 / 백엔드 개발 명세 / 운영 매뉴얼
-핵심 목표: 고가의 외부 AML/모니터링 솔루션 없이, 최소한의 자체 백엔드 로직과 수동 운영 프로세스만으로 '자금 유실(이중 지불)'과 '법적 리스크(한국 VASP 규제)'를 완벽히 차단한다.
+문서 분류: 기획 / 프론트엔드 개발 명세 / 백엔드 운영 통제 / CS 운영 기준
+작성 목적: LONGRISE 플랫폼의 월렛, 입금, 출금, 내부전송, 패키지 구매, 보너스 USDT, CNYT 리워드 및 관련 히스토리 표시 정책을 통일한다. 본 문서는 실제 사용자 인터페이스와 백엔드 처리 로직이 서로 다르게 구현되는 것을 방지하기 위한 기준 문서이다.
+적용 범위: 사용자용 월렛 메뉴, 입금/출금/내부전송 화면, 패키지 구매 잔액 처리, 리워드 및 히스토리 표시, 운영 통제 정책.
 
-Part 1. 개발/백엔드 필수 구현 명세 (Engineering Requirements)
+개정 요약
 
-1. 지갑 인프라 및 수수료 처리 로직 수정
+v2.1은 기존 WALLET / MY WEALTH 구조를 개편하여 사용자에게 직관적인 월렛 자산 구조를 제공하는 것을 목적으로 한다.
 
-지갑 주소 발급: 유저가 입금 버튼 클릭 시 1:1 고유 일반 지갑 주소(EOA)를 발급한다. (컨트랙트 주소 절대 사용 금지)
+주요 변경 사항은 다음과 같다.
 
-수수료 처리 로직 (중요 변경): 유저는 가스비(TRX/BNB)를 별도로 준비할 필요가 없다.
+1. 기존 MY WEALTH 구조의 LIQUID / STAKED / REWARDS / LOCKED / GROWTH 자산 구분을 폐기하고, 사용자 기준의 실질적 자산 구분으로 재정의한다.
+2. 입금은 패키지 즉시 구매가 아니며, 입금 후 Withdrawal Balance의 Deposit Balance에 반영된다.
+3. 패키지 구매는 별도 메뉴에서 수행하며, 구매 금액은 Withdrawal Balance에서 차감한다.
+4. 보너스 USDT는 출금 불가 자산이며 패키지 구매에만 사용할 수 있다.
+5. CNYT는 Available / Staked로 구분한다.
+6. Pending Withdrawal은 상단 자산 카드가 아니라 출금 진행 내역에서 표시한다.
+7. 사용자용 월렛에는 관리자 기능, 개발자 주석, 내부 운영 설명이 노출되어서는 안 된다.
+8. GitHub Pages 또는 공개 빌드 배포 시 구 월렛 문구가 포함된 산출물이 배포되지 않도록 검증한다.
 
-유저가 보유한 인게임 재화(USDT)로 출금 신청을 하면, 시스템은 '신청액 - 고정 출금 수수료(예: 2 USDT)'를 차감한 순수 금액만 외부 지갑으로 송금한다.
+Part 1. 월렛 정보 구조 정책
 
-실제 온체인 가스비는 회사의 단일 출금용 핫월렛에 미리 충전된 TRX/BNB에서 지출됨.
+1. 메뉴명 및 화면 타이틀
 
-최소 출금액 설정: 수동 처리 비용 및 트랜잭션 비용 방어를 위해 최소 출금액을 20 USDT 이상으로 강제한다.
+1.1 최상단 메뉴명
+플랫폼의 최상단 메뉴명은 WALLET으로 한다.
 
-2. 출금 상태값(Status) 세분화 및 롤백(Rollback) 로직
+1.2 MY WEALTH 사용 제한
+MY WEALTH는 월렛 메뉴명이 아니며, 자산 현황을 의미하는 구 표현이다. 신규 월렛 화면의 메인 타이틀 또는 사이드 메뉴명으로 사용하지 않는다.
 
-DB의 출금 요청 테이블 상태값을 반드시 아래 5단계로 설계하고, 각 단계별 백엔드 로직을 구현한다.
+1.3 사이드 메뉴명
+월렛 내부 사이드 메뉴에서 자산 현황 섹션은 ASSETS로 표시한다.
 
-PENDING (대기): 유저가 출금 신청. 인게임 잔액 즉시 차감됨. 유저 본인이 출금 취소 가능.
+1.4 사용자 인터페이스 언어
+플랫폼은 기본적으로 영어 UI를 제공한다. 정책서 및 내부 문서는 한국어로 작성할 수 있으나, 실제 사용자 화면은 영어 기준으로 구현한다.
 
-PROCESSING (처리 중): 관리자가 출금 리스트를 확인하고 송금 작업을 시작한 상태. 이 시점부터 유저는 출금 취소 불가.
+1.5 서비스 제한 국가 표현
+특정 국가를 직접 지칭하는 표현은 사용자 화면에서 사용하지 않는다.
 
-APPROVED (승인) / REJECTED (반려): 관리자의 최종 결정 상태.
+금지 예시:
+"국내 거래소 주소로 직접 출금할 수 없습니다."
 
-COMPLETED (송금 완료): 승인 후 온체인 트랜잭션 해시(TxID)가 생성된 상태.
+권장 표현:
+"Exchanges located in service-restricted jurisdictions may be restricted from deposits and withdrawals."
 
-FAILED (송금 실패): 네트워크 오류 등으로 송금이 실패한 상태.
+2. 구 월렛 자산 구조 폐기
 
-롤백(Rollback) 필수 로직: 관리자가 상태를 REJECTED로 변경하거나 온체인 송금이 FAILED 처리될 경우, 백엔드는 차감되었던 유저의 USDT를 자동으로 인게임 지갑 잔액으로 100% 반환(Rollback)해야 한다. 수동 반환 금지.
+기존 월렛 구조는 다음과 같은 이유로 폐기한다.
 
-3. 입금(Deposit) 오차 허용 범위 설정 (Slippage)
+기존 구조:
+- LIQUID
+- STAKED
+- REWARDS
+- LOCKED
+- GROWTH
 
-거래소 출금 수수료를 계산하지 못하고 패키지 금액보다 적게 입금한 유저에 대한 자동 처리 로직을 구현한다.
+폐기 사유:
+- 각 항목의 의미가 사용자에게 직관적이지 않다.
+- STAKED가 만기 원금과 보너스를 의미하는 등 실제 정책과 용어가 충돌한다.
+- LOCKED와 REWARDS의 CNYT 상태 구분이 명확하지 않다.
+- GROWTH가 활성 패키지 총 구매 금액을 의미하지만 사용자가 즉시 이해하기 어렵다.
 
-로직: 입금된 금액이 선택한 패키지 결제액보다 적을 경우, 해당 패키지는 구매 보류 상태가 되며 입금된 금액만큼만 유저의 인게임 USDT 잔액으로 적립된다. 유저는 잔액을 더 충전하여 패키지를 구매해야 한다.
+3. 신규 월렛 자산 구조
 
-Part 2. 운영 및 CS 매뉴얼 (Operation & CS Guideline)
+신규 월렛 화면의 주요 자산 카드는 다음 항목으로 구성한다.
 
-1. 자금 격리 및 수동 집행 원칙 (Airlock System)
+1. Withdrawal Balance
+2. Bonus USDT
+3. Package Value
+4. CNYT Tokens
 
-입금 회수 (Sweeping): 유저의 개별 지갑으로 들어온 입금액은 시스템이 자동으로 모으지 않는다. 자금은 각 유저 지갑에 그대로 방치하며, 운영팀이 주기적으로 '외부 우회 지갑'을 통해 수동으로 자금을 회수한다. 해킹 시 피해를 최소화하기 위함.
+Pending Withdrawal은 독립 자산 카드로 표시하지 않는다. 진행 중인 출금 요청은 Transfer History 또는 최근 출금 상태 영역에서 표시한다.
 
-단일 무균실 출금: 출금은 오직 회사 법인 자금 등 '검증된 클린 자금'으로만 충전된 단일 핫월렛(Withdrawal Wallet)에서 운영자가 수동으로 일괄 송금한다.
+Part 2. Withdrawal Balance 정책
 
-2. 출금 심사 및 어뷰징 통제 (Blacklist & Sybil Defense)
+1. 정의
 
-운영자는 백오피스 출금 대기열(PENDING)을 확인 시 다음 사항을 교차 검증한 후 APPROVED 처리한다.
+Withdrawal Balance는 사용자가 출금 가능한 USDT 잔액을 의미한다.
 
-다계정 모니터링: 동일한 IP 또는 단말기(MAC Address) 환경에서 3개 이상의 다른 지갑 주소로 출금이 신청될 경우, 다계정 수당 어뷰징으로 간주하여 즉시 REJECTED 처리하고 해당 계정들을 정지(Suspended) 상태로 전환한다.
+Withdrawal Balance는 다음 두 구성 요소의 합계로 표시한다.
 
-이상 패턴: 비정상적으로 단기간에 고액의 수익금이 발생한 경우(DB 오류 또는 롤업 버그 의심), 출금을 보류하고 개발팀에 데이터 검증을 요청한다.
+- Deposit Balance
+- Earnings Balance
 
-출금 주소 1:1 귀속: 1계정 1지갑 귀속을 원칙으로 한다. 유저가 부득이하게 주소 변경을 요청할 경우, CS 채널을 통해 신분증(KYC) 및 이전 지갑의 소유권을 증명할 수 있는 자료를 제출받은 후 최고 관리자(Admin) 권한으로만 수동 변경한다.
+2. Deposit Balance
 
-3. 관리자 권한 분리 및 이중 인증 (Security)
+Deposit Balance는 사용자가 외부 지갑 또는 허용된 입금 경로를 통해 입금한 후, 아직 패키지 구매에 사용하지 않은 USDT 잔액이다.
 
-내부 직원에 의한 횡령(Rug-pull)을 막기 위해 백오피스 권한을 엄격히 분리한다.
+입금은 패키지 즉시 구매로 처리하지 않는다.
 
-CS 팀원: 출금 요청 목록 및 유저 정보 조회만 가능.
+정상 프로세스:
+1. 사용자가 입금 시도
+2. 입금 완료
+3. 입금액이 Withdrawal Balance의 Deposit Balance에 반영
+4. 사용자가 별도로 패키지 구매
+5. 패키지 구매 금액이 Withdrawal Balance에서 차감
+6. 차감 후 남은 금액이 잔액으로 표시
 
-운영 매니저: 출금 요청 반려(REJECTED) 및 계정 정지(Suspended), CS 소명 후 지갑 주소 변경 가능.
+3. Earnings Balance
 
-최고 재무 관리자: 오직 최고 권한자만이 핫월렛 프라이빗 키에 접근할 수 있으며, 최종 출금 승인(APPROVED) 버튼을 누를 수 있다.
+Earnings Balance는 활성 패키지에서 발생한 일일 USDT 수익 중 출금 가능한 금액이다.
 
-필수: 최고 관리자가 출금 승인 또는 지갑 주소를 변경할 때는 반드시 Google OTP 등 이중 인증(2FA)을 거쳐야 한다.
+UI 표시 기준:
+- Withdrawal Balance 총액은 굵은 흰색으로 표시한다.
+- Deposit Balance는 일반 흰색으로 표시한다.
+- Earnings Balance는 노란색 또는 강조 색상으로 표시하고 굵게 처리한다.
 
-4. 한국 VASP (트래블룰) 규제 회피 매뉴얼
+예시:
+Withdrawal Balance: 1,023 USDT
+> Deposit Balance: 1,000 USDT
+> Earnings Balance: 23 USDT
 
-한국 유저의 결제 및 서비스 이용은 허용하되, 업비트, 빗썸, 코빗, 코인원 등 한국 원화 거래소 지갑 주소로의 직접 출금은 엄격히 금지한다.
+4. 입금과 패키지 구매의 분리
 
-CS 대응 지침: 본 플랫폼은 글로벌 규제를 준수합니다. 출금 시 반드시 바이낸스(Binance) 등 해외 거래소 지갑이나 트러스트 월렛(Trust Wallet), 메타마스크(MetaMask) 등 개인 지갑 주소를 등록해 주시기 바랍니다. 한국 거래소 주소 입력 시 자금이 동결될 수 있으며, 이로 인한 손실은 당사가 책임지지 않습니다.
+입금은 패키지 구매를 의미하지 않는다. 사용자는 입금 후 별도로 패키지 구매를 선택해야 한다.
 
-경고에도 불구하고 한국 거래소로 송금하여 트래블룰에 걸린 경우, 당사는 절대 개입하지 않으며 유저가 직접 거래소에 소명하여 반환 절차를 밟도록 안내한다.
+개발 필수 조건:
+- 입금 완료 시 패키지를 자동 구매하지 않는다.
+- 입금액은 우선 Withdrawal Balance의 Deposit Balance에 반영한다.
+- 패키지 구매 시점에만 잔액 차감이 발생한다.
+
+Part 3. Bonus USDT 정책
+
+1. 정의
+
+Bonus USDT는 시스템이 사용자에게 지급하는 출금 불가능한 USDT 성격의 보너스 자산이다.
+
+사용자 화면에서는 Bonus USDT로 표시하지만, 실제 데이터베이스 및 운영 개념상 현금성 예치금이 아니라 패키지 구매 용도에 제한된 보너스 크레딧으로 관리한다.
+
+2. 사용 가능 범위
+
+Bonus USDT는 패키지 구매에만 사용할 수 있다.
+
+금지:
+- 외부 출금
+- 내부전송
+- 일반 Withdrawal Balance와 동일한 출금 가능 잔액으로 표시
+- 사용자가 현금성 예치금으로 오인할 수 있는 설명
+
+3. UI 표시
+
+Bonus USDT 카드에는 긴 설명을 넣지 않는다.
+
+카드 내부 표시 기준:
+- 제목: Bonus USDT
+- 출금 가능 여부: Withdrawable / No
+
+상세 설명은 별도 도움말, 상세 화면, 패키지 구매 화면 또는 정책 안내 영역에서 제공한다.
+
+4. 발행 단위
+
+Bonus USDT는 정해진 액면 단위로만 발행한다.
+
+예정 발행 단위:
+- 150 USDT
+- 450 USDT
+- 900 USDT
+- 3,000 USDT
+
+5. 패키지 구매 시 특수 규칙
+
+Bonus USDT는 잔액 환불 이슈를 방지하기 위해 부분 사용 후 잔액이 남는 방식으로 사용할 수 없다.
+
+정책 문구:
+Bonus USDT cannot be partially used. Any remaining package amount must be paid with Withdrawal Balance.
+
+예시:
+- 150 Bonus USDT로 100 USDT Flexible 패키지 구매 시도: 구매 불가
+- 450 Bonus USDT로 200 USDT Basic 패키지 구매 시도: 구매 불가
+- 450 Bonus USDT + 50 Withdrawal Balance로 500 USDT Standard 패키지 구매 시도: 구매 가능
+
+6. 묶음 구매 제한
+
+보너스 USDT 잔액 환불 이슈를 방지하기 위해 여러 패키지를 동시에 묶음 구매하는 기능은 제공하지 않는다.
+
+사용자 화면에 "여러 패키지를 동시에 묶음 구매할 수 없습니다"라는 개발자용 설명을 노출할 필요는 없다. 단, 기능상으로는 1회 구매 시 1개 패키지만 처리되도록 구현한다.
+
+Part 4. Package Value 정책
+
+1. 정의
+
+Package Value는 아직 만기되지 않은 활성 패키지의 총 구매 금액을 의미한다.
+
+기존 GROWTH 용어는 사용하지 않는다.
+
+2. 카드 표시
+
+카드 제목:
+Package Value
+
+버튼 또는 태그:
+EARN
+
+카드 내부에는 중복 설명을 넣지 않는다.
+
+권장 표시:
+- Status
+- Earning
+
+3. 상세 이동
+
+Package Value 카드를 클릭하면 Package History로 이동한다.
+
+4. 만기 처리
+
+만기된 패키지는 별도 자산 카드로 표시하지 않는다.
+
+만기 시 처리:
+1. 시스템 알림 발송
+2. Package History에 만기 기록 등록
+3. 만기 원금은 자동으로 Withdrawal Balance의 Deposit Balance에 반영
+4. 별도 패키지 재판매 또는 수동 해지 프로세스는 제공하지 않는다
+
+Part 5. CNYT Tokens 정책
+
+1. 정의
+
+CNYT Tokens는 사용자가 보유한 CNYT 리워드 토큰의 총량을 의미한다.
+
+2. 구성
+
+CNYT Tokens는 다음 두 항목으로 구성한다.
+
+- Available
+- Staked
+
+카드 제목에 이미 CNYT Tokens가 표시되고 금액 단위에도 CNYT가 붙으므로, 내부 라벨에 "Available CNYT", "Staked CNYT"처럼 CNYT를 반복하지 않는다.
+
+3. Available
+
+Available은 리워드로 지급된 지 7일 이내이며, 정책상 Swap 또는 P2P 거래가 가능한 CNYT 총액이다.
+
+4. Staked
+
+Staked는 리워드 지급 후 7일이 초과되어 스테이킹 상태로 전환된 CNYT 총액이다.
+
+TGE 전에는 출금할 수 없다.
+
+5. UI 표시 예시
+
+Total CNYT: 553 CNYT
+> Available: 53 CNYT
+> Staked: 500 CNYT
+
+Staked 값은 강조 색상으로 표시할 수 있다.
+
+Part 6. 입금 정책
+
+1. 입금 기본 원칙
+
+입금은 패키지 구매가 아니라 Withdrawal Balance 충전 행위이다.
+
+입금 완료 후 금액은 Deposit Balance에 반영된다.
+
+2. 입금 주소 노출
+
+사용자에게는 본인에게 할당된 입금 주소만 표시한다.
+
+회사 또는 운영 지갑의 집금 주소는 사용자 화면에 노출하지 않는다.
+
+3. 입금 진행 상태 표시
+
+입금이 진행 중인 경우 최근 입금 영역 또는 Transfer History에서 "Deposit Pending" 또는 이에 준하는 상태로 표시한다.
+
+입금 완료 후에는 최근 입금 항목으로 표시할 수 있으며, 상세 기록은 Transfer History에서 확인한다.
+
+4. 입금 실패
+
+입금 실패 또는 식별 불가 상태가 발생하면 Transfer History에서 실패 상태로 표시하고, 필요한 경우 CS 문의 또는 상세 로그 안내를 제공한다.
+
+Part 7. 출금 정책
+
+1. 출금 가능 잔액
+
+출금은 Withdrawal Balance 한도 내에서만 가능하다.
+
+Bonus USDT, Package Value, Staked CNYT는 출금 가능 잔액에 포함하지 않는다.
+
+2. Pending Withdrawal 표시
+
+Pending Withdrawal은 자산 카드 최상단에 표시하지 않는다.
+
+진행 중인 출금 요청은 Transfer History 또는 최근 출금 상태 영역에서 표시한다.
+
+3. 출금 상태값
+
+출금 상태는 사용자 화면에서 이해하기 쉬운 값으로 표시한다.
+
+권장 상태:
+- Withdraw Pending
+- Withdraw Processing
+- Withdraw Completed
+- Withdraw Failed
+- Withdraw Rejected
+
+4. 출금 주소 표시
+
+출금 주소는 사용자 본인이 입력한 외부 지갑 주소 또는 허용된 수신 주소에 한해 표시할 수 있다.
+
+입금 주소 및 회사 운영 주소는 필요 이상으로 노출하지 않는다.
+
+5. 서비스 제한 지역 관련 출금 제한
+
+서비스 이용 불가 국가 또는 제한 관할권 소재 거래소로 판단되는 주소는 입출금을 제한할 수 있다.
+
+사용자 안내 문구는 특정 국가를 직접 언급하지 않는다.
+
+권장 문구:
+Exchanges located in service-restricted jurisdictions may be restricted from deposits and withdrawals.
+
+Part 8. 내부전송(SEND) 정책
+
+1. 정의
+
+SEND는 플랫폼 내부 사용자 간 USDT 전송 기능이다.
+
+외부 지갑 출금은 Withdraw 기능을 사용한다.
+
+2. 메인 버튼 표시
+
+월렛 메인의 Quick Actions에는 다음 세 가지 버튼을 표시한다.
+
+- Deposit
+- Withdraw
+- Send
+
+Send 메인 버튼은 간단히 "Send"로 유지한다.
+
+3. 상세 화면 설명
+
+Send 버튼 클릭 후 열리는 상세 화면에서는 내부전송 기능임을 명확히 설명한다.
+
+권장 문구:
+Internal transfer only. Use Withdraw for external wallets.
+
+4. 내부전송 기록
+
+내부전송은 Transfer History에 통합 표시한다.
+
+내부전송에는 온체인 TxID가 없을 수 있으므로, 상세 로그 팝업에서 다음 정보를 표시한다.
+
+- 보낸 사용자
+- 받은 사용자
+- 일시
+- 금액
+- 상태
+- 내부전송 참조 ID
+
+Part 9. 히스토리 정책
+
+1. 히스토리 기본 기준
+
+월렛 히스토리는 최근 30일 기준으로 표시한다.
+
+컬럼은 기본적으로 최신순으로 정렬한다.
+
+각 히스토리 유형별로 컬럼 구성이 달라야 한다.
+
+2. Package History
+
+Package History는 패키지 구매, 환불, 만기 내역을 표시한다.
+
+컬럼:
+- Package
+- Date
+- Amount
+- Status
+
+예시:
+- Flexible / 2026-06-07 / 100 USDT / ACTIVE
+- Flexible / 2026-06-07 / 100 USDT / Maturity
+- Flexible / 2026-06-07 / 100 USDT / Refund
+
+정렬 규칙:
+- Package 클릭: 상품명 기준 그룹 정렬
+- Date 클릭: 최신순 정렬, 다시 클릭 시 오래된순 정렬
+- Amount 클릭: 큰 금액순 정렬, 다시 클릭 시 작은 금액순 정렬
+- Status 클릭: 동일 상태값끼리 그룹 정렬
+
+3. Recent Activity 제거
+
+기존 Recent Activity 메뉴는 삭제한다.
+
+Recent Activity에 있던 보상, 조정, 입출금성 기록은 성격에 따라 Transfer History 또는 Earn & Reward History로 이동한다.
+
+4. Transfer History
+
+Transfer History는 다음 기록을 통합 표시한다.
+
+- 입금
+- 출금
+- 입금 대기
+- 출금 대기
+- 입금 실패
+- 출금 실패
+- 출금 거절
+- 내부전송 발신
+- 내부전송 수신
+
+권장 컬럼:
+- Type / Status
+- Date
+- Amount
+- Address / User
+- TxID Log
+
+정책:
+- 금액은 + 또는 - 부호로 표시한다.
+- 잔액 영향 컬럼을 별도로 두지 않고 Amount에 통합한다.
+- 입금 주소는 회사 또는 운영 주소 노출 위험이 있으므로 상세 노출하지 않는다.
+- 출금 주소는 사용자가 입력한 주소 일부를 마스킹하여 표시할 수 있다.
+- 온체인 거래는 TxID 일부만 표시하고 클릭 시 상세 로그 팝업을 연다.
+- 내부전송은 TxID 대신 내부전송 상세 로그 팝업을 표시한다.
+
+5. Earn & Reward History
+
+Earn & Reward History는 다음 기록을 표시한다.
+
+- 패키지 구매에 따른 일일 USDT 수익
+- CNYT 일일 리워드
+- Bonus USDT 지급
+- CNYT to USDT Swap 리워드
+
+Swap Reward의 의미:
+CNYT를 USDT로 변환한 기록만 Swap Reward로 표시한다. 다른 임의 전환 거래를 Swap Reward로 부르지 않는다.
+
+Part 10. 사용자 인터페이스 정책
+
+1. 사용자용 화면과 관리자 기능 분리
+
+월렛 화면은 순수 사용자 인터페이스이다.
+
+금지:
+- 관리자 승인 버튼
+- 내부 운영용 상태 변경 버튼
+- 개발자용 주석
+- 정책 설명 목적의 내부 기획 메모
+- DB 구조 또는 상품권 구조를 암시하는 문구
+
+관리자 기능은 별도 Admin Tool에서 제공한다.
+
+2. 개발자용 설명 분리
+
+개발자가 참고해야 하는 로직 설명, 주석, 예외 케이스, 운영 노트는 사용자 화면에 표시하지 않는다.
+
+별도 문서로 관리한다.
+
+권장 문서:
+- 개발 사양서
+- 운영 매뉴얼
+- QA 체크리스트
+- 인수인계서
+
+3. 화면 구조
+
+한 화면에 모든 기능을 길게 나열하지 않는다.
+
+PC View:
+- 기존 플랫폼과 동일한 디자인 톤을 유지한다.
+- 좌측 사이드 메뉴를 사용한다.
+- Deposit / Withdraw / Send는 사이드 메뉴 아래 별도 Quick Actions 섹션에 묶어 표시한다.
+
+Mobile View:
+- 상단에는 로고와 LONGRISE 브랜드를 간결하게 표시한다.
+- 화면 제목은 Wallet으로 표시한다.
+- LONGRISE와 Wallet을 불필요하게 2단 제목으로 분리하지 않는다.
+- Deposit / Withdraw / Send는 Wallet 제목 바로 아래 독립 섹션으로 배치한다.
+- 사용자가 스크롤하지 않아도 Deposit, Withdraw, Send, Assets, Deposit, Withdraw, History, Address 메뉴와 Total Assets 정도는 우선 인지할 수 있어야 한다.
+
+4. 문장 길이와 줄바꿈
+
+자산 카드 내부에는 긴 영문 문장을 넣지 않는다.
+
+예:
+Bonus USDT 카드에서 "Package use only"처럼 긴 표현으로 줄바꿈이 발생하면 "Withdrawable / No"로 줄인다.
+
+Package Value 카드에서 제목과 설명이 중복되면 상세 설명을 제거하고 핵심 상태만 표시한다.
+
+5. 숫자 정렬
+
+자산 카드 내 금액 숫자는 동일한 시각 기준선과 폰트 크기 규칙을 따른다.
+
+금액 크기에 따라 폰트 크기가 제각각 달라져서는 안 된다.
+
+QA 기준:
+- 카드 제목 정렬 일관성
+- 금액 위치 정렬 일관성
+- 단위 표시 위치 일관성
+- 긴 문구 줄바꿈 최소화
+- 모바일 폭에서 텍스트 겹침 없음
+
+Part 11. 총 자산 표시 정책
+
+1. Total Assets
+
+월렛 화면에는 사용자의 총 자산 가치 Total Assets를 표시한다.
+
+기존 월렛 개편 과정에서 Total Assets가 누락되지 않도록 한다.
+
+2. 산정 범위
+
+Total Assets 산정 방식은 운영 정책에 따라 별도 정의한다.
+
+기본 표시 항목:
+- Withdrawal Balance
+- Bonus USDT
+- Package Value
+- CNYT Tokens의 평가 기준 값
+
+단, Bonus USDT와 CNYT의 평가 방식은 출금 가능 현금성 자산으로 오인되지 않도록 상세 설명에서 구분한다.
+
+Part 12. QA 및 CBT 정책
+
+1. QA 필수 항목
+
+월렛 화면 배포 전 다음 항목을 검증한다.
+
+- 구 월렛 문구 제거 여부: My Wealth, LIQUID, STAKED, GROWTH
+- 신규 자산 카드 표시 여부: Withdrawal Balance, Bonus USDT, Package Value, CNYT Tokens
+- Deposit / Withdraw / Send 버튼 위치
+- PC / Mobile 반응형 구조
+- 카드 내 숫자 정렬
+- 줄바꿈 및 텍스트 겹침
+- 관리자 기능 노출 여부
+- 개발자 주석 노출 여부
+- 히스토리 메뉴 구성
+- Package History 정렬 동작
+- Transfer History 통합 표시
+- Earn & Reward History 표시
+
+2. CBT 기준
+
+웹3 플랫폼 이용 경험이 낮고 영어가 모국어가 아니며 번역기를 통해 사용하는 고연령 사용자도 이해할 수 있어야 한다.
+
+CBT 페르소나 기준:
+- Web3 경험 낮음
+- 영어 독해 낮음
+- 인터넷 활용 수준 낮음
+- 모바일 사용 비중 높음
+- 입금, 출금, 내부전송 차이를 혼동할 수 있음
+
+검증 질문:
+- 입금 후 바로 패키지가 구매되는 것으로 오해하지 않는가?
+- 출금 가능한 잔액이 무엇인지 이해하는가?
+- Bonus USDT가 출금 불가임을 이해하는가?
+- Send가 외부 출금이 아니라 내부전송임을 이해하는가?
+- CNYT의 Available / Staked 차이를 이해하는가?
+- Pending Withdrawal이 어디에서 확인되는지 이해하는가?
+
+Part 13. 배포 및 산출물 관리 정책
+
+1. 단일 기준 소스
+
+동일한 프로젝트 폴더를 여러 벌 운영하지 않는다.
+
+실제 개발 기준 폴더와 배포 기준 폴더를 명확히 분리한다.
+
+2. GitHub Pages 배포 기준
+
+공개 페이지 배포 시 실제 서비스되는 브랜치와 경로를 확인해야 한다.
+
+주의:
+main 브랜치 루트에 파일이 있어도 GitHub Pages가 gh-pages 브랜치를 기준으로 서비스할 수 있다.
+
+3. ZIP 기반 자동 배포 금지
+
+최신 빌드 산출물이 아닌 ZIP 내부 dist를 다시 풀어 배포하는 자동화는 구버전 화면을 재배포할 위험이 있다.
+
+월렛 개편 이후 공개 배포는 최신 루트 빌드 산출물 또는 명시된 최신 빌드 폴더만 사용한다.
+
+4. 배포 전 문자열 검증
+
+배포 산출물 JS에는 다음 구 월렛 문구가 없어야 한다.
+
+- My Wealth
+- AVAILABLE USDT
+- LOCKED USDT
+- RECENT ACTIVITY
+- LIQUID
+- STAKED
+- GROWTH
+
+다음 신규 월렛 문구는 포함되어야 한다.
+
+- Withdrawal Balance
+- Bonus USDT
+- Package Value
+- CNYT Tokens
+- Assets Overview
+- Send to LONGRISE User
+
+Part 14. 운영 통제 및 보안 정책
+
+1. 운영 주소 노출 제한
+
+회사 입금 주소, 집금 주소, 운영 지갑 주소는 사용자 화면에 직접 노출하지 않는다.
+
+2. 출금 주소 통제
+
+사용자가 등록한 출금 주소는 마스킹하여 표시할 수 있다.
+
+서비스 제한 관할권 소재 거래소 주소로 판단되는 경우 입출금을 제한할 수 있다.
+
+3. 출금 실패 및 거절 롤백
+
+출금 요청이 거절되거나 실패한 경우, 차감된 Withdrawal Balance는 자동으로 원복되어야 한다.
+
+수동 환불 처리를 기본 프로세스로 사용하지 않는다.
+
+4. 관리자 권한 분리
+
+사용자용 월렛 화면에는 운영자 승인, 거절, 상태 변경 기능이 포함되지 않는다.
+
+이 기능은 별도 Admin Tool에서 관리한다.
+
+5. 로그 보관
+
+입금, 출금, 내부전송, 패키지 구매, 환불, 만기, 보너스 지급, CNYT 리워드, Swap Reward는 모두 감사 가능한 로그로 보관한다.
+
+부록 A. 사용자 화면 권장 영문 용어
+
+Wallet
+Assets
+Withdrawal Balance
+Deposit Balance
+Earnings Balance
+Bonus USDT
+Withdrawable / No
+Package Value
+EARN
+CNYT Tokens
+Available
+Staked
+Deposit
+Withdraw
+Send
+Internal transfer only. Use Withdraw for external wallets.
+Package History
+Transfer History
+Earn & Reward History
+TxID Log
+Deposit Pending
+Withdraw Pending
+Withdraw Rejected
+Maturity
+Refund
+
+부록 B. 폐기 또는 사용 제한 용어
+
+My Wealth
+LIQUID
+STAKED
+REWARDS 카드 단독 사용
+LOCKED
+GROWTH
+Recent Activity
+Package use only 카드 내 장문 표시
+국내 거래소 주소로 직접 출금할 수 없습니다
+투자 플랫폼
+Invest
+
+부록 C. 개발자 인수인계 핵심 요약
+
+1. 입금은 패키지 구매가 아니다.
+2. 입금액은 Withdrawal Balance의 Deposit Balance에 먼저 반영한다.
+3. 패키지 구매 시 Withdrawal Balance에서 금액을 차감한다.
+4. Bonus USDT는 출금 불가이며 패키지 구매에만 사용한다.
+5. Bonus USDT는 부분 사용 후 잔액이 남는 구매를 허용하지 않는다.
+6. 패키지는 한 번에 하나만 구매한다.
+7. Pending Withdrawal은 상단 자산 카드가 아니라 Transfer History에서 표시한다.
+8. Package Value는 활성 패키지 총액이며, 만기 시 자동으로 Deposit Balance에 반영한다.
+9. CNYT는 Available / Staked로만 표시한다.
+10. Recent Activity는 삭제하고 Transfer History 및 Earn & Reward History로 분리한다.
+11. Send는 내부전송이며 외부 출금은 Withdraw이다.
+12. 사용자 화면에는 관리자 기능과 개발자 주석을 표시하지 않는다.
+13. 배포 전 구 월렛 문구가 산출물에 남아 있는지 반드시 검사한다.
