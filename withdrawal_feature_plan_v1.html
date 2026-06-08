@@ -1,3 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai"><title>입출금기능 기획 #02</title><style>body{font-family:Arial,'Noto Sans KR',sans-serif;background:#f8fafc;color:#334155;padding:48px}main{max-width:760px;margin:auto;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:32px;box-shadow:0 8px 24px rgba(15,23,42,.06)}h1{margin:0 0 12px;color:#0f172a}.badge{display:inline-block;background:#dbeafe;color:#1d4ed8;font-weight:700;border-radius:6px;padding:4px 10px;font-size:12px}.note{margin-top:18px;line-height:1.7}</style></head><body><main><span class="badge">UPLOAD PENDING</span><h1>입출금기능 기획 #02</h1><p class="note">이 페이지는 수동 업로드 예정 파일의 임시 자리입니다. 정식 문서를 같은 파일명으로 업로드하면 이 안내 페이지를 대체할 수 있습니다.</p></main></body></html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+<title>LONGRISE Wallet 실제 개발사양서</title>
+<style>
+body{font-family:Arial,'Noto Sans KR',sans-serif;background:#f8fafc;color:#334155;margin:0;padding:40px;line-height:1.7}main{max-width:980px;margin:auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:36px;box-shadow:0 8px 24px rgba(15,23,42,.06)}h1{color:#0f172a;margin-top:0}h2{border-top:1px solid #e2e8f0;padding-top:24px;margin-top:32px;color:#1e293b}h3{color:#334155}.badge{display:inline-block;background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800}code,pre{background:#f1f5f9;border-radius:6px}pre{padding:14px;overflow:auto}li{margin:4px 0}.warn{background:#fff7ed;border-left:4px solid #f97316;padding:14px;border-radius:8px}.ok{background:#ecfdf5;border-left:4px solid #10b981;padding:14px;border-radius:8px}
+</style>
+</head>
+<body>
+<main>
+<span class="badge">Developer Spec v1.0 · Policy v2.1</span>
+<h1>LONGRISE Wallet 실제 개발사양서</h1>
+<p>본 문서는 월렛 목업 제작용 설명서가 아니라, LONGRISE 실제 플랫폼의 사용자용 WALLET 기능을 개발하기 위한 프론트엔드/백엔드 공통 개발사양서이다.</p>
+<p><strong>적용 범위:</strong> 사용자 월렛 화면, 입금, 출금, 내부전송, 자산 카드, 패키지 구매 잔액 처리, 히스토리, CNYT 및 Bonus USDT 표시 정책.</p>
+<p><strong>기준 정책서:</strong> Web3 패키지 플랫폼 입출금 및 운영 통제 정책서 v2.1 월렛기획반영</p>
+
+<h2>1. 핵심 개발 원칙</h2>
+<h3>1.1 월렛은 순수 사용자 인터페이스</h3>
+<ul><li>WALLET 화면에는 관리자 기능이 노출되면 안 된다.</li><li>관리자 승인/반려 버튼, 운영자 상태 변경, Batch Send, Cold Wallet Sweep, Maintenance Mode, DB 구조, 개발자 주석, CS/Admin Tool 전용 정보는 금지한다.</li><li>관리자 기능은 별도 Admin Tool에서만 구현한다.</li></ul>
+<h3>1.2 기존 월렛 구조 대체</h3>
+<p class="warn"><strong>폐기 용어:</strong> My Wealth, LIQUID, STAKED, REWARDS 카드 단독 사용, LOCKED, GROWTH, Recent Activity</p>
+<p class="ok"><strong>신규 구조:</strong> Wallet, Assets, Withdrawal Balance, Bonus USDT, Package Value, CNYT Tokens, Package History, Transfer History, Earn & Reward History</p>
+<h3>1.3 UI 언어</h3><p>실제 사용자 UI는 영어를 기본으로 한다. 정책서와 개발사양서는 한국어로 작성하되, 화면 노출 텍스트는 영문 용어를 우선한다.</p>
+<h3>1.4 투자 플랫폼 표현 금지</h3><p>Invest, Investment, Investment Plans, Invest Now는 사용하지 않는다. Packages, Activate, Earn, Package Value를 사용한다.</p>
+
+<h2>2. 화면 진입 및 내비게이션</h2>
+<ul><li>최상단 메뉴는 WALLET을 유지한다.</li><li>PC View Wallet 내부 사이드 메뉴: Assets, Deposit, Withdraw, History, Address</li><li>Package Buy는 월렛 내부 메뉴가 아니라 최상단 PACKAGES 메뉴에서 처리한다.</li><li>Quick Actions: Deposit, Withdraw, Send</li><li>Mobile View에서는 Wallet 제목 바로 아래 Quick Actions를 독립 배치한다.</li><li>Home / Invest / Wallet / Team 형태 신규 플로팅 메뉴는 추가하지 않는다.</li></ul>
+
+<h2>3. 자산 카드 사양</h2>
+<h3>3.1 Total Assets</h3><p>총 자산 가치는 백엔드에서 내려주는 값을 기본으로 사용한다. Bonus USDT와 CNYT는 출금 가능 현금성 자산으로 오인되지 않도록 구분한다.</p>
+<h3>3.2 Withdrawal Balance</h3>
+<pre>Withdrawal Balance: 1,023.00 USDT
+Deposit Balance: 1,000.00 USDT
+Earnings Balance: 23.00 USDT</pre>
+<ul><li>총액은 굵은 흰색</li><li>Deposit Balance는 일반 흰색</li><li>Earnings Balance는 노란색 또는 강조색, 굵게 표시</li><li>버튼/태그는 Available</li></ul>
+<pre>type WithdrawalBalance = {
+  totalUsdt: string;
+  depositBalanceUsdt: string;
+  earningsBalanceUsdt: string;
+};</pre>
+<p>프론트엔드는 total 값을 임의 계산해 원천값처럼 표시하지 않는다.</p>
+<h3>3.3 Bonus USDT</h3><ul><li>패키지 구매에만 사용 가능</li><li>출금 불가</li><li>내부전송 불가</li><li>카드 표시: Bonus USDT / Withdrawable / No</li><li>카드 내부에 Package use only 같은 긴 문구 또는 상품권/액면/발행 단위 설명을 넣지 않는다.</li></ul>
+<h3>3.4 Package Value</h3><ul><li>활성 패키지 총 구매 금액</li><li>카드 표시: Package Value, Status, Earning</li><li>태그 또는 버튼: EARN</li><li>클릭 시 Package History로 이동</li></ul>
+<h3>3.5 CNYT Tokens</h3><pre>Total CNYT: 553 CNYT
+Available: 53 CNYT
+Staked: 500 CNYT</pre>
+<p>카드 내부 라벨에서 CNYT를 반복하지 않는다. Staked는 강조 색상을 사용할 수 있다.</p>
+
+<h2>4. 입금 프로세스</h2>
+<p class="ok">입금은 패키지 구매가 아니다.</p>
+<ol><li>사용자가 Deposit 진입</li><li>네트워크 선택</li><li>사용자별 입금 주소 확인</li><li>외부에서 USDT 입금</li><li>온체인 컨펌 완료</li><li>Deposit Balance 증가</li><li>Withdrawal Balance 총액 갱신</li><li>사용자가 별도 PACKAGES 메뉴에서 패키지 구매</li></ol>
+<p><strong>Deposit 화면 필수 요소:</strong> Network selector, Assigned deposit address, QR code, Copy address, Deposit status, “Deposits are credited to your Withdrawal Balance. Packages are purchased separately.”</p>
+<p><strong>금지 요소:</strong> 패키지 선택 UI, 패키지 목표 금액, 입금 부족 패키지 보류 UI, 회사 집금 주소 또는 운영 지갑 주소 노출</p>
+
+<h2>5. 출금 프로세스</h2>
+<ul><li>출금 가능 잔액은 Withdrawal Balance만 사용한다.</li><li>Bonus USDT, Package Value, Staked CNYT는 출금 불가.</li><li>필수 요소: Network selector, Withdrawal address input, Amount input, Available Withdrawal Balance, Fee, Estimated receive amount, Confirm modal, Service-restricted jurisdiction notice</li></ul>
+<pre>Exchanges located in service-restricted jurisdictions may be restricted from deposits and withdrawals.</pre>
+<p><strong>프론트 상태 표시:</strong> Withdraw Pending, Withdraw Processing, Withdraw Completed, Withdraw Rejected, Withdraw Failed</p>
+<p>REJECTED 또는 FAILED 상태가 되면 차감된 Withdrawal Balance는 자동 복구되어야 한다.</p>
+
+<h2>6. 내부전송 Send</h2>
+<p>Send는 LONGRISE 내부 사용자 간 USDT 전송 기능이다. 외부 지갑 전송은 Withdraw이다.</p>
+<pre>Internal transfer only. Use Withdraw for external wallets.</pre>
+<p><strong>필수 요소:</strong> Recipient identifier, Amount, Available Withdrawal Balance, Confirmation modal, Internal transfer summary</p>
+<p><strong>로그 필드:</strong> Sender, Recipient, Date/time, Amount, Status, Internal transfer reference ID. TxID는 표시하지 않는다.</p>
+
+<h2>7. 패키지 구매 잔액 처리</h2>
+<ul><li>패키지 구매는 Wallet 내부가 아니라 최상단 PACKAGES 메뉴에서 처리한다.</li><li>사용 가능 잔액: Withdrawal Balance, Bonus USDT</li><li>Bonus USDT는 부분 사용 후 잔액이 남는 방식으로 사용할 수 없다.</li><li>여러 패키지 묶음 구매 기능은 제공하지 않는다.</li></ul>
+<pre>150 Bonus USDT -> 100 USDT package: Not available
+450 Bonus USDT -> 200 USDT package: Not available
+450 Bonus USDT + 50 Withdrawal Balance -> 500 USDT package: Available</pre>
+
+<h2>8. 패키지 만기 처리</h2>
+<ol><li>active package 상태를 MATURED로 변경</li><li>Package History에 Maturity 기록 생성</li><li>만기 원금을 Deposit Balance에 가산</li><li>Withdrawal Balance 총액 갱신</li><li>시스템 알림 생성</li></ol>
+
+<h2>9. 히스토리 사양</h2>
+<ul><li>기본 조회 기간은 최근 30일</li><li>서버 페이지네이션 지원</li><li>Package History: Package, Date, Amount, Status</li><li>Recent Activity 탭은 구현하지 않는다.</li><li>Transfer History: Deposit, Withdraw, Deposit Pending, Withdraw Pending, Deposit Failed, Withdraw Failed, Withdraw Rejected, Send Out, Send In</li><li>Transfer History 컬럼: Type / Status, Date, Amount, Address / User, TxID Log</li><li>Earn & Reward History: Daily USDT Earning, Daily CNYT Reward, Bonus USDT Grant, CNYT to USDT Swap</li></ul>
+
+<h2>10. API 사양 초안</h2>
+<pre>GET /api/wallet/summary
+GET /api/wallet/deposit-address?network=TRON
+POST /api/wallet/withdrawals
+POST /api/wallet/internal-transfers
+GET /api/wallet/histories/packages
+GET /api/wallet/histories/transfers
+GET /api/wallet/histories/earn-rewards</pre>
+
+<h2>11. 데이터 및 원장 이벤트</h2>
+<pre>DEPOSIT_CREDIT
+WITHDRAWAL_HOLD
+WITHDRAWAL_COMPLETED
+WITHDRAWAL_ROLLBACK
+INTERNAL_TRANSFER_OUT
+INTERNAL_TRANSFER_IN
+PACKAGE_PURCHASE
+PACKAGE_REFUND
+PACKAGE_MATURITY
+DAILY_USDT_EARNING
+DAILY_CNYT_REWARD
+BONUS_USDT_GRANT
+CNYT_TO_USDT_SWAP</pre>
+<ul><li>Withdrawal Balance = Deposit Balance + Earnings Balance</li><li>Bonus USDT는 Withdrawal Balance에 포함하지 않는다.</li><li>Package Value는 활성 패키지 총액만 포함한다.</li><li>만기 패키지는 Package Value에서 제거되고 Deposit Balance에 반영된다.</li><li>Staked CNYT는 Available CNYT에 포함하지 않는다.</li></ul>
+
+<h2>12. 프론트엔드 구현 기준</h2>
+<ul><li>기존 플랫폼의 색상, 폰트, 카드 스타일, 사이드바 스타일, 상단 메뉴 톤을 따른다.</li><li>카드 제목, 금액 위치, 단위 위치를 통일한다.</li><li>긴 문구는 카드 내부 줄바꿈을 만들지 않도록 축약한다.</li><li>모바일 첫 화면 우선순위: 브랜드/로고, Wallet 제목, Deposit/Withdraw/Send, Assets 메뉴, Deposit/Withdraw/History/Address 메뉴, Total Assets, 자산 상세 카드</li></ul>
+
+<h2>13. 배포 및 빌드 관리</h2>
+<p>GitHub Pages는 main 루트가 아니라 gh-pages 브랜치가 실제 공개 페이지일 수 있다. ZIP 내부 구버전 dist를 다시 배포하지 않는다.</p>
+<p><strong>배포 산출물 JS에 없어야 하는 문자열:</strong> My Wealth, AVAILABLE USDT, LOCKED USDT, RECENT ACTIVITY, LIQUID, STAKED, GROWTH</p>
+<p><strong>배포 산출물 JS에 있어야 하는 문자열:</strong> Withdrawal Balance, Bonus USDT, Package Value, CNYT Tokens, Assets Overview, Send to LONGRISE User</p>
+
+<h2>14. QA 체크리스트</h2>
+<ul><li>WALLET 메뉴 클릭 시 신규 Wallet 화면이 표시되는가?</li><li>구 월렛 카드가 보이지 않는가?</li><li>Deposit은 패키지 구매 없이 Deposit Balance에 반영되는가?</li><li>Package 구매 시 Withdrawal Balance가 차감되는가?</li><li>Bonus USDT가 출금 가능 잔액에 포함되지 않는가?</li><li>Bonus USDT 부분 사용 후 잔액 발생 구매가 차단되는가?</li><li>패키지 묶음 구매가 불가능한가?</li><li>Package Value 클릭 시 Package History로 이동하는가?</li><li>만기 패키지가 Deposit Balance로 자동 반영되는가?</li><li>Send가 내부전송으로만 작동하는가?</li><li>Transfer History에 입금/출금/내부전송이 통합되는가?</li><li>Earn & Reward History에 수익/리워드/보너스/Swap이 표시되는가?</li><li>PC View에서 기존 플랫폼 디자인과 통일되는가?</li><li>Mobile View에서 Deposit / Withdraw / Send가 상단에 보이는가?</li><li>관리자 기능 또는 개발자 주석이 화면에 보이지 않는가?</li></ul>
+
+<h2>15. 개발 완료 기준</h2>
+<ol><li>사용자용 WALLET 화면에서 구 월렛 UI가 완전히 제거됨</li><li>Withdrawal Balance / Bonus USDT / Package Value / CNYT Tokens 구조 구현</li><li>Deposit / Withdraw / Send 각각 독립 기능 구현</li><li>입금과 패키지 구매 프로세스 분리</li><li>Bonus USDT 정책 검증 로직 구현</li><li>Package History / Transfer History / Earn & Reward History 구현</li><li>PC 및 Mobile 반응형 QA 통과</li><li>관리자 기능 및 개발자 주석 미노출</li><li>배포 산출물 검증 통과</li><li>실제 공개 URL에서 신규 Wallet 화면 확인</li></ol>
+</main>
+</body>
+</html>
