@@ -1,4 +1,213 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex,noai,noimageai"><title>LONGRISE Overview Infographic</title><style>body{margin:0;font-family:Arial,'Noto Sans KR',sans-serif;background:#0a0a0a;color:#e5e5e5;display:grid;place-items:center;min-height:100vh}.box{max-width:760px;border:1px solid rgba(197,168,128,.35);border-radius:8px;padding:32px;background:#111827}h1{margin:0 0 12px;font-size:28px;color:#f6c768}p{line-height:1.7;color:#cbd5e1}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}.card{border:1px solid #273449;border-radius:8px;padding:14px;text-align:center}.card b{display:block;color:#48d597;font-size:22px}.card span{font-size:12px;color:#9aa8bd}</style></head>
-<body><main class="box"><h1>LONGRISE Overview Infographic</h1><p>LONGRISE AI Engine Performance & Operational Metrics 인포그래픽 문서입니다. 원본 HTML은 로컬 작업 커밋에 준비되어 있으며, GitHub 쓰기 인증이 열리면 이 페이지가 원본 문서로 교체됩니다.</p><div class="grid"><div class="card"><b>55,000+</b><span>TPS</span></div><div class="card"><b>64.2%</b><span>Win Rate</span></div><div class="card"><b>130K</b><span>Users</span></div></div></main></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LONGRISE AI - Engine Performance & Traction Infographic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .infographic-container {
+            max-width: 1200px;
+            width: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+            border-radius: 16px;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+            padding-bottom: 30px;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(to right, #c5a880, #fcf6ba, #c5a880);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+        .header p {
+            font-size: 16px;
+            color: #c5a880;
+            margin-top: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #c5a880;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            grid-column: span 3;
+            border-left: 3px solid #c5a880;
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+        .stat-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(197, 168, 128, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: #c5a880;
+            transform: translateY(-5px);
+        }
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #c5a880;
+            margin-bottom: 5px;
+        }
+        .stat-value.green { color: #10b981; }
+        .stat-value.blue { color: #3b82f6; }
+        .stat-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .stat-desc {
+            font-size: 13px;
+            color: #a8a8a8;
+            line-height: 1.5;
+        }
+        .highlight-bar {
+            background: rgba(197, 168, 128, 0.1);
+            border: 1px solid #c5a880;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 40px;
+            color: #fff;
+        }
+        .timeline-tag {
+            background: #c5a880;
+            color: #0a0a0a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="infographic-container">
+        
+        <div class="header">
+            <h1>LONGRISE AI</h1>
+            <p>AI Engine Performance & Operational Metrics</p>
+            <div style="font-size: 14px; color: #a8a8a8; margin-top: 15px;">
+                Operational Milestone Data | Official Launch: Jan 1, 2025 → Current: As of June 2026
+            </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom: 50px;">
+            <div class="section-title">HFT Quant Futures Engine Performance</div>
+            
+            <div class="stat-card">
+                <div class="timeline-tag">Throughput</div>
+                <div class="stat-value">55,000+</div>
+                <div class="stat-label">TPS (Transactions Per Second)</div>
+                <div class="stat-desc">Processes block data at a rate 350% higher than standard algorithmic trading systems.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="timeline-tag">Execution Speed</div>
+                <div class="stat-value">0.8ms</div>
+                <div class="stat-label">Average Latency</div>
+                <div class="stat-desc">Sub-millisecond precision control minimizes price slippage and optimizes entry timing.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="timeline-tag">Arbitrage Scanning</div>
+                <div class="stat-value">24 / 7</div>
+                <div class="stat-label">Real-Time Orderbook Integration</div>
+                <div class="stat-desc">Continuous tracking of orderbook data across 40+ top-tier digital asset exchanges with a 30-second dashboard refresh rate.</div>
+            </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom: 50px;">
+            <div class="section-title">Offline Live Casino B2B Operations</div>
+
+            <div class="stat-card">
+                <div class="stat-value green">64.2%</div>
+                <div class="stat-label">AI Mathematical Win Rate</div>
+                <div class="stat-desc">Cumulative statistical win rate achieved through real-time game state analysis and variable correction algorithms.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value green">840,000+</div>
+                <div class="stat-label">Daily Automated Bets</div>
+                <div class="stat-desc">Total daily transaction volume executed via multi-avatar nodes across contracted VIP junket tables.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value green">$104.0M</div>
+                <div class="stat-label">Monthly Betting Pool Capacity</div>
+                <div class="stat-desc">Total asset volume deployed to regional casino infrastructure, representing a 5x increase from the baseline.</div>
+            </div>
+        </div>
+
+        <div class="grid-3">
+            <div class="section-title" style="grid-column: span 3;">Global Platform Scale & User Retention</div>
+
+            <div class="stat-card">
+                <div class="stat-value blue">130,000</div>
+                <div class="stat-label">Total Registered Users</div>
+                <div class="stat-desc">Cumulative global active user accounts acquired in alignment with the projected S-curve growth model.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value blue">78%</div>
+                <div class="stat-label">Active Users (DAU/MAU)</div>
+                <div class="stat-desc">Proportion of monthly active users generating daily platform sessions for payout verification.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-value blue">92%</div>
+                <div class="stat-label">3-Month User Retention Rate</div>
+                <div class="stat-desc">Percentage of users remaining active on the platform 3 months after initial onboarding.</div>
+            </div>
+        </div>
+
+        <div class="highlight-bar">
+            LONGRISE AI Combined Target Metrics: Active Account Growth Target +95% | Net Operating Reserve Margin Projection $44M
+        </div>
+
+    </div>
+
+</body>
+</html>
