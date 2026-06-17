@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LONGRISE Mobile — 개발 핸드오프 노트</title>
+<link rel="stylesheet" href="_ds/lrhp-f94d4aa8-8a79-40e7-83cd-1474e2f6e17d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/lrhp-f94d4aa8-8a79-40e7-83cd-1474e2f6e17d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/lrhp-f94d4aa8-8a79-40e7-83cd-1474e2f6e17d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/lrhp-f94d4aa8-8a79-40e7-83cd-1474e2f6e17d/styles.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(70% 45% at 72% -5%, #160f0c 0%, var(--color-ink) 55%),
+      var(--color-ink);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .doc { max-width: 920px; margin: 0 auto; padding: 56px 40px 96px; }
+  .mono { font-family: var(--font-mono); }
+  .num { font-variant-numeric: tabular-nums; }
+  .gold {
+    background: linear-gradient(115deg, var(--gold-highlight) 8%, var(--gold-base) 52%, var(--gold-glow) 96%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* masthead */
+  .masthead { display: flex; align-items: center; gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--line-gold-soft); margin-bottom: 34px; }
+  .masthead img { height: 38px; width: auto; }
+  .wm { font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: 0.26em; color: var(--color-cream); }
+  .wm em { font-style: normal; color: var(--gold-glow); }
+  .masthead .meta { margin-left: auto; text-align: right; font-size: 11.5px; color: var(--text-secondary); letter-spacing: 0.06em; }
+
+  h1 { font-family: var(--font-display); font-weight: 800; font-size: 38px; line-height: 1.12; letter-spacing: 0.01em; margin: 6px 0 10px; }
+  .lede { font-size: 16.5px; color: var(--text-secondary); max-width: 660px; margin: 0 0 8px; }
+
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-base); }
+
+  section { margin-top: 46px; }
+  .sec-num { font-family: var(--font-mono); font-size: 13px; color: var(--gold-base); letter-spacing: 0.1em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 25px; letter-spacing: 0.01em; margin: 4px 0 6px; }
+  h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: 0.02em; margin: 22px 0 6px; color: var(--color-cream); }
+  p { margin: 0 0 12px; }
+  .sec-sub { color: var(--text-secondary); margin-bottom: 18px; max-width: 680px; }
+
+  /* badges */
+  .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; vertical-align: middle; white-space: nowrap; }
+  .tag.server { color: #6fe0b0; border: 1px solid rgba(111,224,176,0.4); background: rgba(111,224,176,0.08); }
+  .tag.mock   { color: var(--gold-highlight); border: 1px solid var(--line-gold-mid); background: rgba(185,154,107,0.08); }
+  .tag.client { color: #9db4ff; border: 1px solid rgba(157,180,255,0.38); background: rgba(157,180,255,0.08); }
+  .tag.dot::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  /* cards / lists */
+  .card {
+    background-color: var(--surface-card); background-image: var(--glow-card-inner);
+    border: 1px solid var(--border-card); border-radius: 18px; padding: 22px 24px; margin: 14px 0;
+  }
+  .card.flag { border-color: var(--line-gold-mid); box-shadow: var(--shadow-card); }
+  ul.clean { list-style: none; margin: 0; padding: 0; }
+  ul.clean > li { position: relative; padding: 10px 0 10px 20px; border-bottom: 1px solid var(--line-white-soft); }
+  ul.clean > li:last-child { border-bottom: 0; }
+  ul.clean > li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-base); }
+  .li-t { font-weight: 700; color: var(--color-cream); }
+  .li-d { color: var(--text-secondary); font-size: 13.5px; }
+
+  /* data table */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 4px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line-white-soft); vertical-align: top; }
+  th { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+  td .src { font-family: var(--font-mono); font-size: 12px; color: var(--gold-highlight); }
+  td.k { font-weight: 700; color: var(--color-cream); white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 6px; padding: 14px 18px; border: 1px dashed var(--line-gold-mid); border-radius: 14px; background: radial-gradient(120% 120% at 0% 0%, rgba(185,154,107,0.07), transparent 60%); }
+  .legend .li { display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--text-secondary); }
+
+  .callout { border-left: 3px solid var(--gold-base); padding: 4px 0 4px 18px; margin: 16px 0; color: var(--text-secondary); }
+  .callout strong { color: var(--color-cream); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mini { background: var(--surface-void); border: 1px solid var(--line-white-soft); border-radius: 14px; padding: 16px 18px; }
+  .mini .mt { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--gold-highlight); margin-bottom: 4px; }
+  .mini .md { font-size: 13px; color: var(--text-secondary); }
+
+  code { font-family: var(--font-mono); font-size: 12.5px; color: var(--gold-highlight); background: rgba(185,154,107,0.10); padding: 1px 6px; border-radius: 5px; }
+
+  .foot { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line-white-soft); font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+  @media (max-width: 720px) {
+    .doc { padding: 36px 20px 72px; }
+    h1 { font-size: 28px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .masthead .meta { display: none; }
+  }
+  @media print {
+    body { background: #fff; color: #111; }
+    .doc { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="masthead">
+    <img src="brand/icon-gold.png" alt="LONGRISE">
+    <span class="wm">LONG<em>RISE</em></span>
+    <div class="meta">Mobile · 개발 핸드오프 노트<br>v1 · 정적 시안 기준</div>
+  </div>
+
+  <div class="eyebrow">Developer Handoff</div>
+  <h1>모바일 뷰 <span class="gold">개발 핸드오프 노트</span></h1>
+  <p class="lede">이 문서는 정적 시안(standalone HTML)을 실제 플랫폼으로 옮길 때 필요한 아키텍처·기획 의도와, <strong style="color:var(--color-cream)">시안에서 가짜로 처리된 부분 / 서버에서 내려와야 하는 데이터</strong>의 경계를 정리한 것입니다. 구현 코드가 아니라 의도와 데이터 계약 중심으로 봐 주세요.</p>
+
+  <div class="legend">
+    <div class="li"><span class="tag server dot">Server</span> 서버 API가 실제 값으로 내려줘야 함 (현재 하드코딩)</div>
+    <div class="li"><span class="tag mock dot">Mock</span> 동작은 흉내만 냄 — 실제 처리/검증 엔드포인트 필요</div>
+    <div class="li"><span class="tag client dot">Client</span> 클라이언트 전용 (현 상태 유지 가능)</div>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <div class="sec-num">01</div>
+    <h2>이게 무엇인가</h2>
+    <p class="sec-sub">하이파이 인터랙티브 시안. 실거래·실자금·백엔드 없음.</p>
+    <div class="card">
+      <ul class="clean">
+        <li><span class="li-t">모바일은 PC의 반응형이 아니라 별개 인터페이스다.</span> <span class="li-d">브레이크포인트를 넘어가면 PC를 좁힌 게 아니라 완전히 새로운 UI로 전환되는 설계. 하단 탭 네비 기반 모바일 앱 패턴 — PC의 사이드바/2단 그리드와 무관.</span></li>
+        <li><span class="li-t">소스 구조.</span> <span class="li-d"><code>LONGRISE Mobile.html</code> + <code>app/</code> (React, 화면별 파일 분리). 배포용 단일 파일 <code>LONGRISE Mobile Standalone.html</code> 은 이 소스를 컴파일·인라인한 산출물이라 직접 수정 대상 아님.</span></li>
+        <li><span class="li-t">상태/지속성.</span> <span class="li-d">앱 상태는 메모리(React state)만 사용. <code>localStorage</code> 는 디자인 검토용 Tweaks 값에만 쓰임 — 실제 세션/토큰 저장 아님.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="sec-num">02</div>
+    <h2>구조 &amp; 기획 의도</h2>
+    <p class="sec-sub">앱 셸 = 상단 헤더 + 하단 5탭 네비 + 풀스크린 오버레이. 화면 간 이동은 전부 탭/오버레이 전환이며 페이지 새로고침이 없다.</p>
+
+    <table>
+      <thead><tr><th style="width:120px">영역</th><th>의도</th></tr></thead>
+      <tbody>
+        <tr><td class="k">EARN <span class="li-d">(홈)</span></td><td>기본 진입 화면 = 대시보드. 총자산 · 보유 패키지 · AI 엔진(선물 캔들 차트 + 라이브 통계) · 라이브 체결 피드 · 7일 수익 · 공지.</td></tr>
+        <tr><td class="k">PLANS</td><td>투자 상품/패키지 카탈로그. 구매 진입.</td></tr>
+        <tr><td class="k">NETWORK</td><td>레퍼럴/팀 — 조직도, 추천 실적, 커미션, 랭크.</td></tr>
+        <tr><td class="k">WALLET</td><td>자금. 입금·출금·송금·스왑을 바텀시트 플로우로 처리.</td></tr>
+        <tr><td class="k">ALL</td><td>전체 메뉴 허브. <strong style="color:var(--color-cream)">사이드바/드로어를 대체</strong>하는 핫링크 모음 — 모바일에선 드로어 대신 탭으로 둔다는 의도.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>오버레이 계층</h3>
+    <div class="card">
+      <ul class="clean">
+        <li><span class="li-t">로그인 시퀀스.</span> <span class="li-d">동의 게이트(매 로그인) → 중요 공지 팝업(설정 시) → 신규 유저용 Start Here 넛지. 신규/기존 유저 분기는 Tweaks에서 토글 가능.</span></li>
+        <li><span class="li-t">Start Here = 앱 내부 온보딩 가이드.</span> <span class="li-d">외부 페이지가 아니라 앱 안 풀스크린 오버레이. 진입점 3곳(홈 상단 배너 · ALL 탭 · 신규 유저 팝업). Buy→Earn→Grow→Repeat 루프를 설명하고 각 CTA는 해당 탭/플로우로 직접 라우팅.</span></li>
+        <li><span class="li-t">하단 네비 스택 규칙.</span> <span class="li-d">네비는 Start Here·프로필 같은 풀스크린 오버레이 <em>위에</em> 떠서 항상 이동 가능. 단 바텀시트(입출금)·팝업·로그인 화면에서는 가려짐. (z-index: 네비 46 / 페이지 오버레이 45 / 시트 50 / 팝업 65 / 로그인 70)</span></li>
+        <li><span class="li-t">Tweaks 패널.</span> <span class="tag client">Client</span> <span class="li-d">디자인 검토용 토글(골드 강도, 모션, 라이브 피드, 유저 상태). 실제 제품엔 포함 안 함.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="sec-num">03</div>
+    <h2>서버에서 내려와야 하는 데이터 <span class="tag server" style="font-size:11px;vertical-align:middle">Server</span></h2>
+    <p class="sec-sub">현재 전부 <code>app/data.js</code> 에 하드코딩된 정적 값. 실제 플랫폼에서는 모두 API 응답으로 대체되어야 함. 출처 키는 시안에서의 위치 참고용.</p>
+
+    <table>
+      <thead><tr><th style="width:34%">데이터</th><th style="width:30%">시안 위치</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td class="k">유저 프로필</td><td><span class="src">LR_DATA.user</span></td><td>이름·ID·랭크·다음 랭크·가입일·추천 코드/링크.</td></tr>
+        <tr><td class="k">잔액</td><td><span class="src">LR_DATA.balances</span></td><td>available / earned / cnyt / invested. 화면 곳곳의 총자산은 이 합산.</td></tr>
+        <tr><td class="k">오늘 손익</td><td><span class="src">todayPnl</span></td><td>실시간 누적 손익.</td></tr>
+        <tr><td class="k">보유 포지션</td><td><span class="src">portfolio</span></td><td>패키지별 원금·일ROI·시작/만기·진행률·누적수익.</td></tr>
+        <tr><td class="k">상품 카탈로그</td><td><span class="src">packages</span> / <span class="src">dragons</span></td><td>ROI 범위·최소금액·락업·등급. 비즈니스 로직 확정 필요.</td></tr>
+        <tr><td class="k">팀/레퍼럴</td><td><span class="src">referrals · orgStats · commissions · ranks</span></td><td>조직 규모·깊이·팀 볼륨·커미션(직접/매칭/풀)·랭크 기준.</td></tr>
+        <tr><td class="k">마켓</td><td><span class="src">market</span></td><td>CNYT 시세·변동·USDT 프리미엄·오더북. (현재 NETWORK/ALL에서 "Soon")</td></tr>
+        <tr><td class="k">거래 내역</td><td><span class="src">history</span></td><td>ROI·입출금·커미션·스왑·송금 원장. 페이지네이션 필요.</td></tr>
+        <tr><td class="k">공지/뉴스</td><td><span class="src">news · importantNotice</span></td><td>공지 목록 + 로그인 시 띄울 중요 공지(점검 등).</td></tr>
+        <tr><td class="k">입금 주소</td><td><span class="src">depositAddress</span></td><td><strong style="color:var(--color-cream)">유저·네트워크별로 발급</strong>되어야 함. 현재 단일 고정값.</td></tr>
+        <tr><td class="k">엔진 통계 / 피드</td><td><span class="src">engine · trades · genTrade()</span></td><td>승률·일ROI·시그널·지연 + 체결 피드. 아래 4번 참고.</td></tr>
+        <tr><td class="k">약관/고지 텍스트</td><td><span class="src">riskNotice · terms · faqs</span></td><td>버전 관리 대상. 동의 시 버전 기록 필요(4번).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="sec-num">04</div>
+    <h2>시안에서 가짜로 처리된 동작 <span class="tag mock" style="font-size:11px;vertical-align:middle">Mock</span></h2>
+    <p class="sec-sub">UI 플로우는 완성돼 있으나 실제 검증/처리 없이 낙관적으로 성공 처리됨. 각 항목은 대응 엔드포인트와 상태 머신이 필요.</p>
+
+    <div class="card flag">
+      <ul class="clean">
+        <li><span class="li-t">동의 게이트.</span> <span class="li-d">매 로그인마다 리스크 고지 + 약관 개별 동의. 현재 client-only. → 동의 사실과 <strong style="color:var(--color-cream)">문서 버전</strong>을 서버에 기록해야 함.</span></li>
+        <li><span class="li-t">입금.</span> <span class="li-d">네트워크 선택(TRC-20/ERC-20) → 주소 발급 → "보냈음" → pending. 실제로는 유저·네트워크별 주소 발급 + 온체인 컨펌 감시(예: 12 confirmations) 후 크레딧.</span></li>
+        <li><span class="li-t">출금.</span> <span class="li-d">금액 → 목적지 → <strong style="color:var(--color-cream)">2FA OTP(Google Authenticator)</strong> → 제출. 현재 6자리면 무조건 통과. 실제: OTP 검증, 1.5% 수수료, 잔액 검증, 일괄 정산(00:00–02:00 UTC 배치), 출금 PIN.</span></li>
+        <li><span class="li-t">송금(내부 이체).</span> <span class="li-d">즉시 정산 가정. 수취인 검증(주소/유저ID)·한도·중복 방지 필요.</span></li>
+        <li><span class="li-t">스왑.</span> <span class="li-d">earned USDT → CNYT, <strong style="color:var(--color-cream)">고정 환율 7.08</strong> 하드코딩. 실제 호가/슬리피지/체결 환율 필요.</span></li>
+        <li><span class="li-t">패키지 구매.</span> <span class="li-d">PLANS의 구매 진입은 UI만. 잔액 차감·계약 생성·락업·일ROI 적립 로직 필요.</span></li>
+        <li><span class="li-t">알림·지원·문서·설정·로그아웃.</span> <span class="li-d">현재 토스트로 "preview only" 처리. 각각 실제 기능/화면 연결 필요.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="sec-num">05</div>
+    <h2>AI 엔진 차트 &amp; 라이브 피드 <span class="tag mock" style="font-size:11px;vertical-align:middle">Mock</span></h2>
+    <p class="sec-sub">EARN 화면의 핵심 비주얼. 현재 전부 클라이언트가 난수로 생성하는 연출이다.</p>
+    <div class="grid2">
+      <div class="mini"><div class="mt">선물 캔들 차트</div><div class="md">캔버스 엔진(<code>LRChart</code>)이 캔들·EMA·AI 스캔 빔·매수/매도 시그널을 자체 생성. → 실제 가격 캔들 스트림(웹소켓)과 엔진 시그널로 교체. 차트는 "엔진이 일하는 중" 연출이 기획 의도.</div></div>
+      <div class="mini"><div class="mt">라이브 체결 피드</div><div class="md"><code>genTrade()</code> 가 랜덤 체결을 3초마다 생성. → 실제 엔진 체결 이벤트 스트림으로 교체.</div></div>
+      <div class="mini"><div class="mt">엔진 통계</div><div class="md">승률·일ROI·시그널/초·지연. 차트 콜백으로 시그널/지연만 흔들어줌. → 실측 메트릭.</div></div>
+      <div class="mini"><div class="mt">모션 제어</div><div class="md">애니메이션은 <code>prefers-reduced-motion</code> 과 인앱 "Live feed" 토글을 따름. 정지 시 마지막 프레임 표시.</div></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <div class="sec-num">06</div>
+    <h2>비주얼 시스템</h2>
+    <div class="card">
+      <ul class="clean">
+        <li><span class="li-t">LRHP 디자인 시스템.</span> <span class="li-d">다크 + 골드. 모든 색/타입/스페이싱은 CSS 토큰(<code>var(--*)</code>). 폰트는 디스플레이 세리프 / 본문 / 모노 3종.</span></li>
+        <li><span class="li-t">레이아웃.</span> <span class="li-d">폰 폭 컬럼(최대 430px) 고정 높이 셸 + 내부 스크롤. 하단 네비 바닥 고정. 넓은 화면에서도 폰 컬럼 유지(데스크탑 확장 안 함).</span></li>
+        <li><span class="li-t">색 의미.</span> <span class="li-d">골드=강조/브랜드, 그린=유입/수익, 레드=유출/손실. 데이터 색상은 이 규칙을 따름.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <div class="sec-num">07</div>
+    <h2>알려진 시안 한계 / 주의</h2>
+    <div class="callout">
+      <p><strong>용어는 임시 라벨이다.</strong> 탭/화면 명칭(Plans·Network·Earn 등)은 확정 전 임시값 — 추후 일괄 통일 예정. 매핑은 <code>Glossary.html</code> 참조.</p>
+    </div>
+    <div class="card">
+      <ul class="clean">
+        <li><span class="li-d">모든 숫자·날짜·주소는 데모 값. 통화/소수 자릿수·타임존(UTC 기준 정산) 등 표기 규칙은 서버 응답에 맞춰 확정.</span></li>
+        <li><span class="li-d">인증·세션·권한 없음. 실제 로그인/토큰/리프레시 흐름은 미구현.</span></li>
+        <li><span class="li-d">CNYT·ROI·랭크·커미션 등 비즈니스 로직은 시안 수치가 아니라 확정 정책 기준으로 구현.</span></li>
+        <li><span class="li-d">i18n 미적용(현재 영문 카피). 다국어 시 레이아웃 여백 재검토 필요.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    LONGRISE Mobile · 정적 디자인 시안 — 실거래/실자금 없음.<br>
+    이 노트는 의도와 데이터 경계 전달용이며, 구현 방식·스택은 개발 재량입니다.
+  </div>
+
+</div>
+</body>
+</html>
