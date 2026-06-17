@@ -9,14 +9,15 @@ Upload or replace this file:
 - index.html
 
 Included dashboard updates:
-- Row 00 title changed to LR/CNYT 스토리 위키
-- Row 00 #01 links to The Golden Algorithm
-- Row 00 #02 links to The Architects
-- Row 00 memo changed to LR/CNYT official setting reference wording
-- Row 03 공식 홈페이지 UI/UX status changed to UPDATING
-- Row 03 memo changed to 0617 mobile view/menu/terminology alignment note
-- Row 05 입출금기능 기획 #01 changed to AIPK wallet-preview.html
-- Row 05 memo includes 0617 publishing/spec mismatch investigation note
-- Update Note entry added for 2026-06-17
+- Overall progress changed to 82%.
+- Row 00 changed to LR/CNYT story wiki with Notion links #01 and #02.
+- Row 03 official homepage UI/UX status changed to UPDATING.
+- Row 05 title changed to PC-view platform planning.
+- Row 05 memo updated for Wallet, CRYPTO AI, START HERE, and EARN menu planning.
+- Row 15 CNYT foundation homepage progress changed to 82%.
+- Row 15 #02 and #03 links are kept but styled as inactive/old-draft buttons.
+- Row 15 memo changed to planned source migration to GitHub.
+- Row 16 memo changed to received from developer / continuous update status.
+- Update Note entries are included for 2026-06-17.
 
 When GitHub asks whether to replace index.html, choose replace/commit changes.
