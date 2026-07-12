@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="ko" style="overflow-x:hidden;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-base: #100500;
+      --bg-alt: #1c0900;
+      --gold: #c8a43c;
+      --gold-light: #e2c05a;
+      --text-main: #f0ece4;
+      --text-sub: #b0a898;
+      --border: #2e1a0a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #050100;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      color: var(--text-sub);
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    @media print {
+      body { padding: 0; gap: 0; background-color: var(--bg-base); }
+      @page { size: 16in 9in; margin: 0; }
+      .slide { page-break-after: always; margin: 0 !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; }
+    }
+    .slide {
+      width: 1280px;
+      min-height: 720px;
+      background: radial-gradient(ellipse at 50% 30%, #1e0800 0%, #100500 55%, #060200 100%);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      padding: 40px 48px 52px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    h1,h2,h3,h4,.font-serif { font-family:'Noto Sans KR',sans-serif; font-weight:600; color:var(--text-main); word-break:keep-all; margin:0; letter-spacing:-0.5px; }
+    p,li,td,th { font-size:14px; line-height:1.6; word-break:keep-all; margin:0; }
+    .slide-title { font-size:26px; font-weight:700; margin-bottom:16px; border-bottom:2px solid var(--gold); padding-bottom:8px; display:inline-block; width:100%; letter-spacing:-0.5px; font-family:'Noto Sans KR',sans-serif; }
+    .flex { display:flex; } .flex-col { flex-direction:column; } .flex-1 { flex:1; }
+    .items-center { align-items:center; } .justify-center { justify-content:center; }
+    .text-center { text-align:center; } .relative { position:relative; } .absolute { position:absolute; } .z-10 { z-index:10; }
+    .gap-4 { gap:10px; } .gap-6 { gap:14px; } .gap-8 { gap:18px; }
+    .mb-4 { margin-bottom:10px; } .mb-5 { margin-bottom:12px; } .mb-6 { margin-bottom:14px; } .mb-8 { margin-bottom:18px; }
+    .mt-4 { margin-top:10px; } .mt-6 { margin-top:14px; } .mt-8 { margin-top:18px; }
+    .p-5 { padding:16px; } .p-6 { padding:18px; } .p-8 { padding:20px; } .w-full { width:100%; }
+    .grid { display:grid; }
+    .grid-cols-2 { grid-template-columns:repeat(2,1fr); }
+    .grid-cols-3 { grid-template-columns:repeat(3,1fr); }
+    .grid-cols-4 { grid-template-columns:repeat(4,1fr); }
+    .text-gold { color:var(--gold); } .text-main { color:var(--text-main); }
+    .bg-pattern { background-image:radial-gradient(var(--gold) 1px,transparent 1px); background-size:30px 30px; opacity:.05; }
+    .box { background-color:rgba(30,10,2,0.85); border:1px solid var(--border); border-radius:10px; }
+    .box-gold-border { background-color:rgba(30,10,2,0.85); border-left:4px solid var(--gold); padding:12px 16px; }
+    .table-custom { width:100%; border-collapse:collapse; }
+    .table-custom th,.table-custom td { border-bottom:1px solid var(--border); padding:8px 12px; text-align:left; font-size:13px; line-height:1.45; }
+    .table-custom th { background-color:rgba(26,8,1,0.95); color:var(--gold); font-weight:500; font-size:12px; }
+    .table-custom tr:last-child td { border-bottom:none; }
+    .table-custom tr:hover td { background-color:rgba(197,168,128,.04); }
+    .stat-card { background-color:rgba(26,8,1,0.9); border:1px solid var(--border); border-radius:8px; padding:14px 10px; text-align:center; }
+    .stat-number { font-size:32px; font-weight:600; color:var(--gold); margin-bottom:4px; display:block; font-family:'Noto Sans KR',sans-serif; }
+    .stat-label { font-size:11px; color:var(--text-sub); text-transform:uppercase; letter-spacing:1px; }
+    .feature-box { background-color:rgba(26,8,1,0.9); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+    .feature-title { font-size:14px; font-weight:600; color:var(--gold); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+    ul.icon-list { list-style:none; padding:0; }
+    ul.icon-list li { position:relative; padding-left:32px; margin-bottom:8px; font-size:13px; line-height:1.55; }
+    ul.icon-list li i { position:absolute; left:0; top:2px; font-size:16px; color:var(--gold); }
+    .note { border-left:3px solid var(--gold); padding:10px 14px; background:rgba(26,8,1,0.9); font-size:12px; line-height:1.55; }
+    .slide-footer { position:absolute; bottom:16px; left:48px; right:48px; display:flex; justify-content:space-between; font-size:11px; color:#555; }
+    .kicker { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:6px; }
+    .pill { display:inline-block; padding:4px 10px; border:1px solid rgba(200,164,60,.4); border-radius:999px; background:rgba(26,8,1,0.9); color:var(--text-main); font-size:12px; margin:2px; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .four-col { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .cover-title { font-size:68px; font-weight:700; margin-top:20px; margin-bottom:6px; color:var(--gold); font-family:'Noto Sans KR',sans-serif; letter-spacing:-2px; line-height:1.05; }
+    .cover-subtitle { font-size:22px; font-weight:500; color:var(--text-main); margin-bottom:12px; }
+    .cover-org { font-size:16px; color:var(--text-sub); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+    .cover-footer { margin-top:28px; border-top:1px solid var(--border); padding-top:16px; }
+    .cover-date { font-size:13px; color:#555; }
+    .text-lg { font-size:16px; line-height:1.65; } .text-xl { font-size:17px; line-height:1.6; } .text-2xl { font-size:20px; }
+    strong { color:var(--text-main); } .small { font-size:12px; line-height:1.6; } .tiny { font-size:11px; line-height:1.5; }
+    .highlight-box { background:linear-gradient(135deg,rgba(200,164,60,.14),rgba(200,164,60,.04)); border:1px solid rgba(200,164,60,.45); border-radius:10px; padding:14px 20px; }
+    .roadmap-item { display:flex; gap:12px; align-items:flex-start; padding:9px 14px; background:rgba(26,8,1,0.9); border-radius:6px; border-left:3px solid var(--gold); margin-bottom:6px; }
+    .roadmap-date { font-size:12px; font-weight:500; color:var(--gold); min-width:90px; padding-top:1px; }
+    .roadmap-content { font-size:12px; line-height:1.5; }
+    .chain-box { background:rgba(26,8,1,0.9); border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-align:center; flex:1; }
+    .chain-arrow { display:flex; align-items:center; color:var(--gold); font-size:18px; opacity:.6; }
+    .cnyt-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,rgba(200,164,60,.18),rgba(200,164,60,.05)); border:1px solid var(--gold); border-radius:6px; padding:4px 10px; font-size:12px; font-weight:500; color:var(--gold); font-family:'Noto Sans KR',sans-serif; }
+    .quote-text { font-size:23px; font-weight:600; color:var(--text-main); font-family:'Noto Sans KR',sans-serif; line-height:1.65; text-align:center; }
+    .quote-author { font-size:14px; font-weight:500; color:var(--gold); letter-spacing:2px; text-align:center; margin-top:20px; }
+
+    /* ─── MOBILE RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 767px) {
+      html { overflow-x: hidden; }
+      body { gap: 0; padding: 0; overflow-x: hidden; }
+
+      /* ── 슬라이드 기본 ── */
+      .slide {
+        width: 100%;
+        min-height: auto;
+        padding: 16px 14px 48px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        overflow: hidden;
+      }
+
+      /* ── 제목 / 푸터 ── */
+      .slide-title { font-size: 15px !important; margin-bottom: 14px !important; letter-spacing: -0.2px; padding-bottom: 7px; }
+      .slide-footer { left: 14px; right: 14px; font-size: 10px; bottom: 12px; }
+
+      /* ── 커버 ── */
+      .cover-title { font-size: 28px !important; letter-spacing: -1px; margin-top: 12px; }
+      .cover-subtitle { font-size: 14px !important; margin-bottom: 8px; }
+      .cover-org { font-size: 10px !important; letter-spacing: 1px; }
+      .cover-footer { margin-top: 18px; padding-top: 12px; }
+      .cover-date { font-size: 10px; }
+      .kicker { font-size: 10px !important; letter-spacing: 1.5px; }
+
+      /* ── 기본 텍스트 ── */
+      p, li, td, th { font-size: 12px !important; line-height: 1.6; }
+      .text-lg { font-size: 13px !important; }
+      .text-xl { font-size: 14px !important; }
+      .text-2xl { font-size: 16px !important; }
+      .small { font-size: 11px !important; line-height: 1.6; }
+      .tiny { font-size: 10px !important; line-height: 1.5; }
+      strong { font-size: inherit !important; }
+      h3 { font-size: 13px !important; }
+      h4 { font-size: 12px !important; }
+
+      /* ── 인라인 font-size 강제 오버라이드 ── */
+      [style*="font-size:26px"], [style*="font-size: 26px"] { font-size: 18px !important; }
+      [style*="font-size:28px"], [style*="font-size: 28px"] { font-size: 18px !important; }
+      [style*="font-size:32px"], [style*="font-size: 32px"] { font-size: 18px !important; }
+      [style*="font-size:36px"], [style*="font-size: 36px"] { font-size: 16px !important; }
+      [style*="font-size:42px"], [style*="font-size: 42px"] { font-size: 20px !important; }
+      [style*="font-size:20px"], [style*="font-size: 20px"] { font-size: 14px !important; }
+      [style*="font-size:22px"], [style*="font-size: 22px"] { font-size: 14px !important; }
+      [style*="font-size:16px"], [style*="font-size: 16px"] { font-size: 12px !important; }
+      [style*="font-size:18px"], [style*="font-size: 18px"] { font-size: 13px !important; }
+      [style*="font-size:14px"], [style*="font-size: 14px"] { font-size: 12px !important; }
+      [style*="font-size:15px"], [style*="font-size: 15px"] { font-size: 12px !important; }
+
+      /* ── 그리드 레이아웃 → 1단 ── */
+      .two-col, .three-col, .four-col,
+      .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      /* 모든 인라인 grid → 1단 강제 */
+      .slide div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      /* 5열 플랜 카드 → 1단 */
+      .slide div[style*="repeat(5,1fr)"],
+      .slide div[style*="repeat(5, 1fr)"] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+
+      /* ── flex 레이아웃 → 세로 ── */
+      .flex.gap-4, .flex.gap-6, .flex.gap-8 { flex-direction: column !important; gap: 8px !important; }
+      .slide div[style*="display:flex"] { flex-wrap: wrap !important; gap: 8px !important; }
+      .slide div[style*="display: flex"] { flex-wrap: wrap !important; gap: 8px !important; }
+      .slide .flex[style*="align-items:stretch"] { flex-direction: column !important; }
+      .feature-box[style*="display:flex"] { flex-direction: column !important; }
+
+      /* ── 고정 너비 해제 ── */
+      div[style*="width:290px"] { width: 100% !important; flex: none !important; }
+      div[style*="width: 290px"] { width: 100% !important; flex: none !important; }
+      div[style*="min-width:"] { min-width: 0 !important; }
+      div[style*="max-width:"] { max-width: 100% !important; }
+      [style*="flex:1"] { flex: none !important; width: 100% !important; }
+      [style*="flex: 1"] { flex: none !important; width: 100% !important; }
+
+      /* ── 통계 카드 ── */
+      .stat-card { padding: 10px 8px; }
+      .stat-number { font-size: 20px !important; word-break: break-all; margin-bottom: 3px; }
+      .stat-number[style] { font-size: 20px !important; }
+      .stat-label { font-size: 9px !important; letter-spacing: 0.3px; line-height: 1.4; }
+
+      /* ── 피처 박스 ── */
+      .feature-box { padding: 10px 12px !important; }
+      .feature-title { font-size: 12px !important; margin-bottom: 5px !important; flex-wrap: wrap; }
+      .feature-title i { font-size: 13px !important; }
+      ul.icon-list li { font-size: 11px !important; padding-left: 24px; margin-bottom: 7px; line-height: 1.55; }
+      ul.icon-list li i { font-size: 13px !important; top: 1px; }
+
+      /* ── 박스·카드 패딩 ── */
+      .box { padding: 12px !important; }
+      .p-4, .p-5, .p-6, .p-8 { padding: 12px !important; }
+      .highlight-box { padding: 10px 12px !important; }
+      .box-gold-border { padding: 10px 12px !important; }
+      .note { font-size: 11px !important; padding: 8px 10px !important; }
+
+      /* ── 갭·마진 ── */
+      .gap-4 { gap: 8px !important; } .gap-6 { gap: 10px !important; } .gap-8 { gap: 12px !important; }
+      .mb-4 { margin-bottom: 8px !important; } .mb-5 { margin-bottom: 8px !important; }
+      .mb-6 { margin-bottom: 10px !important; } .mb-8 { margin-bottom: 12px !important; }
+      .mt-4 { margin-top: 8px !important; } .mt-6 { margin-top: 10px !important; } .mt-8 { margin-top: 12px !important; }
+
+      /* ── 테이블 — 가로 스크롤 ── */
+      .table-custom {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        font-size: 10px !important;
+      }
+      .table-custom th, .table-custom td { padding: 6px 8px !important; font-size: 10px !important; }
+
+      /* ── 체인 박스 (LONGRISE 03) ── */
+      .chain-box { flex: none !important; width: 100% !important; padding: 10px 12px; flex-direction: column; }
+      .chain-arrow { transform: rotate(90deg); justify-content: center; height: 18px; flex: none !important; width: 100% !important; }
+
+      /* ── 로드맵 ── */
+      .roadmap-item { padding: 8px 10px; gap: 8px; flex-wrap: nowrap; }
+      .roadmap-date { min-width: 60px; font-size: 10px; flex-shrink: 0; }
+      .roadmap-content { font-size: 10px; line-height: 1.5; }
+
+      /* ── 인용·CTA 슬라이드 ── */
+      .quote-text { font-size: 14px !important; line-height: 1.6; }
+      .quote-author { font-size: 11px; margin-top: 12px; letter-spacing: 1px; }
+
+      /* ── 필 태그 ── */
+      .pill { font-size: 10px !important; padding: 3px 8px !important; margin: 2px; }
+
+      /* ── cnyt-badge ── */
+      .cnyt-badge { font-size: 10px !important; padding: 3px 8px !important; }
+
+      /* ── 배경 패턴 오버레이 ── */
+      .absolute { pointer-events: none; }
+
+      /* ── 커버 / CTA 중앙 정렬 박스 ── */
+      .slide div[style*="max-width:900px"],
+      .slide div[style*="max-width:960px"] {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SLIDE 01 — COVER -->
+<div class="slide" style="justify-content:center;align-items:center;text-align:center;">
+  <div class="absolute" style="inset:0;background-image:radial-gradient(#c8a43c 1px,transparent 1px);background-size:30px 30px;opacity:.05;"></div>
+  <div class="relative z-10">
+    <div class="kicker" style="letter-spacing:3px;font-size:12px;">Horizon Capital Foundation · LONGRISE AI · Global Casino Concierge</div>
+    <h1 class="cover-title">LONGRISE AI<br><span style="font-size:0.55em;font-weight:300;color:var(--text-sub);letter-spacing:4px;">비즈니스 플랜</span></h1>
+    <p class="cover-subtitle" style="font-size:20px;margin-top:20px;color:var(--gold);font-weight:700;">AI 자동거래 기반 디지털 자산 운영 인프라와 파트너십 생태계 소개</p>
+    <p style="font-size:13px;color:var(--text-sub);margin-top:8px;">플랫폼 운영 구조 · 디지털 자산 연계 정책 · CNYT 파트너십 프레임워크</p>
+    <p class="cover-org" style="margin-top:18px;">Integrated Business Master Plan · Version 8.9</p>
+    <div class="cover-footer"><p class="cover-date">Version 8.9 · June 2026 · For Qualified Participants Only</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 02 — CONTENTS -->
+<div class="slide">
+  <h2 class="slide-title">오늘 이 자리에서 확인하실 핵심 내용</h2>
+  <div class="three-col flex-1" style="gap:14px;">
+    <div class="box p-6" style="border-color:rgba(197,168,128,.5);">
+      <p class="kicker" style="margin-bottom:10px;font-size:12px;letter-spacing:2px;">PART 1 — LONGRISE AI · 수익 구조</p>
+      <p style="font-size:13px;line-height:2.1;color:var(--text-main);">
+        <strong class="text-gold">01</strong> 왜 LONGRISE AI인가 — 핵심 가치 요약<br>
+        <strong class="text-gold">02</strong> 기존 재테크로는 불가능한 것들<br>
+        <strong class="text-gold">03</strong> AI가 수익을 만드는 방법<br>
+        <strong class="text-gold">04</strong> 수익은 어떻게 전달되는가<br>
+        <strong class="text-gold">05</strong> 수익 시뮬레이션 — 자금이 불어나는 과정<br>
+        <strong class="text-gold">06</strong> 지금 참여하는 방법 — 5가지 플랜<br>
+        <strong class="text-gold">07</strong> 멤버십 운영 구조 — 드래곤 등급 &amp; 활동 기준<br>
+        <strong class="text-gold">08</strong> 내 자산은 어떻게 보호되는가<br>
+        <strong class="text-gold">09</strong> 운영진 &amp; 글로벌 파트너십<br>
+        <strong class="text-gold">10</strong> 론칭 로드맵 — 지금까지와 앞으로<br>
+        <strong class="text-gold">11</strong> 왜 LONGRISE가 유일한가<br>
+      </p>
+    </div>
+    <div class="box p-6" style="border-color:rgba(197,168,128,.35);">
+      <p class="kicker" style="margin-bottom:4px;font-size:12px;letter-spacing:2px;">PART 2 — CNYT · 토큰 구조</p>
+      <p style="font-size:11px;color:var(--text-sub);margin-bottom:8px;">플랫폼 정책과 연계되는 디지털 자산 운영 프레임워크</p>
+      <p style="font-size:13px;line-height:2.1;color:var(--text-main);">
+        <strong class="text-gold">01</strong> CNYT란 무엇인가<br>
+        <strong class="text-gold">02</strong> 누가 얼마나 받나 — 배정 구조<br>
+        <strong class="text-gold">03</strong> ~$700M 자산이 뒷받침하는 가치<br>
+        <strong class="text-gold">04</strong> HCF·LONGRISE 파트너십 연혁<br>
+        <strong class="text-gold">05</strong> LONGRISE → CNYT 수익 공급 구조<br>
+        <strong class="text-gold">06</strong> 내 CNYT는 안전한가 — 운영 보호 장치<br>
+        <strong class="text-gold">07</strong> 만기 후 선택 — 정산·재운용·P2P<br>
+        <strong class="text-gold">08</strong> CND — 차세대 카지노 정산 자산<br>
+        <strong class="text-gold">09</strong> CND를 지키는 준비금 시스템<br>
+        <strong class="text-gold">10</strong> 거래 기밀 보호 — 프라이버시 설계<br>
+        <strong class="text-gold">11</strong> 내 CNYT로 할 수 있는 것<br>
+      </p>
+    </div>
+    <div class="box p-6">
+      <p class="kicker" style="margin-bottom:4px;font-size:12px;letter-spacing:2px;">PART 3 — GCC · 실물 사업</p>
+      <p style="font-size:11px;color:var(--text-sub);margin-bottom:8px;">CNYT 가치를 현장에서 실현하는 글로벌 카지노 컨시어지</p>
+      <p style="font-size:13px;line-height:2.1;color:var(--text-main);">
+        <strong class="text-gold">01</strong> GCC — 카지노 현장 실물 서비스<br>
+        <strong class="text-gold">02</strong> GCC 수익 모델 — VIP 현금 흐름<br>
+        <strong class="text-gold">03</strong> 통합 실행 로드맵 2026~2030<br>
+        <strong class="text-gold">04</strong> 리스크 관리 프레임워크<br>
+        <strong class="text-gold">05</strong> 법적 고지 및 유의사항<br>
+        <strong class="text-gold">06</strong> CNYT 토크노믹스 한눈에 보기<br>
+        <strong class="text-gold">07</strong> 자주 묻는 질문 (FAQ)<br>
+      </p>
+      <div style="margin-top:16px;padding:12px 14px;background:linear-gradient(135deg,rgba(200,164,60,.12),rgba(200,164,60,.04));border:1px solid rgba(200,164,60,.4);border-radius:8px;">
+        <p style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:4px;">핵심 요약</p>
+        <p style="font-size:11px;color:var(--text-main);line-height:1.6;">AI 운용 인프라 → 플랫폼 운영 정책 안내<br>CNYT 구조 → 파트너십 프레임워크 연계<br>실물 기반 → GCC 글로벌 카지노 네트워크 연동</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>2</span></div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PART 1  LONGRISE AI
+════════════════════════════════════════════════ -->
+
+<!-- SLIDE 03 — EXECUTIVE SUMMARY (LONGRISE 01) -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 01. 왜 LONGRISE AI인가 — 한 장으로 보는 핵심</h2>
+  <div class="highlight-box mb-4" style="padding:12px 20px;text-align:center;">
+    <p style="font-size:16px;font-weight:700;color:var(--gold);margin-bottom:4px;">AI가 24시간 거래 데이터를 분석하고 플랫폼 운영을 지원합니다</p>
+    <p class="small" style="color:var(--text-main);">LONGRISE AI는 글로벌 주요 암호화폐 거래소에 연동된 <strong>AI 자동거래 엔진</strong>입니다. 운영 지표, 정산 정책, 이용 등급과 같은 핵심 구조를 표준화해 <strong>플랫폼 이용 흐름</strong>을 일관되게 관리하는 데 초점을 둡니다.</p>
+  </div>
+  <div class="four-col mb-4">
+    <div class="stat-card"><span class="stat-number" style="font-size:26px;">24/7</span><div class="stat-label">AI 모니터링 및 자동 거래 운영</div></div>
+    <div class="stat-card"><span class="stat-number" style="font-size:26px;">일일 반영</span><div class="stat-label">UTC 06:00 기준 플랫폼 잔고 업데이트</div></div>
+    <div class="stat-card" style="border-color:rgba(197,168,128,.5);"><span class="stat-number" style="font-size:26px;">250,000명</span><div class="stat-label">글로벌 9개국 활성 회원 (18개월)</div></div>
+    <div class="stat-card"><span class="stat-number" style="font-size:26px;">$265M+</span><div class="stat-label">누적 수익 분배액 · 월 $28M</div></div>
+  </div>
+  <div class="two-col" style="gap:12px;flex:1;">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="feature-box" style="padding:10px 14px;display:flex;align-items:flex-start;gap:12px;">
+        <i class="fa-solid fa-robot" style="font-size:18px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+        <div><div class="feature-title" style="margin-bottom:3px;">AI 자동거래 엔진</div><p class="tiny">밀리초 단위 초고속 거래를 기반으로 차익거래·마켓메이킹 전략을 수행하며 24/7 무중단 운영을 지향합니다.</p></div>
+      </div>
+      <div class="feature-box" style="padding:10px 14px;display:flex;align-items:flex-start;gap:12px;border-color:rgba(197,168,128,.4);">
+        <i class="fa-solid fa-layer-group" style="font-size:18px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+        <div><div class="feature-title" style="margin-bottom:3px;">5가지 이용 플랜</div><p class="tiny">Flexible($100·락업없음) · Basic($200) · Standard($500) · Premium($1,000) · VIP($5,000). 플랜별 운영 조건과 CNYT 연계 기준이 다르게 설계됩니다.</p></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="feature-box" style="padding:10px 14px;display:flex;align-items:flex-start;gap:12px;">
+        <i class="fa-solid fa-trophy" style="font-size:18px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+        <div><div class="feature-title" style="margin-bottom:3px;">드래곤 등급 체계</div><p class="tiny">White→Black Dragon까지 구분되는 멤버십 체계로, 활동 이력과 운영 기여도에 따라 등급이 구분됩니다.</p></div>
+      </div>
+      <div class="feature-box" style="padding:10px 14px;display:flex;align-items:flex-start;gap:12px;border-color:rgba(197,168,128,.4);">
+        <i class="fa-solid fa-shield-halved" style="font-size:18px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+        <div><div class="feature-title" style="margin-bottom:3px;">다층 보안 시스템</div><p class="tiny">콜드/핫 월렛 분리, 3중 Multi-Sig 서명, AI 실시간 리스크 모니터링. 외부 보안 감사 완료.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>3</span></div>
+</div>
+
+<!-- LONGRISE 02: MARKET OPPORTUNITY -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 02. 기존 재테크로는 불가능한 것들 — 왜 지금인가</h2>
+  <div class="two-col flex-1 mb-4">
+    <div class="box p-6">
+      <h3 style="font-size:15px;font-weight:700;color:var(--gold);margin-bottom:10px;"><i class="fa-solid fa-triangle-exclamation" style="margin-right:8px;"></i>기존 방법의 한계</h3>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-piggy-bank"></i><strong>은행 예금 연 3~4%:</strong> 물가 상승률을 감안하면 실질 수익은 제로 수준. 12개월을 예치해도 월 0.3%에 불과합니다.</li>
+        <li><i class="fa-solid fa-chart-line"></i><strong>주식·코인 직접 투자:</strong> 고수익 가능성이 있지만 손실 리스크가 크고, 상시 공부·모니터링이 필요합니다.</li>
+        <li><i class="fa-solid fa-building-columns"></i><strong>기관 퀀트 펀드:</strong> 연 20%+ 수익을 내지만 진입 문턱이 억 단위 자금 + 기관 자격 — 일반인에게는 닫힌 구조.</li>
+      </ul>
+    </div>
+    <div class="box p-6" style="border-color:rgba(197,168,128,.5);">
+      <h3 style="font-size:15px;font-weight:700;color:var(--gold);margin-bottom:10px;"><i class="fa-solid fa-bolt" style="margin-right:8px;"></i>LONGRISE라면 가능합니다</h3>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-robot"></i><strong>지식·시간 없이 AI가 24시간 운용:</strong> 알고리즘이 지속적으로 거래 데이터를 분석하고 플랫폼 운영 흐름을 자동화합니다.</li>
+        <li><i class="fa-solid fa-coins"></i><strong>$100부터 이용 가능한 구조:</strong> 복잡한 별도 운영 지식 없이도 정해진 플랜 기준에 따라 플랫폼 기능을 사용할 수 있습니다.</li>
+        <li><i class="fa-solid fa-gift"></i><strong>CNYT 연계 정책 운영:</strong> 플랜별 기준에 따라 CNYT가 연동되며, 세부 수량과 조건은 내부 운영 정책에 따라 관리됩니다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="three-col">
+    <div class="stat-card"><span class="stat-number" style="font-size:24px;">은행 예금</span><div class="stat-label">연 3~4% → 월 0.3% 수준<br>물가 상승 감안 시 실질 수익 미미</div></div>
+    <div class="stat-card" style="border-color:rgba(197,168,128,.5);"><span class="stat-number" style="font-size:24px;color:var(--gold);">LONGRISE AI</span><div class="stat-label">24/7 자동 운영 · 일일 플랫폼 반영<br>$100부터 이용 가능한 플랜 구성</div></div>
+    <div class="stat-card"><span class="stat-number" style="font-size:24px;">기관 펀드</span><div class="stat-label">억 단위 자본 + 기관 자격 필요<br>일반인에게 닫힌 구조</div></div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>4</span></div>
+</div>
+
+<!-- LONGRISE 03: AI HFT ENGINE -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 03. AI가 수익을 창출하는 원리 — 자동거래 엔진 구조</h2>
+  <div class="flex gap-8 flex-1">
+    <div style="flex:1;">
+      <div class="flex gap-4 mb-6" style="align-items:stretch;">
+        <div class="chain-box">
+          <i class="fa-solid fa-brain" style="font-size:22px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+          <div style="font-size:14px;font-weight:600;color:var(--text-main);">Casino AI Engine</div>
+          <p class="tiny mt-4">베팅 패턴 분석 → <strong style="color:var(--gold);">"언제"</strong> 진입할지 결정</p>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-box">
+          <i class="fa-solid fa-bolt" style="font-size:22px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+          <div style="font-size:14px;font-weight:600;color:var(--text-main);">HFT Quant Engine</div>
+          <p class="tiny mt-4">초고속 자동 실행 엔진 → <strong style="color:var(--gold);">"어떻게"</strong> 최적 포지션</p>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-box">
+          <i class="fa-solid fa-rotate" style="font-size:22px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+          <div style="font-size:14px;font-weight:600;color:var(--text-main);">Adaptive Retraining</div>
+          <p class="tiny mt-4">자동 재학습 → <strong style="color:var(--gold);">정확도 상시 유지</strong></p>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-box">
+          <i class="fa-solid fa-coins" style="font-size:22px;color:var(--gold);display:block;margin-bottom:8px;"></i>
+          <div style="font-size:14px;font-weight:600;color:var(--text-main);">Compound</div>
+          <p class="tiny mt-4">실현 수익 AUTO REBETTING → <strong style="color:var(--gold);">복리 증폭</strong></p>
+        </div>
+      </div>
+      <div class="box p-6">
+        <h4 class="feature-title"><i class="fa-solid fa-chart-bar"></i>핵심 성과 지표</h4>
+        <ul class="icon-list">
+          <li style="margin-bottom:10px;"><i class="fa-solid fa-brain"></i><strong>Casino AI Engine:</strong> 178개 파트너사 · 추천 정확도 <strong class="text-gold">87%</strong> · 회원 평균 월 수익 <strong class="text-gold">$1,240</strong> · 채택률 73%</li>
+          <li style="margin-bottom:10px;"><i class="fa-solid fa-bolt"></i><strong>HFT Quant Engine:</strong> 50,000회+/일 자동 실행 · VaR 실시간 모니터링 · 글로벌 기관급 거래 인프라 연동</li>
+          <li style="margin-bottom:0;"><i class="fa-solid fa-rotate"></i><strong>Adaptive Retraining:</strong> 재학습 소요 평균 4.2h · 결합 정확도 <strong class="text-gold">83.7%</strong> · Model Drift 주기 3개월 → <strong class="text-gold">11개월</strong>(3.6배 연장)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="width:290px;">
+      <div class="stat-card mb-4"><span class="stat-number">4%–18%</span><div class="stat-label">LONGRISE 월간 목표 수익 범위<br><span style="font-size:10px;font-weight:400;color:var(--text-sub);">플랜에 따라 차등 적용 (Flexible~VIP)</span></div></div>
+      <div class="stat-card mb-4"><span class="stat-number">초고속</span><div class="stat-label">인간이 인식하기 전에 거래 완료<br><span style="font-size:10px;font-weight:400;color:var(--text-sub);">인간 반응 속도의 수천 배</span></div></div>
+      <div class="stat-card" style="border-color:var(--gold);"><span class="stat-number">24/7</span><div class="stat-label">무중단 자동 운용<br><span style="font-size:10px;font-weight:400;color:var(--text-sub);">주말·공휴일 무관 365일 가동</span></div></div>
+      <div class="note mt-4">
+        <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;letter-spacing:.5px;">— 연동 거래소 (Tier-1 글로벌 10대) —</p>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Binance</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">OKX</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Bybit</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Kraken</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Coinbase</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Upbit</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Bitget</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">Gate.io</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">HTX</span>
+          <span style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.35);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--gold);">KuCoin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>5</span></div>
+</div>
+
+<!-- LONGRISE 04: PROFIT DISTRIBUTION MECHANISM -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 04. 수익률 결정 구조 — AI 동적 운용 시스템 & 자금 분배 원칙</h2>
+  <div class="two-col" style="gap:14px;margin-bottom:12px;">
+    <!-- LEFT: 동적 수익률 -->
+    <div>
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;"><i class="fa-solid fa-chart-line" style="color:var(--gold);margin-right:6px;"></i>동적 수익률 시스템 — 매일 AI가 당일 모드를 결정</p>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.3);border-radius:8px;">
+          <span style="font-size:20px;min-width:28px;">📈</span>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">수익일 (정상 운영)</p>
+              <span style="font-size:13px;font-weight:700;color:var(--gold);">연간 80%</span>
+            </div>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">AI 정확도 68%↑ + 준비금 75%↑ 시 발동 · 복합 수익 재분배 정상 실행</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(65,105,225,.06);border:1px solid rgba(65,105,225,.3);border-radius:8px;">
+          <span style="font-size:20px;min-width:28px;">🛡️</span>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <p style="font-size:12px;font-weight:700;color:#6890f0;margin:0;">방어일 (보수 운영)</p>
+              <span style="font-size:13px;font-weight:700;color:#6890f0;">연간 15%</span>
+            </div>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">준비금 75%↓ 또는 AI 정확도 저하 감지 시 발동 · 서킷브레이커 연동</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(220,20,60,.06);border:1px solid rgba(220,20,60,.3);border-radius:8px;">
+          <span style="font-size:20px;min-width:28px;">🎰</span>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <p style="font-size:12px;font-weight:700;color:#e05070;margin:0;">잭팟일 (특별 이벤트)</p>
+              <span style="font-size:13px;font-weight:700;color:#e05070;">연간 5%</span>
+            </div>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">누적 초과 수익 임계치 달성 시 발동 · 전체 보너스 일괄 지급</p>
+          </div>
+        </div>
+      </div>
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-layer-group" style="color:var(--gold);margin-right:6px;"></i>VIP 기준 월 18%~ = 3요소 합산 (매일 변동)</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+        <div style="background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:7px;padding:8px;text-align:center;">
+          <p style="font-size:10px;color:var(--text-sub);margin:0 0 2px;">🎲 Pool Size</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">6%~</p>
+          <p style="font-size:9px;color:var(--text-sub);margin:2px 0 0;">총 판돈 하우스 우위</p>
+        </div>
+        <div style="background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:7px;padding:8px;text-align:center;">
+          <p style="font-size:10px;color:var(--text-sub);margin:0 0 2px;">🎰 Betting</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">9%~</p>
+          <p style="font-size:9px;color:var(--text-sub);margin:2px 0 0;">4개 거점 베팅 성과</p>
+        </div>
+        <div style="background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:7px;padding:8px;text-align:center;">
+          <p style="font-size:10px;color:var(--text-sub);margin:0 0 2px;">💰 Futures</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">3%~</p>
+          <p style="font-size:9px;color:var(--text-sub);margin:2px 0 0;">AI 코인 선물거래</p>
+        </div>
+      </div>
+      <p style="font-size:10px;color:var(--text-sub);margin-top:6px;text-align:center;">30일 실적(VIP 기준): 평균 <strong class="text-gold">17.8%</strong> · 최고 <strong class="text-gold">21.7%</strong> · 최저 <strong class="text-gold">14.2%</strong></p>
+    </div>
+    <!-- RIGHT: 자금 분배 -->
+    <div>
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;"><i class="fa-solid fa-pie-chart" style="color:var(--gold);margin-right:6px;"></i>수익 실현 후 전체 수익금 분배 구조</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(200,164,60,.1);border:1px solid rgba(200,164,60,.5);border-radius:8px;">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:700;color:#100500;">83%</span>
+          </div>
+          <div>
+            <p style="font-size:13px;font-weight:700;color:var(--gold);margin:0;">준비금 (Reserve)</p>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">원금 보호 · 서킷브레이커 재원 · 장기 안정성 확보 · <strong style="color:var(--gold);">15% 최소 환급 보장</strong>의 물리적 기반</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(65,105,225,.06);border:1px solid rgba(65,105,225,.3);border-radius:8px;">
+          <div style="width:42px;height:42px;border-radius:50%;background:rgba(65,105,225,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:700;color:#c8dcff;">10%</span>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:#6890f0;margin:0;">네트워크 운영 항목</p>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">멤버십 확장 및 조직 운영 기준 관련 재원</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(220,20,60,.05);border:1px solid rgba(220,20,60,.3);border-radius:8px;">
+          <div style="width:42px;height:42px;border-radius:50%;background:rgba(220,20,60,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:700;color:#ffb0c0;">3%</span>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:#e05070;margin:0;">글로벌 풀 (Global Pool)</p>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">Red · Black 직급 수당 공유 재원</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(100,100,100,.06);border:1px solid rgba(150,150,150,.2);border-radius:8px;">
+          <div style="width:42px;height:42px;border-radius:50%;background:rgba(120,120,120,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="font-size:13px;font-weight:700;color:#d0d0d0;">4%</span>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:var(--text-sub);margin:0;">운영비 (Operations)</p>
+            <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">기술 인프라 · 팀 운영 · 법무·컴플라이언스</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>6</span></div>
+</div>
+
+<!-- LONGRISE 05: RETURN SIMULATION -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 05. 수익 시뮬레이션 — 플랜별 자산 증가 구조</h2>
+
+  <!-- 5 플랜 카드 -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;">
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.3);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:6px;">Flexible</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:2px;">4%~</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">월 수익률</p>
+      <div style="border-top:1px solid var(--border);padding-top:8px;">
+        <p style="font-size:14px;font-weight:700;color:var(--text-main);">$100</p>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">락업 없음</p>
+        <p style="font-size:10px;color:var(--gold);margin-top:4px;font-weight:600;">CNYT 4,762개</p>
+      </div>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.4);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:6px;">Basic</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:2px;">7%~</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">월 수익률</p>
+      <div style="border-top:1px solid var(--border);padding-top:8px;">
+        <p style="font-size:14px;font-weight:700;color:var(--text-main);">$200</p>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">12개월 락업</p>
+        <p style="font-size:10px;color:var(--gold);margin-top:4px;">CNYT 수익 × 2%</p>
+      </div>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.55);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:6px;">Standard</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:2px;">9%~</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">월 수익률</p>
+      <div style="border-top:1px solid var(--border);padding-top:8px;">
+        <p style="font-size:14px;font-weight:700;color:var(--text-main);">$500</p>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">12개월 락업</p>
+        <p style="font-size:10px;color:var(--gold);margin-top:4px;">CNYT 수익 × 4%</p>
+      </div>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.7);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:6px;">Premium</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:2px;">11%~</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">월 수익률</p>
+      <div style="border-top:1px solid var(--border);padding-top:8px;">
+        <p style="font-size:14px;font-weight:700;color:var(--text-main);">$1,000</p>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">12개월 락업</p>
+        <p style="font-size:10px;color:var(--gold);margin-top:4px;">CNYT 수익 × 6%</p>
+      </div>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.95);background:linear-gradient(135deg,rgba(200,164,60,.12),rgba(200,164,60,.03));">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:6px;color:var(--gold-light);">VIP ★</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold-light);margin-bottom:2px;">18%~</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">월 수익률</p>
+      <div style="border-top:1px solid rgba(200,164,60,.4);padding-top:8px;">
+        <p style="font-size:14px;font-weight:700;color:var(--text-main);">$5,000</p>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">12개월 락업</p>
+        <p style="font-size:10px;color:var(--gold-light);margin-top:4px;">CNYT 수익 × 10%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시뮬레이션 테이블 -->
+  <div class="box p-0 mb-4" style="overflow:hidden;">
+    <table class="table-custom" style="font-size:13px;width:100%;margin:0;">
+      <thead>
+        <tr>
+          <th style="width:12%;">플랜</th>
+          <th style="width:10%;">예치금</th>
+          <th style="width:9%;">락업</th>
+          <th style="width:11%;background:rgba(200,164,60,.08);">월 수익률</th>
+          <th style="width:12%;background:rgba(200,164,60,.08);">월 수익<br><span style="font-weight:400;font-size:10px;">(단순 기준)</span></th>
+          <th style="width:13%;background:rgba(200,164,60,.16);">12개월 누적 수익</th>
+          <th style="width:16%;background:rgba(200,164,60,.16);">12개월 총 수령액<br><span style="font-weight:400;font-size:10px;">원금 포함</span></th>
+          <th style="width:17%;">CNYT 추가 보상</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Flexible</strong></td>
+          <td>$100</td>
+          <td style="font-size:11px;color:var(--text-sub);">없음</td>
+          <td style="background:rgba(200,164,60,.05);">4%~</td>
+          <td style="background:rgba(200,164,60,.05);">$4~</td>
+          <td style="background:rgba(200,164,60,.1);">$48~</td>
+          <td style="background:rgba(200,164,60,.1);"><strong>$148~</strong></td>
+          <td style="font-size:11px;color:var(--text-sub);">없음</td>
+        </tr>
+        <tr style="background:rgba(255,255,255,.02);">
+          <td><strong>Basic</strong></td>
+          <td>$200</td>
+          <td style="font-size:11px;">12개월</td>
+          <td style="background:rgba(200,164,60,.05);">7%~</td>
+          <td style="background:rgba(200,164,60,.05);">$14~</td>
+          <td style="background:rgba(200,164,60,.1);">$168~</td>
+          <td style="background:rgba(200,164,60,.1);"><strong>$368~</strong></td>
+          <td style="font-size:11px;color:var(--gold);">USDT 수익 × 2%</td>
+        </tr>
+        <tr>
+          <td><strong>Standard</strong></td>
+          <td>$500</td>
+          <td style="font-size:11px;">12개월</td>
+          <td style="background:rgba(200,164,60,.05);">9%~</td>
+          <td style="background:rgba(200,164,60,.05);">$45~</td>
+          <td style="background:rgba(200,164,60,.1);">$540~</td>
+          <td style="background:rgba(200,164,60,.1);"><strong>$1,040~</strong></td>
+          <td style="font-size:11px;color:var(--gold);">USDT 수익 × 4%</td>
+        </tr>
+        <tr style="background:rgba(255,255,255,.02);">
+          <td><strong>Premium</strong></td>
+          <td>$1,000</td>
+          <td style="font-size:11px;">12개월</td>
+          <td style="background:rgba(200,164,60,.05);">11%~</td>
+          <td style="background:rgba(200,164,60,.05);">$110~</td>
+          <td style="background:rgba(200,164,60,.1);">$1,320~</td>
+          <td style="background:rgba(200,164,60,.1);"><strong class="text-gold">$2,320~</strong></td>
+          <td style="font-size:11px;color:var(--gold);">USDT 수익 × 6%</td>
+        </tr>
+        <tr style="background:linear-gradient(90deg,rgba(200,164,60,.06),rgba(200,164,60,.02));">
+          <td><strong class="text-gold">VIP ★</strong></td>
+          <td><strong>$5,000</strong></td>
+          <td style="font-size:11px;">12개월</td>
+          <td style="background:rgba(200,164,60,.14);"><strong class="text-gold">18%~</strong></td>
+          <td style="background:rgba(200,164,60,.14);"><strong class="text-gold">$900~</strong></td>
+          <td style="background:rgba(200,164,60,.22);"><strong class="text-gold">$10,800~</strong></td>
+          <td style="background:rgba(200,164,60,.22);"><strong class="text-gold">$15,800~</strong></td>
+          <td style="font-size:11px;color:var(--gold-light);">USDT 수익 × 10%<br><span style="font-size:10px;">최고 AI 전략 티어</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 하단 주석 -->
+  <div class="two-col" style="gap:12px;">
+    <div class="note" style="margin:0;">
+      <strong>📌 수익 계산 방식:</strong> 총 수령액 = 원금 + (원금 × 월 수익률 × 12개월). 수익률은 AI 운용 성과에 따라 변동되며 표기 수치는 최솟값 기준입니다. 복리 미적용 단순 계산.
+    </div>
+    <div class="note" style="margin:0;border-left-color:rgba(200,164,60,.45);">
+      <strong>⏰ 일일 플랫폼 반영:</strong> 매일 UTC 06:00 기준 운영 결과가 플랫폼 잔고에 반영됩니다. Flexible은 락업 없이 이용 가능하며, Basic~VIP는 12개월 약정형 운영 조건을 따릅니다.
+    </div>
+  </div>
+
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>7</span></div>
+</div>
+
+<!-- LONGRISE 06: PARTICIPATION PACKAGES -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 06. 지금 참여하는 방법 — 5가지 플랜 & CNYT 초기 보너스</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px;">
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.3);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:4px;">Flexible</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:1px;">$100</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">무약정</p>
+      <div style="background:rgba(200,164,60,.06);border-radius:6px;padding:6px;margin-bottom:6px;">
+        <p style="font-size:17px;font-weight:700;color:var(--gold);">4%~</p>
+        <p style="font-size:10px;color:var(--text-sub);">월 수익률</p>
+      </div>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">즉시 해지 가능<br>24h 원금 100% 반환<br><span style="color:var(--gold);font-weight:600;">CNYT 4,762개</span></p>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.4);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:4px;">Basic</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:1px;">$200</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">12개월 약정</p>
+      <div style="background:rgba(200,164,60,.07);border-radius:6px;padding:6px;margin-bottom:6px;">
+        <p style="font-size:17px;font-weight:700;color:var(--gold);">7%~</p>
+        <p style="font-size:10px;color:var(--text-sub);">월 수익률</p>
+      </div>
+      <p style="font-size:10px;color:var(--gold);line-height:1.7;">USDT 수익 × 2% 추가<br>CNYT <strong>9,524개</strong></p>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.55);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:4px;">Standard</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:1px;">$500</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">12개월 약정</p>
+      <div style="background:rgba(200,164,60,.09);border-radius:6px;padding:6px;margin-bottom:6px;">
+        <p style="font-size:17px;font-weight:700;color:var(--gold);">9%~</p>
+        <p style="font-size:10px;color:var(--text-sub);">월 수익률</p>
+      </div>
+      <p style="font-size:10px;color:var(--gold);line-height:1.7;">USDT 수익 × 4% 추가<br>CNYT <strong>23,810개</strong></p>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.72);">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:4px;">Premium</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold);margin-bottom:1px;">$1,000</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">12개월 약정</p>
+      <div style="background:rgba(200,164,60,.11);border-radius:6px;padding:6px;margin-bottom:6px;">
+        <p style="font-size:17px;font-weight:700;color:var(--gold);">11%~</p>
+        <p style="font-size:10px;color:var(--text-sub);">월 수익률</p>
+      </div>
+      <p style="font-size:10px;color:var(--gold);line-height:1.7;">USDT 수익 × 6% 추가<br>CNYT <strong>47,619개</strong></p>
+    </div>
+    <div class="box p-4 text-center" style="border-color:rgba(200,164,60,.95);background:linear-gradient(135deg,rgba(200,164,60,.12),rgba(200,164,60,.03));">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:4px;color:var(--gold-light);">VIP ★</p>
+      <p style="font-size:26px;font-weight:700;color:var(--gold-light);margin-bottom:1px;">$5,000</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">12개월 약정</p>
+      <div style="background:rgba(200,164,60,.18);border-radius:6px;padding:6px;margin-bottom:6px;">
+        <p style="font-size:17px;font-weight:700;color:var(--gold-light);">18%~</p>
+        <p style="font-size:10px;color:var(--text-sub);">월 수익률</p>
+      </div>
+      <p style="font-size:10px;color:var(--gold-light);line-height:1.7;">USDT 수익 × 10% 추가<br>CNYT <strong>238,095개</strong></p>
+    </div>
+  </div>
+
+  <div class="two-col" style="gap:12px;">
+    <div class="box p-4">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-coins" style="color:var(--gold);margin-right:6px;"></i>CNYT 초기 보너스 — 구매 즉시 지급 · 상장 전 락업</p>
+      <p style="font-size:10px;color:var(--text-sub);margin-bottom:6px;">공식: <strong class="text-gold">구매금액 ÷ $0.021</strong> (2026.06.27 현재가) · 1회성 즉시 지급 · 상장 전 인출 제한</p>
+      <table class="table-custom" style="font-size:11px;">
+        <thead><tr><th>플랜</th><th>구매금액</th><th>공식</th><th>CNYT 지급량</th><th>상장 후 가치($1.00)</th></tr></thead>
+        <tbody>
+          <tr><td>Basic</td><td>$200</td><td style="color:var(--text-sub);">÷ $0.021</td><td class="text-gold">9,524개</td><td class="text-gold">$9,524</td></tr>
+          <tr><td>Standard</td><td>$500</td><td style="color:var(--text-sub);">÷ $0.021</td><td class="text-gold">23,810개</td><td class="text-gold">$23,810</td></tr>
+          <tr><td>Premium</td><td>$1,000</td><td style="color:var(--text-sub);">÷ $0.021</td><td class="text-gold">47,619개</td><td class="text-gold">$47,619</td></tr>
+          <tr><td>VIP</td><td>$5,000</td><td style="color:var(--text-sub);">÷ $0.021</td><td class="text-gold">238,095개</td><td class="text-gold">$238,095</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box p-4">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-door-open" style="color:var(--gold);margin-right:6px;"></i>중도 해지 정책</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:7px 10px;background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.2);border-radius:6px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin:0 0 2px;">Flexible — 즉시 해지</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">24시간 내 원금 <strong class="text-gold">100%</strong> 반환</p>
+        </div>
+        <div style="padding:7px 10px;background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.2);border-radius:6px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin:0 0 2px;">약정 상품 — 중도 해지</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">3개월 이내 해지 시 30% 수수료를 제외하고 70% 환급 <strong class="text-gold">(최소 원금의 70% 보장)</strong></p>
+        </div>
+        <div style="padding:7px 10px;background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.35);border-radius:6px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin:0 0 2px;">12개월 만기 정상 종료</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">원금 + 누적 수익 전액 + 락업 CNYT 전량 해제</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>8</span></div>
+</div>
+
+<!-- LONGRISE 07: REWARD SYSTEM & DRAGON TIER -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 07. 멤버십 운영 구조 — 5가지 프로그램 요소 & 드래곤 등급</h2>
+  <!-- ① AI 일일 운용 수익 -->
+  <div style="padding:8px 16px;background:rgba(200,164,60,.10);border:1px solid rgba(200,164,60,.45);border-radius:7px;display:flex;align-items:center;gap:16px;margin-bottom:10px;flex-wrap:wrap;">
+    <p class="kicker" style="font-size:11px;margin:0;white-space:nowrap;"><i class="fa-solid fa-robot" style="color:var(--gold);margin-right:6px;"></i>① AI 일일 운용 수익</p>
+    <span style="font-size:11px;color:var(--text-sub);">수익일(80%) · 방어일(15%) · 잭팟일(5%) 동적 배분</span>
+    <span style="font-size:11px;color:var(--text-sub);">매일 UTC 06:00 USDT 자동 정산</span>
+    <span style="font-size:11px;color:var(--text-sub);">Flexible 4%~ · Basic 7%~ · Standard 9%~ · Premium 11%~ · VIP 18%~ (연 기준)</span>
+  </div>
+  <div class="two-col" style="gap:14px;margin-bottom:10px;">
+    <!-- LEFT: 네트워크 운영 기준 -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <!-- 네트워크 활동 기준 -->
+      <div>
+        <p class="kicker" style="font-size:11px;margin-bottom:7px;"><i class="fa-solid fa-user-plus" style="color:var(--gold);margin-right:6px;"></i>② 멤버십 확장 기준 — 플랜별 네트워크 운영 지표 예시</p>
+        <table class="table-custom" style="font-size:11px;">
+          <thead><tr><th>플랜</th><th>기준금액</th><th>운영비율</th><th>예시값</th></tr></thead>
+          <tbody>
+            <tr><td>Flexible</td><td>$100</td><td>10%</td><td class="text-gold">$10</td></tr>
+            <tr><td>Basic</td><td>$200</td><td>10%</td><td class="text-gold">$20</td></tr>
+            <tr><td>Standard</td><td>$500</td><td>10%</td><td class="text-gold">$50</td></tr>
+            <tr><td>Premium</td><td>$1,000</td><td>10%</td><td class="text-gold">$100</td></tr>
+            <tr style="background:rgba(200,164,60,.08);"><td><strong>VIP</strong></td><td><strong>$5,000</strong></td><td><strong>10%</strong></td><td style="color:var(--gold);font-weight:700;font-size:13px;">$500</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:4px;">💡 표의 수치는 네트워크 운영 기준을 설명하기 위한 예시이며, 실제 적용은 내부 정책과 심사 기준에 따릅니다.</p>
+      </div>
+      <!-- 조직 단계 구조 -->
+      <div>
+        <p class="kicker" style="font-size:11px;margin-bottom:7px;"><i class="fa-solid fa-network-wired" style="color:var(--gold);margin-right:6px;"></i>③ 조직 단계 구조 — 25단계 체감형 운영 비율 예시</p>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <div style="padding:5px 10px;background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.4);border-radius:5px;text-align:center;">
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">1대 (10%)</p>
+            <p style="font-size:13px;font-weight:700;color:var(--gold);margin:0;">$10</p>
+          </div>
+          <span style="color:var(--text-sub);font-size:12px;">→</span>
+          <div style="padding:5px 10px;background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;text-align:center;">
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">2대 (1%)</p>
+            <p style="font-size:13px;font-weight:700;color:var(--gold);margin:0;">$1</p>
+          </div>
+          <span style="color:var(--text-sub);font-size:12px;">→</span>
+          <div style="padding:5px 10px;background:rgba(200,164,60,.05);border:1px solid rgba(200,164,60,.2);border-radius:5px;text-align:center;">
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">3대 (0.1%)</p>
+            <p style="font-size:13px;font-weight:700;color:var(--gold);margin:0;">$0.10</p>
+          </div>
+          <span style="color:var(--text-sub);font-size:12px;">→ … →</span>
+          <div style="padding:5px 10px;background:rgba(200,164,60,.04);border:1px solid rgba(200,164,60,.15);border-radius:5px;text-align:center;">
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">25대까지</p>
+            <p style="font-size:12px;font-weight:700;color:var(--text-sub);margin:0;">체감</p>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:4px;">⚠️ 멤버십 확장 기준과 조직 단계 구조는 <strong class="text-gold">서로 다른</strong> 운영 항목으로 구분됩니다.</p>
+      </div>
+    </div>
+    <!-- RIGHT: P2P + CNYT 보너스 + 직급수당 -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <!-- CNYT 초기 보너스 요약 -->
+      <div>
+        <p class="kicker" style="font-size:11px;margin-bottom:7px;"><i class="fa-solid fa-coins" style="color:var(--gold);margin-right:6px;"></i>④ 가입시 웰컴 보너스는 구매금액 ÷ CNYT 현재가 (구매금액 전액 상당 CNYT 지급)</p>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;">
+          <div style="padding:6px 4px;background:rgba(200,164,60,.05);border:1px solid rgba(200,164,60,.2);border-radius:6px;text-align:center;">
+            <p style="font-size:10px;color:var(--text-sub);margin:0;">Flexible</p>
+            <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">4,762개</p>
+          </div>
+          <div style="padding:6px 4px;background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:6px;text-align:center;">
+            <p style="font-size:10px;color:var(--text-sub);margin:0;">Basic</p>
+            <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">9,524개</p>
+          </div>
+          <div style="padding:6px 4px;background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:6px;text-align:center;">
+            <p style="font-size:10px;color:var(--text-sub);margin:0;">Standard</p>
+            <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">23,810개</p>
+          </div>
+          <div style="padding:6px 4px;background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:6px;text-align:center;">
+            <p style="font-size:10px;color:var(--text-sub);margin:0;">Premium</p>
+            <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">47,619개</p>
+          </div>
+          <div style="padding:6px 4px;background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.5);border-radius:6px;text-align:center;">
+            <p style="font-size:10px;color:var(--text-sub);margin:0;">VIP</p>
+            <p style="font-size:12px;font-weight:700;color:var(--gold);margin:0;">238,095개</p>
+          </div>
+        </div>
+      </div>
+      <!-- P2P 매도 가능 범위 -->
+      <div>
+        <p class="kicker" style="font-size:11px;margin-bottom:7px;"><i class="fa-solid fa-arrows-left-right" style="color:var(--gold);margin-right:6px;"></i>CNYT P2P 매도 가능 범위 (V8.9)</p>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.25);border-radius:6px;">
+            <i class="fa-solid fa-circle-check" style="color:var(--gold);font-size:12px;flex-shrink:0;"></i>
+            <p style="font-size:11px;color:var(--text-sub);margin:0;"><strong class="text-gold">모든 CNYT 보유 회원</strong> 매도 가능 — Flexible 포함 전 등급</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(220,20,60,.05);border:1px solid rgba(220,20,60,.25);border-radius:6px;">
+            <i class="fa-solid fa-clock" style="color:#e05070;font-size:12px;flex-shrink:0;"></i>
+            <p style="font-size:11px;color:var(--text-sub);margin:0;">단, <strong style="color:#e05070;">Flexible 웰컴 보너스 물량</strong>은 <strong class="text-gold">2026년 12월 TGE 락업 해제 후</strong> 매도 가능</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(220,20,60,.07);border:1px solid rgba(220,20,60,.35);border-radius:6px;">
+            <i class="fa-solid fa-star" style="color:#e05070;font-size:12px;flex-shrink:0;"></i>
+            <p style="font-size:11px;color:var(--text-sub);margin:0;"><strong style="color:#e05070;">Red 직급 이상</strong>만 매수 가능 — 97% 매수 → 103% 인정 → <strong class="text-gold">6% 마진</strong></p>
+          </div>
+        </div>
+      </div>
+      <!-- 직급 수당 요약 -->
+      <div style="padding:8px 12px;background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.3);border-radius:7px;">
+        <p class="kicker" style="font-size:11px;margin-bottom:6px;"><i class="fa-solid fa-crown" style="color:var(--gold);margin-right:6px;"></i>⑤ 글로벌 직급 수당 — Red·Black만 해당</p>
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;text-align:center;padding:5px;background:rgba(220,20,60,.08);border-radius:5px;border:1px solid rgba(220,20,60,.3);">
+            <p style="font-size:10px;color:#e05070;margin:0;">🐉 Red Dragon</p>
+            <p style="font-size:16px;font-weight:700;color:#e05070;margin:0;">1%</p>
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">Red 전체 일일 총수익 공유</p>
+          </div>
+          <div style="flex:1;text-align:center;padding:5px;background:rgba(200,164,60,.1);border-radius:5px;border:1px solid rgba(200,164,60,.4);">
+            <p style="font-size:10px;color:var(--gold);margin:0;">🐉 Black Dragon</p>
+            <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">2%</p>
+            <p style="font-size:9px;color:var(--text-sub);margin:0;">Black 전체 일일 총수익 공유</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 직급 달성 조건 테이블 -->
+  <p class="kicker" style="font-size:11px;margin-bottom:6px;"><i class="fa-solid fa-dragon" style="color:var(--gold);margin-right:6px;"></i>드래곤 직급 달성 조건 (V8.9) — 4가지 조건 중 1개라도 미달 시 매일 자정 자동 강등</p>
+  <table class="table-custom" style="font-size:11px;">
+    <thead>
+      <tr>
+        <th style="width:13%;">직급</th>
+        <th style="width:14%;">필요 패키지</th>
+        <th style="width:9%;">직접 등록</th>
+        <th style="width:15%;">하부 육성</th>
+        <th style="width:13%;">팀 매출</th>
+        <th style="width:9%;">단계수</th>
+        <th style="width:27%;">직급 수당</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:#dcdcf0;font-weight:700;">🐉 White</td><td>Basic $200+</td><td>0명</td><td>—</td><td>$0</td><td>없음</td><td style="color:var(--text-sub);">없음</td></tr>
+      <tr><td style="color:#6890f0;font-weight:700;">🐉 Blue</td><td>Standard $500+</td><td>3명</td><td>White 3명</td><td>$1,000</td><td>3대</td><td style="color:var(--text-sub);">없음</td></tr>
+      <tr><td style="color:#b070e8;font-weight:700;">🐉 Purple</td><td>Premium $1,000+</td><td>5명</td><td>Blue 3명</td><td>$10,000</td><td>7대</td><td style="color:var(--text-sub);">없음</td></tr>
+      <tr style="background:rgba(220,20,60,.06);"><td style="color:#e05070;font-weight:700;">🐉 Red</td><td>VIP $5,000+</td><td>10명</td><td>Purple 3명</td><td>$100,000</td><td>15대</td><td style="color:#e05070;font-weight:700;">일일 총수익 1% 공유</td></tr>
+      <tr style="background:rgba(200,164,60,.06);"><td style="color:var(--gold);font-weight:700;">🐉 Black ★</td><td>$10,000+</td><td>15명</td><td>Red 3명</td><td>$1,000,000</td><td>25대</td><td style="color:var(--gold);font-weight:700;">일일 총수익 2% 공유</td></tr>
+    </tbody>
+  </table>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>9</span></div>
+</div>
+
+<!-- LONGRISE 07-B: RED DRAGON ACHIEVEMENT SYSTEM -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 07-B. 레드 드래곤 성취 시스템 — 달성 조건 & 특권</h2>
+  <div class="three-col" style="gap:12px;margin-bottom:12px;">
+    <!-- 달성 조건 -->
+    <div class="feature-box" style="padding:14px 16px;">
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;"><i class="fa-solid fa-list-check" style="color:var(--gold);margin-right:6px;"></i>Red Dragon 달성 조건 (V8.9)</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <span style="color:#e05070;font-size:12px;flex-shrink:0;margin-top:1px;">✓</span>
+          <p style="font-size:11px;color:var(--text-sub);margin:0;"><strong class="text-gold">VIP 패키지</strong> ($5,000) 보유</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <span style="color:#e05070;font-size:12px;flex-shrink:0;margin-top:1px;">✓</span>
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">직접 추천 <strong class="text-gold">10명 이상</strong></p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <span style="color:#e05070;font-size:12px;flex-shrink:0;margin-top:1px;">✓</span>
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">하부 <strong class="text-gold">Purple 직급 3명 이상</strong> 육성</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <span style="color:#e05070;font-size:12px;flex-shrink:0;margin-top:1px;">✓</span>
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">팀 누적 매출 <strong class="text-gold">$100,000 이상</strong></p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <span style="color:#e05070;font-size:12px;flex-shrink:0;margin-top:1px;">✓</span>
+          <p style="font-size:11px;color:var(--text-sub);margin:0;"><strong class="text-gold">15단계 조직 라인</strong> 확보</p>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding:7px 10px;background:rgba(220,20,60,.08);border:1px solid rgba(220,20,60,.35);border-radius:6px;text-align:center;">
+        <p style="font-size:10px;color:var(--text-sub);margin:0 0 2px;">전 세계 Red Dragon 달성자</p>
+        <p style="font-size:20px;font-weight:700;color:#e05070;margin:0;">18명</p>
+        <p style="font-size:9px;color:var(--text-sub);margin:2px 0 0;">2026-06-15 기준 · 희소성이 가치다</p>
+      </div>
+    </div>
+    <!-- 특권 -->
+    <div class="feature-box" style="padding:14px 16px;border-color:rgba(224,80,112,.4);">
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;"><i class="fa-solid fa-star" style="color:#e05070;margin-right:6px;"></i>Red Dragon 7대 특권</p>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">💰 일일 총수익 <strong style="color:#e05070;">1% 공유</strong></p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">🎁 CNYT 웰컴보너스 <strong class="text-gold">50만 개</strong> + 월 베팅 수익 CNYT</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">💱 USDT P2P <strong style="color:#e05070;">6% 마진</strong> 차익 획득</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">🔐 Red Dragon <strong class="text-gold">전용 채널</strong> 접근</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">📞 24시간 <strong class="text-gold">VIP 고객 지원</strong></p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">🌐 공식 랜킹 <strong class="text-gold">상위 표시</strong> (글로벌 명예 인정)</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">🏆 전 세계 회원 앞 <strong class="text-gold">공개 인정</strong></p>
+      </div>
+    </div>
+    <!-- USDT P2P 구조 -->
+    <div class="feature-box" style="padding:14px 16px;">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-arrows-left-right" style="color:var(--gold);margin-right:6px;"></i>USDT P2P 플랫폼 — 6% 마진 구조 (V8.9)</p>
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <div style="flex:1;background:rgba(220,20,60,.1);border:1px solid rgba(220,20,60,.35);border-radius:5px;padding:6px 8px;text-align:center;">
+          <p style="font-size:9px;color:var(--text-sub);margin:0 0 1px;">Red Dragon 매수</p>
+          <p style="font-size:14px;font-weight:700;color:#e05070;margin:0;">기준가 × 97%</p>
+        </div>
+        <div style="display:flex;align-items:center;color:var(--gold);">→</div>
+        <div style="flex:1;background:rgba(200,164,60,.09);border:1px solid rgba(200,164,60,.35);border-radius:5px;padding:6px 8px;text-align:center;">
+          <p style="font-size:9px;color:var(--text-sub);margin:0 0 1px;">신규 회원 인정가</p>
+          <p style="font-size:14px;font-weight:700;color:var(--gold);margin:0;">기준가 × 103%</p>
+        </div>
+        <div style="display:flex;align-items:center;color:var(--gold);">=</div>
+        <div style="flex:1;background:rgba(220,20,60,.07);border:1px solid rgba(220,20,60,.35);border-radius:5px;padding:6px 8px;text-align:center;">
+          <p style="font-size:9px;color:var(--text-sub);margin:0 0 1px;">순마진</p>
+          <p style="font-size:14px;font-weight:700;color:#e05070;margin:0;">6%</p>
+        </div>
+      </div>
+      <!-- 잔액 4분류 -->
+      <p style="font-size:10px;font-weight:700;color:var(--gold);margin:0 0 5px;">잔액 4분류 시스템</p>
+      <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 7px;background:rgba(200,164,60,.06);border-radius:4px;border:1px solid rgba(200,164,60,.2);">
+          <span style="font-size:10px;color:var(--text-main);">① 출금 잔액</span>
+          <span style="font-size:10px;color:var(--gold);">✅ 즉시 출금</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 7px;background:rgba(200,164,60,.04);border-radius:4px;border:1px solid rgba(200,164,60,.15);">
+          <span style="font-size:10px;color:var(--text-main);">② 입금 잔액</span>
+          <span style="font-size:10px;color:var(--text-sub);">⏳ 패키지 구매 후</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 7px;background:rgba(200,164,60,.04);border-radius:4px;border:1px solid rgba(200,164,60,.15);">
+          <span style="font-size:10px;color:var(--text-main);">③ 패키지 가치</span>
+          <span style="font-size:10px;color:var(--text-sub);">🔒 만기 전 락업</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 7px;background:rgba(200,164,60,.06);border-radius:4px;border:1px solid rgba(200,164,60,.2);">
+          <span style="font-size:10px;color:var(--text-main);">④ 보너스 USDT</span>
+          <span style="font-size:10px;color:var(--gold);">✅ 전환 후 출금</span>
+        </div>
+      </div>
+      <!-- 출금 정책 -->
+      <p style="font-size:10px;font-weight:700;color:var(--gold);margin:0 0 5px;">출금 정책</p>
+      <div style="display:flex;flex-direction:column;gap:3px;">
+        <div style="display:flex;justify-content:space-between;padding:3px 7px;background:rgba(100,100,100,.05);border-radius:4px;">
+          <span style="font-size:10px;color:var(--text-sub);">수수료</span>
+          <span style="font-size:10px;color:var(--text-main);font-weight:600;">1.5%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:3px 7px;background:rgba(100,100,100,.05);border-radius:4px;">
+          <span style="font-size:10px;color:var(--text-sub);">배치 처리</span>
+          <span style="font-size:10px;color:var(--text-main);font-weight:600;">UTC 00:00~02:00 (일 1회)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:3px 7px;background:rgba(100,100,100,.05);border-radius:4px;">
+          <span style="font-size:10px;color:var(--text-sub);">최소/최대</span>
+          <span style="font-size:10px;color:var(--text-main);font-weight:600;">$10~ / VIP $10,000/일</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 첫 달성자 12명 -->
+  <div class="highlight-box" style="padding:10px 20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div>
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin:0 0 4px;"><i class="fa-solid fa-trophy" style="margin-right:6px;"></i>2026-06-15 기준 — Red Dragon 달성자 18명 · 신규 회원 유입 <strong style="color:#e05070;">200% 증가</strong></p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">신뢰도 평판 시스템: ⭐⭐ Good (정상) → ⭐ Warning (1차 신고) → 🔒 Locked (2차 신고 · 영구 잠금) — 플랫폼 내 사기 방지 자동 실행</p>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="text-align:center;padding:6px 14px;background:rgba(200,164,60,.1);border-radius:8px;border:1px solid rgba(200,164,60,.3);">
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">🇨🇳 중국</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">8명</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">평균 수익 287%</p>
+        </div>
+        <div style="text-align:center;padding:6px 14px;background:rgba(200,164,60,.1);border-radius:8px;border:1px solid rgba(200,164,60,.3);">
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">🇬🇪 조지아</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">3명</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">평균 수익 241%</p>
+        </div>
+        <div style="text-align:center;padding:6px 14px;background:rgba(200,164,60,.1);border-radius:8px;border:1px solid rgba(200,164,60,.3);">
+          <p style="font-size:11px;color:var(--text-sub);margin:0;">🇻🇳 베트남</p>
+          <p style="font-size:16px;font-weight:700;color:var(--gold);margin:0;">1명</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">수익 216%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>10</span></div>
+</div>
+
+<!-- LONGRISE 08: SECURITY -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 08. 내 자산은 어떻게 보호되는가 — 보안 시스템</h2>
+  <div class="two-col flex-1 mb-5" style="gap:16px;">
+    <div>
+      <h3 style="font-size:15px;color:var(--gold);margin-bottom:14px;"><i class="fa-solid fa-shield-halved" style="margin-right:8px;"></i>다층 보안 아키텍처</h3>
+      <ul class="icon-list">
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-vault"></i><div><strong>Cold/Hot Wallet 분리 보관</strong><br><span class="tiny">운용 자산의 90%+ Cold Wallet 보관. API 연동 운용분만 Hot Wallet 분리 운용. 해킹·도난 위협 최소화.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-signature"></i><div><strong>Multi-Signature 트랜잭션 승인</strong><br><span class="tiny">모든 대규모 출금·이체에 다중 서명 필수. 단독 권한 탈취 불가 구조. 내부 통제 강화.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-key"></i><div><strong>분산형 API Key 암호화 관리</strong><br><span class="tiny">거래소별 API Key 분산 저장·암호화. 키 유출 시 단일 거래소에만 영향 — 전체 자산 노출 차단.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-fingerprint"></i><div><strong>2FA 이중 신원 보호</strong><br><span class="tiny">회원 로그인·출금 요청 시 2단계 인증(2FA) 적용. 비밀번호 단독 탈취로 인한 계정 접근 차단.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-lock"></i><div><strong>AES-256 + TLS 1.3 전 구간 암호화</strong><br><span class="tiny">저장 데이터 AES-256 암호화, 전송 구간 TLS 1.3 적용. 데이터 탈취·중간자 공격(MITM) 원천 차단.</span></div></li>
+        <li><i class="fa-solid fa-user-shield"></i><div><strong>분기별 외부 보안 감사</strong><br><span class="tiny">독립적 제3자 보안 감사 기관의 정기 코드 검증·취약점 점검. 감사 결과 내부 보고 체계 운영.</span></div></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:15px;color:var(--gold);margin-bottom:14px;"><i class="fa-solid fa-chart-bar" style="margin-right:8px;"></i>AI 알고리즘 리스크 관리 체계</h3>
+      <ul class="icon-list">
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-stop-circle"></i><div><strong>자동 손실 제한 (Stop-Loss) 시스템</strong><br><span class="tiny">포지션별 최대 손실 한도 사전 설정. 임계치 도달 즉시 자동 청산. 연쇄 손실 확대 차단 구조.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-scale-balanced"></i><div><strong>자산 분산 운용 원칙</strong><br><span class="tiny">단일 거래소·단일 포지션 집중 방지. 멀티-거래소·멀티-전략 분산 운용으로 시스템 리스크 완화.</span></div></li>
+        <li style="margin-bottom:12px;"><i class="fa-solid fa-gauge-high"></i><div><strong>실시간 변동성 모니터링</strong><br><span class="tiny">시장 변동성 급등 시 알고리즘 자동 전략 전환. 비정상 시장 환경 감지 시 포지션 자동 축소 또는 대기 모드 전환.</span></div></li>
+        <li><i class="fa-solid fa-file-shield"></i><div><strong>거래 로그 투명 기록</strong><br><span class="tiny">모든 운용 트랜잭션 타임스탬프 기록. 내부 감사·규제 기관 제출 대비 완전한 추적 가능성 확보.</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <!-- 서킷브레이커 3단계 -->
+  <div style="margin-top:10px;">
+    <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-bolt" style="color:var(--gold);margin-right:6px;"></i>서킷브레이커 자동 방어 시스템 — 준비금(83%) 기반 3단계 발동</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="padding:9px 12px;background:rgba(255,200,0,.06);border:1px solid rgba(255,200,0,.35);border-radius:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <p style="font-size:12px;font-weight:700;color:#f0c040;margin:0;">Level 1 — 경보</p>
+          <span style="font-size:10px;color:#f0c040;font-weight:700;">75%~83%</span>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin:0;">준비금이 목표 아래 하락 시 발동<br>→ 신규 패키지 판매 일시 중단 · 공개 공지 발송</p>
+      </div>
+      <div style="padding:9px 12px;background:rgba(255,120,0,.06);border:1px solid rgba(255,120,0,.35);border-radius:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <p style="font-size:12px;font-weight:700;color:#f07030;margin:0;">Level 2 — 방어</p>
+          <span style="font-size:10px;color:#f07030;font-weight:700;">50%~75%</span>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin:0;">지속적 준비금 감소 시 발동<br>→ CNYT 수익 비율 조정 · 수익 분배 사이클 연장</p>
+      </div>
+      <div style="padding:9px 12px;background:rgba(220,20,60,.07);border:1px solid rgba(220,20,60,.4);border-radius:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <p style="font-size:12px;font-weight:700;color:#e05070;margin:0;">Level 3 — 비상</p>
+          <span style="font-size:10px;color:#e05070;font-weight:700;">50% 미만</span>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin:0;">심각한 준비금 고갈 시 발동<br>→ 멀티시그 긴급 소집 · 출금 일시 제한 · 재단 비상 자금 투입</p>
+      </div>
+    </div>
+    <p style="font-size:10px;color:var(--text-sub);margin-top:6px;"><strong class="text-gold">핵심 원칙</strong>: 스마트컨트랙트가 온체인 준비금을 실시간 모니터링 — 서킷브레이커는 <strong class="text-gold">자동 실행</strong> (인간 판단 개입 최소화)</p>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>11</span></div>
+</div>
+
+<!-- LONGRISE 09: TEAM & LEADERSHIP -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 09. 신뢰할 수 있는 팀 — 글로벌 전문가 11인 & HCF 전략 파트너십</h2>
+  <div class="highlight-box mb-5" style="padding:10px 20px;text-align:center;">
+    <p class="small" style="color:var(--text-main);"><strong class="text-gold">Google DeepMind · Renaissance Technologies · Goldman Sachs · Binance · Ethereum Foundation</strong> 출신 전문가 11인이 구성한 핵심 운영진입니다.<br>
+    <span style="font-size:11px;color:var(--text-sub);">AI 알고리즘 · 퀀트 트레이딩 · 블록체인 · 글로벌 오퍼레이션 · 법무·컴플라이언스 분야 전문가 집단</span></p>
+  </div>
+  <!-- 5 core executives -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px;">
+    <div class="feature-box text-center" style="padding:12px 8px;">
+      <i class="fa-solid fa-crown" style="font-size:18px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+      <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px;">CEO</p>
+      <p style="font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px;">David Kvaratskhelia</p>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">조지아 출신<br>Google DeepMind<br>AlphaTrade 초기팀<br>Palantir AI 아키텍트</p>
+    </div>
+    <div class="feature-box text-center" style="padding:12px 8px;">
+      <i class="fa-solid fa-microchip" style="font-size:18px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+      <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px;">CTO</p>
+      <p style="font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Marcus Chen</p>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">싱가포르 출신<br>Renaissance Technologies<br>Medallion Fund 서브모델<br>Jane Street Principal Quant</p>
+    </div>
+    <div class="feature-box text-center" style="padding:12px 8px;">
+      <i class="fa-solid fa-gear" style="font-size:18px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+      <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px;">COO</p>
+      <p style="font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Elena Volkov</p>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">러시아 출신 (두바이)<br>Binance 글로벌 확장 총괄<br>FTX 아시아 오퍼레이션<br>플랫폼 운영 총괄</p>
+    </div>
+    <div class="feature-box text-center" style="padding:12px 8px;">
+      <i class="fa-solid fa-chart-line" style="font-size:18px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+      <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px;">Chief Quant</p>
+      <p style="font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Dr. Arjun Mehta</p>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">MIT Sloan 금융공학 박사<br>Goldman Sachs Strats<br>리스크 관리 총괄<br>Adaptive Retraining 설계</p>
+    </div>
+    <div class="feature-box text-center" style="padding:12px 8px;">
+      <i class="fa-brands fa-ethereum" style="font-size:18px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+      <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px;">Chief Blockchain</p>
+      <p style="font-size:13px;font-weight:700;color:var(--text-main);margin-bottom:4px;">Sofia Andreou</p>
+      <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">그리스 출신<br>Ethereum Foundation<br>Chainlink Protocol<br>CNYT 스마트컨트랙트 설계</p>
+    </div>
+  </div>
+  <!-- remaining 6 + HCF -->
+  <div class="two-col" style="gap:12px;">
+    <div class="box p-4" style="border-color:rgba(197,168,128,.35);">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-users" style="margin-right:6px;color:var(--gold);"></i>나머지 창업팀 6인</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;">
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Michael Torres</strong> · Chief Data Scientist (Grab Financial)</p>
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Lisa Kim</strong> · Head of UX/Product (Kakao Pay AI)</p>
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Ahmad Hassan</strong> · Head of Compliance (ADIA)</p>
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Priya Sharma</strong> · VP of Engineering (Infosys AI)</p>
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Wang Lei</strong> · Head of Asia Expansion (Ant Group)</p>
+        <p style="font-size:11px;color:var(--text-sub);"><strong class="text-gold" style="font-size:11px;">Fatima Al-Rashid</strong> · Director ME Operations (Gulf Capital)</p>
+      </div>
+    </div>
+    <div class="box p-4" style="border-color:rgba(197,168,128,.5);">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;"><i class="fa-solid fa-handshake" style="margin-right:6px;color:var(--gold);"></i>글로벌 파트너십 — 공식 체결 완료</p>
+      <p style="font-size:11px;color:var(--text-sub);line-height:1.8;">HCF(Horizon Capital Foundation) · 카지노 RWA 기반 디지털 자산 생태계 구축 전문 재단<br>
+      실물 카지노 RWA 포트폴리오 <strong class="text-gold">~$700M</strong><br>
+      소스코드·보안 감사·법적 구조 검토 등 실사 완료 후 공식 파트너십 체결<br>
+      <span style="color:var(--gold);font-weight:700;">협의 결과: CNYT 10억 개 발행 · 시작가 $0.01 · 목표가 $1.00 (준비 요건 충족 조건부)</span></p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>12</span></div>
+</div>
+
+<!-- LONGRISE 10: ROADMAP -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 10. 도전과 극복의 여정 — 개발 연혁 & 성장 로드맵</h2>
+  <div class="two-col" style="gap:14px;margin-bottom:10px;">
+    <!-- LEFT: 개발 연혁 -->
+    <div>
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;letter-spacing:1.5px;"><i class="fa-solid fa-clock-rotate-left" style="color:var(--gold);margin-right:6px;"></i>기술 검증 과정 — 단계별 고도화로 완성된 엔진</p>
+      <div style="position:relative;padding-left:16px;border-left:2px solid rgba(200,164,60,.3);display:flex;flex-direction:column;gap:8px;">
+        <div>
+          <p style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:2px;">✓ 단독 운용 검증 단계</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">Casino AI 단독, HFT 단독 각각 운용 테스트. 단독 운용의 구조적 한계를 확인하고, 두 엔진의 결합 설계를 결정했습니다.</p>
+        </div>
+        <div>
+          <p style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:2px;">✓ 2024 상반기 — 쌍둥이 엔진 탄생</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">Casino AI("언제") + HFT("어떻게") 결합. Adaptive Retraining Pipeline: 정확도 자동 유지 시스템 적용. <strong class="text-gold">결합 정확도 83.7% · Drift 주기 11개월</strong></p>
+        </div>
+        <div>
+          <p style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:2px;">✓ 2024 하반기 — 글로벌 파트너십 & 베타 테스트</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">글로벌 파트너십 체결. Alpha·Beta1·Beta2·Pre-Launch 4단계 검증 완료. 가동률 <strong class="text-gold">99.97%</strong> · 수익 배분 100% 달성.</p>
+        </div>
+        <div>
+          <p style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:2px;">✓ 2025년 — 공식 출시</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">LONGRISE AI 전 세계 공식 오픈. 매일 UTC 06:00 USDT 정산 시작. 글로벌 9개국 250,000명 운용 중.</p>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: 앞으로 -->
+    <div>
+      <p class="kicker" style="font-size:11px;margin-bottom:10px;letter-spacing:1.5px;"><i class="fa-solid fa-rocket" style="color:var(--gold);margin-right:6px;"></i>론칭 로드맵 — 2026~2030</p>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div class="box" style="padding:9px 12px;border-color:rgba(200,164,60,.6);">
+          <p style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:3px;">🎯 2026년 5월 — LONGRISE AI 일반 참여자 오픈</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">플랫폼 정식 공개. $100~ 플랜 가입 개시. CNYT 파트너십 참여 채널 공개.</p>
+        </div>
+        <div class="box" style="padding:9px 12px;">
+          <p style="font-size:12px;color:var(--text-main);font-weight:700;margin-bottom:3px;">📍 2026년 하반기 — GCC 카지노 허브 풀스케일</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">Golden Palace(🇬🇪)·VIP Junket Lounge(🇻🇳)·VIP Table Rights(🇵🇭)·Ocean Star Resort(🇰🇭)·VIP Club Bucharest(🇷🇴)·Marina Premium Club(🇸🇬) 6개 허브 본격 가동.</p>
+        </div>
+        <div class="box" style="padding:9px 12px;border-color:rgba(200,164,60,.4);">
+          <p style="font-size:12px;color:var(--text-main);font-weight:700;margin-bottom:3px;">🏁 2027년 6월 — CNYT 거래소 상장 목표</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">글로벌 주요 거래소 CNYT 공개 상장. 초기 배정가 $0.01 → 목표가 $1.00. CNYT 스테이킹 수익 분기 배분 정기화.</p>
+        </div>
+        <div class="box" style="padding:9px 12px;">
+          <p style="font-size:12px;color:var(--text-main);font-weight:700;margin-bottom:3px;">📍 2028년 Q1 — CND 정식 출시</p>
+          <p style="font-size:10px;color:var(--text-sub);line-height:1.6;">프라이버시 보존형 카지노 정산 자산 CND 공식 출시. CNYT→CND 전환 채널 개방. GCC 40개국·500만 명 달성 목표.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="padding:9px 18px;">
+    <div style="display:flex;justify-content:space-around;align-items:center;">
+      <div style="text-align:center;"><p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">250,000명</p><p class="tiny">글로벌 9개국 활성 회원</p></div>
+      <div style="width:1px;height:32px;background:var(--border);"></div>
+      <div style="text-align:center;"><p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">$265M+</p><p class="tiny">18개월 누적 수익 분배</p></div>
+      <div style="width:1px;height:32px;background:var(--border);"></div>
+      <div style="text-align:center;"><p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">500배</p><p class="tiny">18개월 회원 성장률</p></div>
+      <div style="width:1px;height:32px;background:var(--border);"></div>
+      <div style="text-align:center;"><p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">99.97%</p><p class="tiny">플랫폼 가동률</p></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>13</span></div>
+</div>
+
+<!-- LONGRISE 11: COMPETITIVE ANALYSIS -->
+<div class="slide">
+  <h2 class="slide-title">LONGRISE 11. LONGRISE AI가 유일한 이유 — 경쟁 우위 분석</h2>
+  <div class="flex-1 flex flex-col" style="gap:22px;">
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th style="width:18%;">비교 항목</th>
+          <th style="width:26%;text-align:center;">르네상스·시타델</th>
+          <th style="width:26%;text-align:center;">일반 금융 시장</th>
+          <th style="width:30%;text-align:center;background:rgba(180,40,40,0.55);color:var(--gold);letter-spacing:1px;">LONGRISE AI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong class="text-gold">참여 방식</strong></td>
+          <td style="text-align:center;">폐쇄형 (기관 전용)</td>
+          <td style="text-align:center;">개방형 (무제한)</td>
+          <td style="text-align:center;color:var(--gold);font-weight:500;">개방형 (글로벌 파트너십)</td>
+        </tr>
+        <tr>
+          <td><strong class="text-gold">진입 기준</strong></td>
+          <td style="text-align:center;">최소 수천억 원 단위</td>
+          <td style="text-align:center;">별도 진입 기준 없음</td>
+          <td style="text-align:center;color:var(--gold);font-weight:500;">$100부터 소액 참여 가능</td>
+        </tr>
+        <tr>
+          <td><strong class="text-gold">수익 분배 구조</strong></td>
+          <td style="text-align:center;">운용사 독점 (수수료 최대 44%)</td>
+          <td style="text-align:center;">운용 보수 차감형</td>
+          <td style="text-align:center;color:var(--gold);font-weight:500;">참여자·리더 성과 직접 배분</td>
+        </tr>
+        <tr>
+          <td><strong class="text-gold">수익 창출 구조</strong></td>
+          <td style="text-align:center;">알고리즘 퀀트 (비공개)</td>
+          <td style="text-align:center;">인덱스·가치운용</td>
+          <td style="text-align:center;color:var(--gold);font-weight:500;">AI HFT + 자동 복리 재투입 엔진</td>
+        </tr>
+        <tr>
+          <td><strong class="text-gold">생태계 연동</strong></td>
+          <td style="text-align:center;">해당 없음</td>
+          <td style="text-align:center;">해당 없음</td>
+          <td style="text-align:center;color:var(--gold);font-weight:500;">CNYT 파트너십 생태계 완전 통합</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="two-col" style="gap:20px;">
+      <div class="highlight-box">
+        <p class="kicker" style="margin-bottom:8px;">기관 자본의 기술 독점 구조</p>
+        <p class="small">르네상스·시타델 등 최상위 헤지펀드의 알고리즘 수익 구조는 수천억 원 단위 기관 자본과 폐쇄적 네트워크를 가진 소수만 접근 가능합니다. 높은 진입 장벽이 개인과의 수익 격차를 구조적으로 유지시켜 왔습니다.</p>
+      </div>
+      <div class="highlight-box" style="border-color:rgba(200,164,60,.7);">
+        <p class="kicker" style="margin-bottom:8px;">LONGRISE AI의 기술 민주화 전략</p>
+        <p class="small">LONGRISE AI는 기관급 퀀트 알고리즘을 파트너십 생태계로 개방합니다. $100부터 VIP까지 동일한 수익 구조를 제공하며, 수익은 투명한 계약 기반으로 참여자에게 직접 배분됩니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>14</span></div>
+</div>
+
+<!-- SLIDE 09 — CNYT 01: STRATEGIC PARTNER INTRO -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 01. CNYT란 무엇인가 — HCF 파트너십 디지털 자산</h2>
+  <div class="highlight-box mb-6" style="text-align:center;">
+    <p class="text-lg" style="color:var(--text-main);">
+      <strong class="text-gold">CNYT</strong>는 글로벌 파트너십 기반 AI 운영 생태계의 권리 관계를 디지털 자산으로 구조화한<br>
+      <strong>파트너십 디지털 자산</strong>입니다. LONGRISE AI의 운영 정책과 연동되는 구조를 설명하기 위한 핵심 요소입니다.
+    </p>
+  </div>
+  <div class="three-col mb-6">
+    <div class="feature-box text-center">
+      <i class="fa-solid fa-handshake" style="font-size:28px;color:var(--gold);display:block;margin-bottom:10px;"></i>
+      <div class="feature-title" style="justify-content:center;">글로벌 파트너십 기반</div>
+      <p class="tiny">LONGRISE AI의 AI 알고리즘 운용 플랫폼 및 GCC 글로벌 카지노 컨시어지 사업에 자본·네트워크·인프라를 연결하는 공식 파트너십 생태계입니다.</p>
+    </div>
+    <div class="feature-box text-center" style="border-color:rgba(197,168,128,.45);">
+      <i class="fa-solid fa-coins" style="font-size:28px;color:var(--gold);display:block;margin-bottom:10px;"></i>
+      <div class="feature-title" style="justify-content:center;">CNYT 파트너십 자산</div>
+      <p class="tiny">CNYT 보유자는 파트너십 구조 안에서 LONGRISE AI의 운영 프레임워크와 연결됩니다. 적격 스테이킹 시 CND 수수료 정책과 관련된 권리 구조가 적용됩니다.</p>
+    </div>
+    <div class="feature-box text-center">
+      <i class="fa-solid fa-arrow-trend-up" style="font-size:28px;color:var(--gold);display:block;margin-bottom:10px;"></i>
+      <div class="feature-title" style="justify-content:center;">운영 연동 구조</div>
+      <p class="tiny">LONGRISE AI 운영 성과 → 파트너십 생태계 확장 → CNYT 스테이킹 정책 연동. 플랫폼 구조가 확장될수록 관련 운영 범위도 함께 넓어집니다.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="box p-6">
+      <h4 class="feature-title"><i class="fa-solid fa-arrow-trend-up"></i>CNYT 운영 연동 구조</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(200,164,60,.05);border-radius:6px;border:1px solid rgba(200,164,60,.2);">
+          <i class="fa-solid fa-robot" style="color:var(--gold);font-size:16px;flex-shrink:0;"></i>
+          <p class="tiny" style="margin:0;"><strong>LONGRISE AI</strong> — AI HFT 알고리즘 기반 거래 및 운영 인프라</p>
+        </div>
+        <div style="text-align:center;color:var(--gold);font-size:14px;">↓</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(200,164,60,.05);border-radius:6px;border:1px solid rgba(200,164,60,.2);">
+          <i class="fa-solid fa-coins" style="color:var(--gold);font-size:16px;flex-shrink:0;"></i>
+          <p class="tiny" style="margin:0;"><strong>파트너십 생태계</strong> — 운영 권리와 정책을 구조화하여 참여자와 연결</p>
+        </div>
+        <div style="text-align:center;color:var(--gold);font-size:14px;">↓</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(200,164,60,.08);border-radius:6px;border:1px solid rgba(200,164,60,.35);">
+          <i class="fa-solid fa-user" style="color:var(--gold);font-size:16px;flex-shrink:0;"></i>
+          <p class="tiny" style="margin:0;"><strong>참여자</strong> — CNYT 연계 정책 + 스테이킹 기반 운영 권리 적용</p>
+        </div>
+      </div>
+    </div>
+    <div class="box p-6">
+      <h4 class="feature-title"><i class="fa-solid fa-user-tie"></i>CNYT 파트너십 토큰 핵심 조건</h4>
+      <div class="note" style="margin-bottom:12px;">
+        <p class="tiny">• 고정 총 발행량: <strong>1,000,000,000 개</strong> (추가 발행 불가)<br>• 초기 참조가: <strong>$0.01</strong> · 내부 기준가: <strong style="color:var(--gold);">$0.021 (2026.06.27 기준)</strong> · 장기 운영 목표치: <strong>$1.00</strong><br>• 운영 연동: LONGRISE 운용 성과 + CND 생태계 수수료 정책<br>• 분배 기준 예시: <strong class="text-gold">운영 정책 및 내부 산식에 따라 별도 적용</strong></p>
+      </div>
+      <p class="small">CNYT는 카지노 자산에 대한 직접 소유권이 아닌, HCF-LONGRISE 파트너십에 기여된 <strong>계약적 권리 및 수익 분배 청구권</strong>을 구조화한 증권형 디지털 자산입니다.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>15</span></div>
+</div>
+
+<!-- SLIDE 08 — CNYT 02: PARTNERSHIP STRUCTURE -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 02. CNYT 배정 구조 — 누가 얼마나 받나</h2>
+  <p class="text-lg mb-6" style="color:var(--text-sub);">CNYT 총 발행량 10억 개는 고정이며 추가 발행이 없습니다. 참여자 배정 풀 <strong class="text-gold">50%(5억 개)</strong>가 LONGRISE AI 플랫폼을 통한 성과 기반 참여 회원에게 배정됩니다.</p>
+  <div class="highlight-box mb-6" style="text-align:center;">
+    <p style="font-size:32px;font-weight:700;color:var(--gold);margin:0;">50%</p>
+    <p class="small" style="margin:4px 0 0;">총 발행량 10억 개 중 <strong>5억 개</strong>가 참여자 배정 풀로 고정 예약 — 추가 발행 없음</p>
+  </div>
+  <div class="two-col">
+    <div class="highlight-box">
+      <p class="kicker" style="margin-bottom:8px;">파트너십 구조의 핵심 원칙</p>
+      <p class="small">CNYT는 카지노 자산에 대한 직접 소유권이 아니라, <strong>HCF-LONGRISE 파트너십 구조에 기여·배정된 계약적 수익 권리</strong>를 디지털화한 자산입니다. 파트너십 밖의 자산은 포함되지 않습니다.</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-title"><i class="fa-solid fa-door-open"></i>CNYT 파트너십 참여 채널</div>
+      <p class="small">HCF는 LONGRISE AI를 통해 일반 참여자에게 파트너십 참여 경로를 제공합니다. 공개 판매·에어드롭·외부 소매 채널은 운영되지 않으며, <strong>LONGRISE AI 플랫폼이 현행 유일한 파트너십 참여 게이트웨이</strong>입니다.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>16</span></div>
+</div>
+
+<!-- SLIDE 09 — CNYT 03: PARTNERSHIP ASSET NETWORK -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 03. ~$700M 자산이 뒷받침하는 CNYT의 가치</h2>
+  <p class="text-lg mb-6" style="color:var(--text-sub);">HCF는 LONGRISE AI와의 파트너십을 통해 글로벌 카지노 네트워크에 연결된 자산 기반을 확보하고 있습니다. 아래 수치는 이 파트너십의 규모와 잠재 가치를 보여주는 참고 지표입니다.</p>
+  <div class="three-col mb-8">
+    <div class="stat-card"><span class="stat-number">~$700M</span><div class="stat-label">HCF 파트너십 연계 카지노 네트워크 자산 규모 (참고)</div></div>
+    <div class="stat-card"><span class="stat-number">$10M</span><div class="stat-label">CNYT 파트너십 토큰 초기 총 참조 가치</div></div>
+    <div class="stat-card" style="border-color:rgba(197,168,128,.5);"><span class="stat-number">$100M+</span><div class="stat-label">파트너십 생태계 장기 가치 목표</div></div>
+  </div>
+  <ul class="icon-list">
+    <li><i class="fa-solid fa-network-wired"></i><strong>USD ~$700M — 파트너십 연계 카지노 네트워크 규모:</strong> HCF가 LONGRISE AI를 통해 연결된 글로벌 6개 카지노 허브의 배포 자산 참고 수치입니다. CNYT 담보 자산으로 직접 편입되는 수치가 아니며, 파트너십의 시장 접근 규모를 나타냅니다.</li>
+    <li><i class="fa-solid fa-coins"></i><strong>USD 10M — CNYT 파트너십 토큰 초기 총 참조 가치:</strong> 총 발행량 10억 개 × $0.01 초기 참조가 기준. 현재 시장 가격 또는 보증 가치가 아니며, 파트너십 출발점을 나타내는 기준치입니다.</li>
+    <li><i class="fa-solid fa-chart-line"></i><strong>USD 100M+ — 파트너십 생태계 장기 목표가:</strong> LONGRISE AI 운용 수익 성장, CND 교환·정산 수수료 확대, GCC 오프라인 네트워크 확장을 통해 달성 가능한 파트너십 기업 가치 목표입니다.</li>
+  </ul>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>17</span></div>
+</div>
+
+<!-- SLIDE 10 — CNYT 04: PARTNERSHIP HISTORY -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 04. CNYT의 시작 — HCF·LONGRISE 파트너십 연혁</h2>
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="box p-8 mb-6">
+      <p class="text-xl"><strong>2024년 10월</strong> — HCF, LONGRISE AI와의 전략적 파트너십 공식 체결. 고정 발행량 10억 개 CNYT 최초 발행·등록. CND 생태계 재원 설계 착수.</p>
+    </div>
+    <div class="box p-8 mb-6">
+      <p class="text-xl"><strong>2024년 12월 15일</strong> — CNYT 발행량의 50%를 LONGRISE AI 회원 파트너십 분배 풀로 공식 배정 확정. LONGRISE AI 플랫폼 참여자가 HCF 파트너십에 성과 기반으로 동참하는 단계적 인센티브 구조 확립.</p>
+    </div>
+    <div class="box p-8 mb-6">
+      <p class="text-xl"><strong>2025~2026년</strong> — 바이백·P2P·스테이킹·거버넌스·준비금 등 운영 프레임워크 완성. GCC 싱가포르 법인 설립 및 Eclipse Casino·Grand Casino Beograd·VIP Junket Rooms 등 6개 글로벌 카지노 허브 파트너십 체결.</p>
+    </div>
+    <div class="box p-8" style="border-color:rgba(197,168,128,.5);">
+      <p class="text-xl"><strong>2026년 5월</strong> — <strong class="text-gold">LONGRISE AI 플랫폼 + HCF-CNYT 파트너십 생태계 공식 론칭.</strong> 일반 게임참여자 대상 CNYT 파트너십 참여 채널 정식 개방.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>18</span></div>
+</div>
+
+<!-- SLIDE 11 — CNYT 05: LONGRISE AS REVENUE ENGINE -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 05. CNYT 수익 공급 구조</h2>
+  <div class="highlight-box mb-6">
+    <p class="text-lg text-center" style="color:var(--text-main);">
+      <strong class="text-gold">LONGRISE AI가 창출하는 운용 수익</strong>이<br>
+      CNYT 파트너십 생태계를 통해 참여자에게 환원되는 구조입니다.<br>
+      LONGRISE AI 플랫폼 참여는 곧 <strong class="text-gold">CNYT 파트너십에 실질적으로 동참하는 경로</strong>입니다.
+    </p>
+  </div>
+  <div class="two-col flex-1">
+    <div class="box p-8">
+      <h3 class="text-xl text-gold mb-6">CNYT 운영 연계 3가지 경로</h3>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-robot"></i><strong>AI HFT 운영 엔진:</strong> LONGRISE AI 플랫폼의 거래 및 운영 인프라가 CNYT 구조의 기반 역할을 수행합니다.</li>
+        <li><i class="fa-solid fa-key"></i><strong>CNYT 공식 운영 채널:</strong> LONGRISE AI는 일반 이용자가 CNYT 파트너십 구조를 확인할 수 있는 <strong>현행 공식 채널</strong>입니다.</li>
+        <li><i class="fa-solid fa-coins"></i><strong>CNYT 단계별 배정 구조:</strong> LONGRISE AI 플랫폼 활동 기준에 따라 CNYT 연계 범위가 단계적으로 적용됩니다.</li>
+      </ul>
+    </div>
+    <div class="box p-8">
+      <h3 class="text-xl text-gold mb-6">파트너십 참여 기여도 평가 기준</h3>
+      <p class="small mb-4">CNYT 파트너십 배정 규모는 LONGRISE AI 내에서의 기여도를 기반으로 산정됩니다. 더 많이 기여할수록 더 많은 파트너십 지분을 확보합니다.</p>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-layer-group"></i><strong>드래곤 등급(Dragon Tier)</strong> — 파트너십 기여도를 반영한 멤버십 직급</li>
+        <li><i class="fa-solid fa-calendar"></i><strong>플랫폼 참여 기간</strong> — 지속적 기여 이력</li>
+        <li><i class="fa-solid fa-robot"></i><strong>AI 자동 운용 서비스 이용 실적</strong></li>
+        <li><i class="fa-solid fa-chart-bar"></i><strong>거래 볼륨 및 조직 운영 기여도</strong></li>
+        <li><i class="fa-solid fa-seedling"></i><strong>파트너십 생태계 전반 기여 실적</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>19</span></div>
+</div>
+
+<!-- SLIDE 12 — CNYT 06: BUYBACK & INVESTOR PROTECTION -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 06. 내 CNYT는 안전한가 — 운영 보호 구조</h2>
+  <div class="flex-1">
+    <div class="three-col mb-8">
+      <div class="feature-box">
+        <h4 class="feature-title"><i class="fa-solid fa-gift"></i>① 토큰 배정</h4>
+        <p class="small">적격 LONGRISE 활동 실적에 기반하여 CNYT 크레딧이 지급됩니다.</p>
+      </div>
+      <div class="feature-box">
+        <h4 class="feature-title"><i class="fa-solid fa-clock"></i>② 7일 결정 기간</h4>
+        <p class="small">회원은 내부 P2P 재판매 또는 플랫폼 운영 정책에 따른 정산 절차 중 하나를 선택합니다.</p>
+      </div>
+      <div class="feature-box">
+        <h4 class="feature-title"><i class="fa-solid fa-lock"></i>③ 커스터디 풀 편입</h4>
+        <p class="small">미결정 잔액은 수탁 커스터디 풀에 자동 편입되어 <strong>12개월 보호예수(Lock-up)</strong>가 적용됩니다.</p>
+      </div>
+    </div>
+    <ul class="icon-list">
+      <li><i class="fa-solid fa-money-bill-transfer"></i>LONGRISE는 각 7일 사이클 개시 전 <strong>정산 기준과 처리 절차를 사전 공지</strong>하며, 적격 요청을 내부 정책에 따라 처리합니다.</li>
+      <li><i class="fa-solid fa-coins"></i>정산 재원과 처리 방식은 LONGRISE 운영 정책에 따라 관리되며, CND 출시 이전에는 내부 준비금 및 커스터디 체계를 중심으로 운영됩니다.</li>
+      <li><i class="fa-solid fa-ban"></i><strong>12개월 보호예수 풀은 정기 보상을 지급하지 않으며</strong>, 회원에게 직접적인 CND 전환 권리를 부여하지 않습니다.</li>
+    </ul>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>20</span></div>
+</div>
+
+<!-- SLIDE 13 — CNYT 07: MATURITY & P2P -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 07. 만기 후 선택 — 정산·재운용·P2P 거래</h2>
+  <div class="two-col mb-6">
+    <div class="box p-8">
+      <h3 class="text-xl text-main mb-4">12개월 만기 시 처리 옵션</h3>
+      <p class="small mb-4">LONGRISE는 만기 전 USDT 전환 기준가를 사전 공지하며 회원에게 <strong>14일의 선택 기간</strong>을 부여합니다.</p>
+      <div class="two-col">
+        <div class="note" style="text-align:center;"><strong>① 전액 USDT 전환 및 출금</strong></div>
+        <div class="note" style="text-align:center;"><strong>② 신규 12개월 사이클 재예치</strong></div>
+      </div>
+      <p class="small mt-4">만기 정산으로 회수된 CNYT는 LONGRISE 전략 준비 풀 또는 회원 에코시스템 분배 풀로 재배분될 수 있습니다.</p>
+    </div>
+    <div class="box p-8">
+      <h3 class="text-xl text-main mb-4">내부 P2P 거래 시장</h3>
+      <ul class="icon-list">
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-users"></i>현행 2차 거래는 내부 P2P 시장을 통한 <strong>적격 LONGRISE 회원 간 거래</strong>로 한정</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-scale-balanced"></i>거래 기간별 <strong>참조 가격 및 허용 변동 범위</strong> 사전 공시</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-percent"></i>매도자 거래 수수료 적용 / 매수자 거래 수수료 면제</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-hourglass-half"></i>P2P 수령 시마다 <strong>신규 7일 결정 기간</strong> 재개시</li>
+        <li style="margin-bottom:0;"><i class="fa-solid fa-shield-halved"></i>세탁 거래·연계 계정 이상 거래·인위적 거래량 상시 모니터링 및 제한</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    <strong>외부 거래소 상장 계획:</strong> 현행 폐쇄형 유통 구조는 프로젝트 현 단계를 반영하는 한시적 조치입니다. 법적 구조화·커스터디·유동성·거버넌스·상장 요건 충족 시 외부 거래소 상장 추진. <strong>목표 시점: 2027년 6월</strong>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>21</span></div>
+</div>
+
+<!-- SLIDE 14 — CNYT 08: CND DESIGN & CONVERSION -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 08. CND — 차세대 카지노 정산 자산 & 전환 구조</h2>
+  <div class="grid grid-cols-2 gap-8 mb-6" style="flex:1;">
+    <div class="box p-8">
+      <h3 class="text-xl text-gold mb-4">CND 설계 원칙</h3>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-dollar-sign"></i><strong>1 CND ≈ USD 1</strong> 참조 가치. 협업 거점에서 현지 통화·카지노 칩·승인 서비스로의 실시간 전환 지원</li>
+        <li><i class="fa-solid fa-building-circle-xmark"></i><strong>법정화폐 직접 청구권 미부여:</strong> 재단 또는 규제 금융기관에 대한 직접 법정화폐 상환권 미포함. 협업 카지노·정켓·파트너사를 통해 전환</li>
+        <li><i class="fa-solid fa-percentage"></i><strong>수익 창출 모델:</strong> 카지노 교환·결제·정산 수수료 — 특정 채널 두 자릿수 수수료율 달성 가능</li>
+        <li><i class="fa-solid fa-vote-yea"></i><strong>거버넌스:</strong> 활성 스테이킹 CNYT 보유량 기준 분기 투표 — CND 수수료 배분율 결정</li>
+        <li><i class="fa-solid fa-calendar-check"></i><strong>정식 출시 목표: 2028년 Q1</strong> (준비 요건 충족 조건부)</li>
+      </ul>
+    </div>
+    <div class="box p-8">
+      <h3 class="text-xl text-gold mb-4">CNYT → CND 전환 구조</h3>
+      <ul class="icon-list">
+        <li><i class="fa-solid fa-arrow-right-arrow-left"></i><strong>단방향 전환 원칙:</strong> CNYT → CND 전환 가능 / CND → CNYT 역전환 불가</li>
+        <li><i class="fa-solid fa-fire"></i><strong>전환 CNYT 영구 소각:</strong> 전환된 CNYT는 영구 소각 처리 → 총 발행량 및 유통량 순감</li>
+        <li><i class="fa-solid fa-chart-line"></i><strong>전환 가격 산정:</strong> CNYT 24시간 TWAP(시간가중평균가격) + 별도 고정 전환 수수료 적용</li>
+        <li><i class="fa-solid fa-users-gear"></i><strong>접근 우선순위:</strong> 승인된 전략적 참여자 우선 처리 → 단계별 확대. LONGRISE의 우선 접근권 인정, 우대 가격 미적용</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    LONGRISE 회원 보상 잔액은 CND 직접 전환 권리를 보유하지 않습니다. LONGRISE는 자신의 전략 풀로 유효하게 재취득한 CNYT에 한하여 전환을 실행할 수 있습니다.
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>22</span></div>
+</div>
+
+<!-- SLIDE 15 — CNYT 09: RESERVE FRAMEWORK -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 09. CND를 지키는 준비금 시스템</h2>
+  <div class="three-col mb-6">
+    <div class="feature-box">
+      <h4 class="feature-title"><i class="fa-solid fa-building-columns"></i>카지노 실물 자산 중심 구성</h4>
+      <p class="small">운영권·수익 분배권·정켓 이익·환전 준비금·리조트 지분 및 관련 민간 게이밍 자산. 게이밍 연동 자산은 독립 외부 감정평가·실제 운영 성과·할인 예상 현금흐름(DCF) 혼합 방식으로 평가.</p>
+    </div>
+    <div class="feature-box">
+      <h4 class="feature-title"><i class="fa-solid fa-wallet"></i>유동성 지원 자산</h4>
+      <p class="small">현금성 자산 및 유동 디지털 자산이 정산·준비금 운용을 지원. 정기 독립 가치 평가: <strong>연 1회</strong> 외부 평가, 분기별 내부 모니터링, 필요 시 수시 재평가 실시.</p>
+    </div>
+    <div class="feature-box" style="border-color:rgba(197,168,128,.45);">
+      <h4 class="feature-title"><i class="fa-solid fa-shield"></i>최소 준비율 110% 의무화</h4>
+      <p class="small">집계 리스크 조정 준비금 가치는 발행 CND 참조가 기준의 <strong>최소 110% 이상</strong>을 유지해야 합니다. 110% 미달 시: 신규 CND 발행 및 CNYT→CND 전환 즉시 중단 / 재단의 복구 계획 이행 의무화.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="note">
+      <strong>준비율 복구 수단:</strong> 추가 유동성 기여, 수익 유보, 리스크 노출 축소, 자산 매각, 준비금 구조 재조정.
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>23</span></div>
+</div>
+
+<!-- SLIDE 16 — CNYT 10: PRIVACY ARCHITECTURE -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 10. 거래 기밀 보호 — CND 프라이버시 설계</h2>
+  <div class="flex-1 flex flex-col justify-center">
+    <p class="text-lg mb-6">CND는 <strong>프라이버시 보존형 카지노 교환·정산 디지털 자산</strong>으로 설계됩니다. 발신자·수신자·거래 금액·지갑 연관관계·정산 이력은 기본적으로 공개 원장에 노출되지 않아야 합니다.</p>
+    <div class="two-col mb-6">
+      <div class="box p-8">
+        <h3 class="text-xl text-main mb-4">승인 당사자를 위한 프라이빗 원장</h3>
+        <p class="small">양 당사자의 합의 하에 승인된 키 보유자는 완전한 거래 기록을 비공개 원장 형태로 열람할 수 있습니다.</p>
+        <p class="small mt-4">규제 당국·외부 감사·사법 요건을 충족하는 컴플라이언스 레이어를 제공합니다.</p>
+      </div>
+      <div class="box p-8">
+        <h3 class="text-xl text-main mb-4">제3자를 위한 암호학적 유효성 증명</h3>
+        <p class="small">제3자는 거래 당사자 신원·금액·기밀 거래 정보의 노출 없이, 거래의 유효성만을 확인하는 <strong>영지식증명(ZKP, Zero-Knowledge Proof)</strong>을 제공받습니다.</p>
+        <p class="small mt-4">세부 기술 명세는 별도 기술 백서에 수록될 예정입니다.</p>
+      </div>
+    </div>
+    <div class="note">
+      본 비즈니스 백서는 프라이버시 설계 원칙을 정의합니다. 블록체인 레이어 및 암호학적 구현의 세부 사항은 기술 백서에 별도로 명시될 예정입니다.
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>24</span></div>
+</div>
+
+
+
+<!-- SLIDE 18 — CNYT 11: PARTICIPANT GUIDE -->
+<div class="slide">
+  <h2 class="slide-title">CNYT 11. 내 CNYT로 할 수 있는 것 — 참여자 행동 가이드</h2>
+  <div class="three-col mb-5" style="gap:12px;">
+    <div class="feature-box" style="display:flex;flex-direction:column;gap:8px;">
+      <h4 class="feature-title"><i class="fa-solid fa-gift"></i>① CNYT는 어떻게 받나</h4>
+      <p class="small">LONGRISE AI 플랫폼 참여 실적에 기반해 <strong>성과 비례</strong>로 CNYT 크레딧이 지급됩니다.</p>
+      <p class="small">배정 후 <strong>7일 결정 기간</strong> 내에 아래 ②~④ 중 하나를 선택합니다. 미선택 시 12개월 보호예수 풀에 자동 편입됩니다.</p>
+    </div>
+    <div class="feature-box" style="display:flex;flex-direction:column;gap:8px;">
+      <h4 class="feature-title"><i class="fa-solid fa-money-bill-transfer"></i>② USDT 바이백 신청</h4>
+      <p class="small">LONGRISE가 사전 공시한 <strong>확정 바이백 가격</strong>으로 CNYT를 USDT로 즉시 전환합니다.</p>
+      <p class="small">수량 제한 없이 모든 적격 요청을 처리하며, 신청 후 <strong>취소가 불가</strong>합니다.</p>
+    </div>
+    <div class="feature-box" style="display:flex;flex-direction:column;gap:8px;">
+      <h4 class="feature-title"><i class="fa-solid fa-users"></i>③ 내부 P2P 거래</h4>
+      <p class="small">적격 LONGRISE 회원 간 내부 P2P 시장에서 CNYT를 <strong>직접 매도</strong>할 수 있습니다.</p>
+      <p class="small">거래 시 참조 가격 및 변동 허용 범위가 사전 공시되며, P2P 수령 즉시 <strong>새 7일 결정 기간</strong>이 재개시됩니다.</p>
+    </div>
+  </div>
+  <div class="two-col mb-5" style="gap:12px;">
+    <div class="box p-6">
+      <h4 class="feature-title mb-4"><i class="fa-solid fa-lock"></i>④ 12개월 보호예수 후 정산</h4>
+      <p class="small mb-3">7일 내 미결정 잔액은 12개월 보호예수 풀에 자동 편입됩니다. 만기 시 <strong>전액 USDT 전환·출금</strong> 또는 <strong>신규 12개월 사이클 재예치</strong> 중 선택합니다.</p>
+      <p class="small">만기 전 USDT 전환 기준가를 사전 공지하며, <strong>14일의 선택 기간</strong>을 부여합니다.</p>
+    </div>
+    <div class="box p-6">
+      <h4 class="feature-title mb-4"><i class="fa-solid fa-chart-line"></i>⑤ 장기 보유 — 거래소 상장 대기</h4>
+      <p class="small mb-3">초기 발행가 <strong>$0.01</strong> → 현재가 <strong class="text-gold">$0.021 (2026.06.27 기준)</strong> (2.1배 상승) · 장기 전략 목표가 <strong>$1.00(×100)</strong></p>
+      <p class="small"><strong>2027년 6월 거래소 상장</strong>이 목표이며, 상장 이후에는 공개 시장에서 자유롭게 매도·보유·거래가 가능해집니다.</p>
+    </div>
+  </div>
+  <div class="note">
+    CNYT는 확정 수익 보장 상품이 아닙니다. 바이백·P2P·보호예수·거래소 상장 일정은 모두 조건부이며, 시장·규제·플랫폼 운영 상황에 따라 변경될 수 있습니다.
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>25</span></div>
+</div>
+
+<!-- SLIDE 19 — GCC 01 -->
+<div class="slide">
+  <h2 class="slide-title">GCC 01. GCC — CNYT 가치를 현장에서 실현하는 카지노 컨시어지</h2>
+  <div class="highlight-box mb-5">
+    <p class="text-lg" style="color:var(--text-main);text-align:center;">
+      LONGRISE AI가 디지털 수익을 창출하고, CNYT가 그 구조를 파트너십으로 체계화하며,<br>
+      <strong class="text-gold">GCC(Global Casino Concierge)는 CNYT 파트너십 가치를 조지아·세르비아·동남아 등 글로벌 6개 카지노 허브에서 실물 서비스로 구현하는 장기 실행 전략입니다.</strong>
+    </p>
+  </div>
+  <div class="three-col mb-5">
+    <div class="feature-box">
+      <div class="feature-title"><i class="fa-solid fa-building"></i>싱가포르 법인 — CNYT 정산 허브</div>
+      <ul class="icon-list">
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-file-contract"></i>카지노 본사와 정켓·에이전시 협약 체결</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-credit-card"></i>플랫폼 결제 대금 정산 (PG·외환 관리)</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-scale-balanced"></i>라이선스 관리 및 합법적 자금 흐름 구조</li>
+        <li style="margin-bottom:0;"><i class="fa-solid fa-coins"></i>CNYT 기반 <strong>글로벌 정산 허브</strong> 기능 수행</li>
+      </ul>
+    </div>
+    <div class="feature-box" style="border-color:rgba(197,168,128,.4);">
+      <div class="feature-title"><i class="fa-solid fa-mobile-screen"></i>디지털 플랫폼 — CNYT 생태계 접점</div>
+      <ul class="icon-list">
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-plane"></i>항공·호텔·골프·밤문화 원스톱 예약</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-chart-pie"></i>카지노 크레딧·컴프(Comp) 실시간 조회</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-wallet"></i>CNYT 지갑 연동·환전 이력 관리</li>
+        <li style="margin-bottom:0;"><i class="fa-solid fa-id-badge"></i>VIP 멤버십 등급 관리</li>
+      </ul>
+    </div>
+    <div class="feature-box">
+      <div class="feature-title"><i class="fa-solid fa-map-location-dot"></i>현지 오퍼레이션 — CNYT 실물 유통망</div>
+      <ul class="icon-list">
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-car"></i>공항 의전·전용 차량 이동 서비스</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-money-bill-transfer"></i>CNYT 기반 현장 즉시 환전</li>
+        <li style="margin-bottom:10px;"><i class="fa-solid fa-dice"></i>카지노 VIP 룸 에스코트·입장 지원</li>
+        <li style="margin-bottom:0;"><i class="fa-solid fa-music"></i>KTV·골프·밤문화 엔터테인먼트</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two-col" style="gap:16px;">
+    <div class="box p-4" style="border-color:rgba(197,168,128,.35);">
+      <p class="kicker" style="font-size:12px;margin-bottom:8px;">CNYT가 GCC를 미래 전략으로 삼는 이유</p>
+      <p class="small">CNYT 파트너십 토큰의 가치는 LONGRISE AI의 디지털 수익만으로는 완성되지 않습니다. GCC는 CNYT가 카지노 VIP 시장의 실물 현금 흐름에 직접 연결되는 오프라인 채널로, CNYT 홀더들이 실질적인 운영 수익을 배분받을 수 있는 구조를 완성합니다.</p>
+    </div>
+    <div class="box p-4" style="border-color:rgba(197,168,128,.35);">
+      <p class="kicker" style="font-size:12px;margin-bottom:8px;"><i class="fa-solid fa-handshake" style="margin-right:5px;color:var(--gold);"></i>HCF 실물 카지노 6개국 거점 — 연간 베팅 $152,800,000 · $1B+ RWA</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">Golden Palace</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇬🇪 조지아 트빌리시 — $28.5M/년 · VIP 40석</p>
+        </div>
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">VIP Junket Lounge</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇻🇳 베트남 다낭 — $31.2M/년 · 정크 18그룹</p>
+        </div>
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">VIP Table Rights</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇵🇭 필리핀 마닐라 — $30.0M/년 · 엔터테인먼트 시티</p>
+        </div>
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">Ocean Star Resort</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇰🇭 캄보디아 시하누크빌 — $22.8M/년 · 섬 리조트</p>
+        </div>
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">VIP Club Bucharest</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇷🇴 루마니아 부쿠레슈티 — $18.6M/년 · ONJN</p>
+        </div>
+        <div style="background:rgba(200,164,60,.08);border:1px solid rgba(200,164,60,.3);border-radius:5px;padding:6px 9px;">
+          <p style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:1px;">Marina Premium Club</p>
+          <p style="font-size:10px;color:var(--text-sub);margin:0;">🇸🇬 싱가포르 MBS 인접 — $21.4M/년 · 프라이빗 24석</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>26</span></div>
+</div>
+
+<!-- SLIDE 20 — GCC 02 -->
+<div class="slide">
+  <h2 class="slide-title">GCC 02. 시장 기회 & 수익 모델 — TAM $450B · VIP 카지노 현금 흐름</h2>
+  <div class="highlight-box mb-5" style="padding:14px 20px;">
+    <p class="small" style="text-align:center;color:var(--text-main);">HCF는 GCC를 통해 CNYT 파트너십 생태계에 <strong class="text-gold">카지노 VIP 시장의 실물 현금 흐름</strong>을 직접 연결합니다.<br>아래 수익 모델은 CNYT 홀더가 장기적으로 배분받을 GCC 운영 수익의 구조입니다.</p>
+  </div>
+  <!-- TAM/SAM/SOM -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">
+    <div style="background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.3);border-radius:7px;padding:8px 12px;text-align:center;">
+      <p style="font-size:10px;letter-spacing:1px;color:var(--text-sub);margin:0 0 2px;">TAM — 전체 시장</p>
+      <p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">$450B</p>
+      <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">글로벌 온라인 도박 + 디지털 자산</p>
+    </div>
+    <div style="background:rgba(200,164,60,.06);border:1px solid rgba(200,164,60,.3);border-radius:7px;padding:8px 12px;text-align:center;">
+      <p style="font-size:10px;letter-spacing:1px;color:var(--text-sub);margin:0 0 2px;">SAM — 유효 시장</p>
+      <p style="font-size:20px;font-weight:700;color:var(--gold);margin:0;">$85B</p>
+      <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">아태 + CIS + 동유럽 VIP + 크립토</p>
+    </div>
+    <div style="background:rgba(220,20,60,.07);border:1px solid rgba(220,20,60,.3);border-radius:7px;padding:8px 12px;text-align:center;">
+      <p style="font-size:10px;letter-spacing:1px;color:var(--text-sub);margin:0 0 2px;">SOM — 5년 목표 점유율</p>
+      <p style="font-size:20px;font-weight:700;color:#e05070;margin:0;">$4.2B</p>
+      <p style="font-size:10px;color:var(--text-sub);margin:2px 0 0;">SAM의 5% · LONGRISE AI 목표</p>
+    </div>
+  </div>
+  <div class="two-col flex-1 mb-4">
+    <div>
+      <div class="feature-box mb-4">
+        <div class="feature-title"><i class="fa-solid fa-star"></i>① 카지노 에이전시·정켓 운용 수익 (핵심)</div>
+        <p class="small"><strong>롤링 커미션(Rolling Commission):</strong> 베팅 총액의 1.0~1.8% — 승패 무관 안정적 수수료 수익<br>
+        <strong>루징 셰어(Losing Share):</strong> 플레이어 손실액의 30~50% 배분<br>
+        <strong>컴프(Comp) 재판매:</strong> 객실·F&amp;B·골프권 무상 배정분 차익 실현</p>
+      </div>
+      <div class="feature-box mb-4">
+        <div class="feature-title"><i class="fa-solid fa-coins"></i>② CNYT 기반 교환·FX 마진</div>
+        <p class="small">CNYT 활용 시 환전 수수료 최소화 → 플레이어 만족도 제고 → 신규 VIP 유입 선순환 구조. VND·KHR·USD·SGD 간 고액 외환 마진 확보. <strong>CNYT 실물 유통량 증가 → 토큰 가치 상승 기대.</strong></p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-title"><i class="fa-solid fa-champagne-glasses"></i>③ 럭셔리 엔터테인먼트·VIP 멤버십 수익</div>
+        <p class="small">KTV·클럽·풀파티 운용 리베이트 20~40%, 골프 홀세일 마진, 컨시어지 서비스 수수료, VIP 멤버십 연회비.</p>
+      </div>
+    </div>
+    <div class="box p-5">
+      <h4 class="feature-title" style="margin-bottom:10px;"><i class="fa-solid fa-chart-line"></i>LONGRISE AI 플랫폼 재무 전망 (2025~2028)</h4>
+      <table class="table-custom" style="font-size:12px;margin-bottom:10px;">
+        <thead><tr><th>연도</th><th>회원 수</th><th>월 수익 분배</th><th>연간 베팅</th><th>CNYT Oracle</th></tr></thead>
+        <tbody>
+          <tr><td>2025</td><td>~150,000명</td><td>~$87M</td><td>$112.5M</td><td>$0.01→$0.02</td></tr>
+          <tr><td>2026</td><td>~250,000명</td><td>~$195M+</td><td>$450M+</td><td>TGE $10.00</td></tr>
+          <tr><td class="text-gold"><strong>2027</strong></td><td>~3,000,000명</td><td>~$800M</td><td>$1.2B</td><td>$10.00+</td></tr>
+          <tr><td class="text-gold"><strong>2028</strong></td><td>~5,000,000명</td><td>~$2B</td><td>$3B+</td><td>목표 $1.00+</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px;color:var(--text-sub);margin:0;">※ 재무 전망은 영업 목표치로, 시장 환경에 따라 실제와 상이할 수 있습니다. GCC VIP 3개년 목표 및 CNYT 전략파트너 우선 배당 구조는 GCC 03 로드맵 참조.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>27</span></div>
+</div>
+
+
+<!-- SLIDE 22 — GCC 03 ROADMAP -->
+<div class="slide">
+  <h2 class="slide-title">GCC 03. 단계별 성장 전략</h2>
+  <div class="three-col flex-1" style="gap:14px;">
+    <!-- PHASE 1 -->
+    <div class="box p-5" style="border-color:rgba(200,164,60,.5);">
+      <p class="kicker" style="font-size:12px;letter-spacing:1.5px;margin-bottom:12px;color:var(--gold);">PHASE 1 — 완료 · 플랫폼 기반 구축</p>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">완료</span>
+        <span class="roadmap-content" style="font-size:13px;">CNYT 총 발행량 10억 개(고정) 등록 및 발행 완료</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">완료</span>
+        <span class="roadmap-content" style="font-size:13px;">참여자 배정 풀 50% 고정 확정. 커스터디·바이백·P2P·스테이킹·거버넌스 프레임워크 공식화</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;">
+        <span class="roadmap-date" style="font-size:12px;font-weight:700;color:var(--gold);">진행 중 ★</span>
+        <span class="roadmap-content" style="font-size:13px;"><strong>LONGRISE AI 플랫폼 공식 운영 중.</strong> AI 운용·수익 분배·드래곤 등급 시스템 가동</span>
+      </div>
+    </div>
+    <!-- PHASE 2 -->
+    <div class="box p-5" style="border-color:rgba(200,164,60,.5);">
+      <p class="kicker" style="font-size:12px;letter-spacing:1.5px;margin-bottom:12px;color:var(--gold);">PHASE 2 — 진행 중 · CNYT 생태계 확장</p>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">진행 중</span>
+        <span class="roadmap-content" style="font-size:13px;">CNYT 생태계 운영. 스테이킹(6M·12M·24M) 및 P2P 거래 활성화</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">진행 중</span>
+        <span class="roadmap-content" style="font-size:13px;">CND 기술 개발·준비금 온보딩·프라이버시 설계·보안 감사 병행</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;font-weight:700;color:var(--gold);">예정 ★</span>
+        <span class="roadmap-content" style="font-size:13px;"><strong class="text-gold">CNYT 거래소 공식 상장</strong> (준비 요건 충족 조건부)</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;">
+        <span class="roadmap-date" style="font-size:12px;font-weight:700;color:var(--gold);">예정 ★</span>
+        <span class="roadmap-content" style="font-size:13px;"><strong class="text-gold">CND 정식 출시</strong> (준비 요건 충족 조건부). 분기별 CND 수수료 분배 개시</span>
+      </div>
+    </div>
+    <!-- PHASE 3 -->
+    <div class="box p-5" style="border-color:rgba(200,164,60,.5);">
+      <p class="kicker" style="font-size:12px;letter-spacing:1.5px;margin-bottom:12px;color:var(--gold);">PHASE 3 — 진행 중 · GCC 실물 경제 실현</p>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">완료</span>
+        <span class="roadmap-content" style="font-size:13px;">GCC 법인 설립. 글로벌 6개 카지노 허브 파트너십 체결 완료</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;font-weight:700;color:var(--gold);">진행 중 ★</span>
+        <span class="roadmap-content" style="font-size:13px;"><strong>GCC 플랫폼 정식 서비스 운영 중.</strong> 글로벌 VIP 네트워크 확대</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;border-bottom:1px solid var(--border);">
+        <span class="roadmap-date" style="font-size:12px;">예정</span>
+        <span class="roadmap-content" style="font-size:13px;">글로벌 리조트 CNYT 실물 환전 통합 확대. VIP 네트워크 단계적 성장</span>
+      </div>
+      <div class="roadmap-item" style="padding:8px 0;">
+        <span class="roadmap-date" style="font-size:12px;">장기</span>
+        <span class="roadmap-content" style="font-size:13px;">CND 현장 정산 전면 확대. CNYT 파트너 우선 배당 지속. 글로벌 확장 지속</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>29</span></div>
+</div>
+
+<!-- SLIDE 23 — RISK FACTORS -->
+<div class="slide">
+  <h2 class="slide-title">GCC 04. 우리가 준비하는 리스크 — 관리 프레임워크</h2>
+  <div class="highlight-box mb-5" style="padding:12px 18px;">
+    <p class="small" style="text-align:center;color:var(--text-main);">GCC는 CNYT의 미래 실행 계획으로서, 디지털 자산·카지노 운영·현지 규제라는 세 영역에 걸친 복합 리스크를 체계적으로 관리합니다.</p>
+  </div>
+  <div class="two-col mb-5">
+    <ul class="icon-list">
+      <li><i class="fa-solid fa-scale-balanced"></i><strong>법적·관할권 리스크</strong> — 국가별 암호화폐·디지털 자산·증권형 토큰 규제의 상이성 및 법적 취급 불확실성</li>
+      <li><i class="fa-solid fa-dice"></i><strong>카지노·게이밍 규제 리스크</strong> — 각국 게이밍 법령 개정 및 라이선스 요건 변화</li>
+      <li><i class="fa-solid fa-money-bill-trend-up"></i><strong>거래량·수익 리스크</strong> — CND 교환·정산 볼륨 및 GCC VIP 고객 실적의 목표 대비 편차</li>
+      <li><i class="fa-solid fa-water"></i><strong>유동성·정산 리스크</strong> — 준비율 임계치 하락 시 신규 발행·전환 자동 중단</li>
+    </ul>
+    <ul class="icon-list">
+      <li><i class="fa-solid fa-building-circle-exclamation"></i><strong>민간 자산 가치 평가 리스크</strong> — 비상장 게이밍 자산의 시장가치 변동 및 평가 불확실성</li>
+      <li><i class="fa-solid fa-lock"></i><strong>커스터디·스마트컨트랙트 리스크</strong> — 기술적 취약점, 코드 오류 및 사이버 보안 위협</li>
+      <li><i class="fa-solid fa-user-shield"></i><strong>프라이버시 기술 구현 리스크</strong> — ZKP 암호학적 구현의 완성도 및 감사 가능성</li>
+      <li><i class="fa-solid fa-chart-line"></i><strong>가격·상장·목표치 리스크</strong> — $1.00 장기 목표가는 목표 수치이며 확정 수익 보장이 아님</li>
+    </ul>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>30</span></div>
+</div>
+
+<!-- SLIDE 24 — LEGAL DISCLAIMER -->
+<div class="slide">
+  <h2 class="slide-title">공통 01. 반드시 확인하세요 — 법적 고지 및 유의사항</h2>
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="box-gold-border mb-6">
+      <p class="small">본 통합 비즈니스 마스터플랜은 <strong>LONGRISE AI 플랫폼(디지털 수익 창출)</strong>, <strong>CNYT–CND 파트너십 생태계(수익 구조화)</strong>, <strong>GCC 글로벌 카지노 컨시어지(미래 실물 경제 실행 전략)</strong>의 사업 구조·경제적 프레임워크·준비금·프라이버시·거버넌스 체계를 기술합니다. 본 문서는 기술된 기능·일정·파트너 관계·가치 평가·거래소 상장·전환 메커니즘·분배·목표가가 서술된 대로 반드시 실현됨을 보증하지 않습니다.</p>
+    </div>
+    <p class="small mb-4">CNYT는 민간 시장 구조 내 증권형 디지털 자산으로 운영될 예정입니다. 법적 취급·적격 게임참여자 요건·이전 제한·정보 공시·과세 및 게임참여자 권리는 관할 법역에 따라 상이할 수 있습니다.</p>
+    <p class="small mb-4">CND는 개발 계획 중인 프라이버시 보존형 카지노 교환·정산 디지털 자산입니다. 참조 가치·준비금 프레임워크·교환 채널·기술 아키텍처 및 정식 출시는 기술 개발·자산 기여·파트너사 준비·보안 테스트 및 관련 법적 요건의 충족을 전제 조건으로 합니다.</p>
+    <p class="small mb-4">GCC 플랫폼의 재무 전망은 영업 목표치로, 시장 환경·규제 체계·파트너십 진행 상황에 따라 실제 결과와 상이할 수 있습니다.</p>
+    <p class="small mb-4">CNYT, CND 또는 GCC 서비스의 취득·보유·스테이킹·거래·전환·이용 전에 독립적인 법률·금융·세무·기술 전문가의 자문을 받으시기 바랍니다.</p>
+    <div class="box" style="border-color:rgba(200,164,60,.45);padding:14px 18px;">
+      <p class="kicker" style="font-size:11px;letter-spacing:1.5px;margin-bottom:10px;color:var(--gold);">주요 면책 항목 통합 고지</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;">
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">▪ 수익 시뮬레이션 및 분배율 수치는 목표 수익률이며, 확정 수익을 보증하지 않습니다. 예치 원금 손실 가능성이 있습니다.</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">▪ CNYT는 연계 카지노 자산에 대한 직접 담보권이 아닌 파트너십 계약상 수익 청구권을 구조화한 자산입니다.</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">▪ $1.00 장기 목표가 및 GCC 재무 전망은 영업 목표치이며, 시장 가격 보장 또는 확정 수익률이 아닙니다.</p>
+        <p style="font-size:11px;color:var(--text-sub);margin:0;">▪ CNYT는 CND 준비금 담보 자산이 아니며, 계약상 배정·기여된 자본만이 CND 준비금에 산입될 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>31</span></div>
+</div>
+
+<!-- SLIDE 27 — TOKENOMICS VISUALIZATION -->
+<div class="slide">
+  <h2 class="slide-title">공통 02. CNYT 토크노믹스 한눈에 보기</h2>
+
+  <!-- 상단 핵심 지표 -->
+  <div class="four-col mb-5" style="gap:10px;">
+    <div class="stat-card" style="padding:14px 10px;">
+      <span class="stat-number" style="font-size:28px;">1,000,000,000</span>
+      <div class="stat-label">Total Supply — 영구 고정, 추가 발행 없음</div>
+    </div>
+    <div class="stat-card" style="padding:14px 10px;">
+      <span class="stat-number" style="font-size:28px;">$0.01</span>
+      <div class="stat-label">초기 참조가 (Initial Reference Price)</div>
+    </div>
+    <div class="stat-card" style="border-color:rgba(197,168,128,.5);padding:14px 10px;">
+      <span class="stat-number" style="font-size:28px;">$1.00</span>
+      <div class="stat-label">장기 전략 목표가 (×100 상승 목표)</div>
+    </div>
+    <div class="stat-card" style="padding:14px 10px;">
+      <span class="stat-number" style="font-size:28px;">2027.06</span>
+      <div class="stat-label">거래소 상장 목표 (조건부)</div>
+    </div>
+  </div>
+
+  <div class="two-col flex-1" style="gap:16px;">
+    <!-- 좌: 토큰 배분 시각화 -->
+    <div class="box p-5">
+      <p class="kicker" style="font-size:12px;margin-bottom:14px;"><i class="fa-solid fa-chart-pie" style="margin-right:6px;color:var(--gold);"></i>토큰 배분 구조 (총 10억 개)</p>
+      <!-- 50% bar -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:12px;color:var(--text-main);font-weight:600;">LONGRISE 파트너십 참여 회원 풀</span>
+          <span style="font-size:13px;font-weight:700;color:var(--gold);">50% — 500M</span>
+        </div>
+        <div style="height:14px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden;">
+          <div style="height:100%;width:50%;background:linear-gradient(90deg,#c8a43c,#e2c05a);border-radius:7px;"></div>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">성과 기반 파트너십 배정 — LONGRISE AI 기여도에 따라 단계적 지급</p>
+      </div>
+      <!-- 40% bar -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:12px;color:var(--text-main);font-weight:600;">초기 전략파트너 및 기관 파트너</span>
+          <span style="font-size:13px;font-weight:700;color:var(--text-main);">40% — 400M</span>
+        </div>
+        <div style="height:14px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden;">
+          <div style="height:100%;width:40%;background:linear-gradient(90deg,#8a6a20,#c8a43c);border-radius:7px;"></div>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">HCF 파트너십에 민간 자본을 기여한 전략파트너 배정</p>
+      </div>
+      <!-- 10% bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:12px;color:var(--text-main);font-weight:600;">HCF 재단 운영 및 전략 준비금</span>
+          <span style="font-size:13px;font-weight:700;color:var(--text-sub);">10% — 100M</span>
+        </div>
+        <div style="height:14px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden;">
+          <div style="height:100%;width:10%;background:linear-gradient(90deg,#5a4510,#8a6a20);border-radius:7px;"></div>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">기술 개발·운영·감사·보안·생태계 인프라</p>
+      </div>
+    </div>
+
+    <!-- 우: 스테이킹 수익 + 가격 시나리오 -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="box p-5">
+        <p class="kicker" style="font-size:12px;margin-bottom:12px;"><i class="fa-solid fa-lock" style="margin-right:6px;color:var(--gold);"></i>스테이킹 수익 구조</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+          <div style="background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:6px;padding:10px 6px;">
+            <p style="font-size:18px;font-weight:700;color:var(--text-main);">1.0x</p>
+            <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">6개월<br>단기 약정</p>
+          </div>
+          <div style="background:rgba(200,164,60,.12);border:1px solid rgba(200,164,60,.45);border-radius:6px;padding:10px 6px;">
+            <p style="font-size:18px;font-weight:700;color:var(--gold);">1.5x</p>
+            <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">12개월<br>중기 약정</p>
+          </div>
+          <div style="background:rgba(200,164,60,.07);border:1px solid rgba(200,164,60,.25);border-radius:6px;padding:10px 6px;">
+            <p style="font-size:18px;font-weight:700;color:var(--text-main);">2.5x</p>
+            <p style="font-size:10px;color:var(--text-sub);margin-top:3px;">24개월<br>장기 약정</p>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--text-sub);margin-top:8px;text-align:center;">CND 수수료 분배 가중치 — 장기 약정일수록 배분 비율 증가</p>
+      </div>
+      <div class="box p-5">
+        <p class="kicker" style="font-size:12px;margin-bottom:10px;"><i class="fa-solid fa-arrow-trend-up" style="margin-right:6px;color:var(--gold);"></i>가격 단계별 시나리오 (1,000 CNYT 기준)</p>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:5px 6px;color:var(--text-sub);font-weight:600;">CNYT 가격</th>
+              <th style="text-align:right;padding:5px 6px;color:var(--text-sub);font-weight:600;">$1,000 투자 시 평가액</th>
+              <th style="text-align:right;padding:5px 6px;color:var(--text-sub);font-weight:600;">수익률</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(46,26,10,.5);">
+              <td style="padding:6px;color:var(--text-sub);">$0.01 (현재 참조가)</td>
+              <td style="padding:6px;text-align:right;color:var(--text-main);">$1,000</td>
+              <td style="padding:6px;text-align:right;color:var(--text-sub);">기준</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(46,26,10,.5);">
+              <td style="padding:6px;color:var(--text-main);font-weight:600;">$0.05</td>
+              <td style="padding:6px;text-align:right;color:var(--text-main);font-weight:600;">$5,000</td>
+              <td style="padding:6px;text-align:right;color:var(--gold);">+400%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(46,26,10,.5);">
+              <td style="padding:6px;color:var(--text-main);font-weight:600;">$0.10</td>
+              <td style="padding:6px;text-align:right;color:var(--text-main);font-weight:600;">$10,000</td>
+              <td style="padding:6px;text-align:right;color:var(--gold);">+900%</td>
+            </tr>
+            <tr>
+              <td style="padding:6px;color:var(--gold);font-weight:700;">$1.00 <span style="font-size:10px;">(장기 목표)</span></td>
+              <td style="padding:6px;text-align:right;color:var(--gold);font-weight:700;">$100,000</td>
+              <td style="padding:6px;text-align:right;color:var(--gold);font-weight:700;">+9,900%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>32</span></div>
+</div>
+
+<!-- SLIDE 28 — FAQ -->
+<div class="slide">
+  <h2 class="slide-title">공통 03. 자주 묻는 질문 (FAQ)</h2>
+  <div class="two-col flex-1" style="gap:14px;">
+    <!-- 좌측 3개 -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q1. 수익은 언제, 어떻게 받나요?</p>
+        <p class="small">LONGRISE AI 플랫폼에서는 운영 결과가 <strong>매일 UTC 06:00 플랫폼 내 잔고</strong>에 반영됩니다. CNYT 스테이킹 보유자의 CND 수수료 분배는 <strong>CND 정식 출시(2028 Q1 목표) 후 6개월 안정화 기간 경과 이후</strong> 분기별 정책에 따라 처리됩니다.</p>
+      </div>
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q2. 원금 보장이 되나요?</p>
+        <p class="small">LONGRISE AI 운용 서비스와 CNYT는 <strong>원금을 보장하지 않습니다.</strong> 본 문서의 운영 지표와 목표치는 설명 목적의 수치이며, 시장 환경과 정책 변화에 따라 결과는 달라질 수 있습니다. 이용 전 독립적 전문가 자문을 권장합니다.</p>
+      </div>
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q3. CNYT는 어디서 구매할 수 있나요?</p>
+        <p class="small">현재 CNYT는 <strong>LONGRISE AI 플랫폼 내 공식 운영 채널</strong>을 통해서만 안내됩니다. 공개 거래소 판매·에어드롭·외부 소매 채널은 운영되지 않으며, 외부 거래 가능 시점은 추후 정책 확정 후 별도 공지됩니다.</p>
+      </div>
+    </div>
+    <!-- 우측 3개 -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q4. 운영 상한 Cap 400%이란 무엇인가요?</p>
+        <p class="small">LONGRISE AI 플랫폼은 내부 정책상 <strong>누적 운영 기준이 400%에 도달하면 해당 라이선스가 자동 만료</strong>되도록 설계되어 있습니다. 이는 이용 구간을 구분하기 위한 정책 기준이며, 이후 이용 여부는 재심사 및 재등록 정책에 따릅니다.</p>
+      </div>
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q5. 중도 해지·출금이 가능한가요?</p>
+        <p class="small">LONGRISE AI 운용 서비스는 <strong>계약 기간 내 조기 종료가 원칙적으로 불가</strong>합니다. 다만 플랫폼 잔고는 출금 잔액으로 전환 후 인출 가능하며, 수수료 <strong>1.5%</strong>, 최소 출금 <strong>$10</strong>, 배치 처리 <strong>UTC 00:00~02:00</strong> 기준이 적용됩니다. Flexible 플랜은 락업 없이 이용 가능하며, CNYT 스테이킹 약정 해제는 만기 후 30일 언본딩 기간 경과 후 가능합니다.</p>
+      </div>
+      <div class="box p-4" style="border-color:rgba(200,164,60,.35);">
+        <p style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fa-solid fa-circle-question" style="margin-right:6px;"></i>Q6. GCC 서비스는 언제 시작되나요?</p>
+        <p class="small">GCC 플랫폼 정식 서비스는 <strong>2026년 5월 LONGRISE AI와 동시 론칭을 목표</strong>로 합니다. Golden Palace(조지아), VIP Junket Lounge(베트남), VIP Table Rights(필리핀) 등 6개 전략 카지노 허브와의 협약을 진행 중입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:14px;">
+    추가 문의 사항은 공식 채널(<strong>www.longrise.ai</strong>)을 통해 접수하시기 바랍니다. 본 문서에 기재된 일정·수치·구조는 준비 요건 충족을 전제로 하며, 시장 환경 및 규제 변화에 따라 조정될 수 있습니다.<br>※ 거점 명칭은 운영 환경에 따라 변경될 수 있습니다.
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>33</span></div>
+</div>
+
+<!-- SLIDE 29 — CLOSING CTA -->
+<div class="slide" style="justify-content:center;align-items:center;text-align:center;">
+  <div class="absolute" style="inset:0;background-image:radial-gradient(#c8a43c 1px,transparent 1px);background-size:30px 30px;opacity:.05;"></div>
+  <div class="relative z-10" style="max-width:960px;width:100%;">
+    <p class="kicker" style="font-size:12px;letter-spacing:3px;margin-bottom:16px;">플랫폼 구조를 확인하세요</p>
+    <p style="font-size:28px;font-weight:700;color:var(--gold);line-height:1.4;margin-bottom:8px;">AI 기반 자동거래 운영과<br>디지털 자산 연계 구조를 한 번에 확인할 수 있습니다</p>
+    <p style="font-size:14px;color:var(--text-sub);margin-bottom:24px;">$100부터 이용 가능한 플랜 구성 · 일일 플랫폼 반영 · CNYT 파트너십 구조 안내</p>
+    <div class="four-col" style="gap:12px;margin-bottom:22px;">
+      <div class="stat-card" style="padding:14px 10px;">
+        <span class="stat-number" style="font-size:20px;">STEP 1</span>
+        <div class="stat-label" style="font-size:12px;margin-top:4px;color:var(--text-main);">플랜 선택<br><span style="color:var(--text-sub);">Flexible $100~<br>VIP $5,000</span></div>
+      </div>
+      <div class="stat-card" style="padding:14px 10px;">
+        <span class="stat-number" style="font-size:20px;">STEP 2</span>
+        <div class="stat-label" style="font-size:12px;margin-top:4px;color:var(--text-main);">USDT 등록<br><span style="color:var(--text-sub);">플랫폼 지갑 기준<br>입력 및 확인</span></div>
+      </div>
+      <div class="stat-card" style="padding:14px 10px;border-color:rgba(197,168,128,.5);">
+        <span class="stat-number" style="font-size:20px;">STEP 3</span>
+        <div class="stat-label" style="font-size:12px;margin-top:4px;color:var(--text-main);">AI 운용 시작<br><span style="color:var(--text-sub);">24/7 자동거래<br>운영 현황 반영</span></div>
+      </div>
+      <div class="stat-card" style="padding:14px 10px;border-color:rgba(197,168,128,.7);">
+        <span class="stat-number" style="font-size:20px;">매일</span>
+        <div class="stat-label" style="font-size:12px;margin-top:4px;color:var(--gold);">UTC 06:00<br><span style="color:var(--text-main);">플랫폼 잔고 반영<br>+ CNYT 정책 연동</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;">
+      <span class="pill" style="font-size:13px;padding:6px 16px;border-color:var(--gold);color:var(--gold);">WWW.LONGRISE.AI</span>
+      <span class="pill">Flexible · Basic · Standard · Premium · VIP</span>
+      <span class="pill">CNYT 내부 기준가 및 운영 정책 별도 안내</span>
+      <span class="pill">외부 거래 일정은 추후 정책 확정 후 공지</span>
+    </div>
+    <p style="font-size:12px;color:#555;">Horizon Capital Foundation · LONGRISE AI · Global Casino Concierge · Version 8.9</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>LONGRISE AI — AI HFT 수익 엔진 & 디지털 자산 생태계 비즈니스 플랜</span><span>34</span></div>
+</div>
+
+
+<div id="mobile-nav" style="display:none; position:fixed; bottom:0; left:0; right:0; background:rgba(10,3,0,0.95); border-top:1px solid #2e1a0a; padding:8px 16px; z-index:999; justify-content:space-between; align-items:center;">
+  <button onclick="prevSlide()" style="background:rgba(200,164,60,.15); border:1px solid rgba(200,164,60,.4); color:#c8a43c; padding:6px 16px; border-radius:6px; font-size:13px; cursor:pointer;">◀ 이전</button>
+  <span id="slide-counter" style="color:#b0a898; font-size:11px;">1 / 34</span>
+  <button onclick="nextSlide()" style="background:rgba(200,164,60,.15); border:1px solid rgba(200,164,60,.4); color:#c8a43c; padding:6px 16px; border-radius:6px; font-size:13px; cursor:pointer;">다음 ▶</button>
+</div>
+
+<script>
+(function() {
+  if (window.innerWidth > 767) return;
+  var nav = document.getElementById('mobile-nav');
+  if (nav) nav.style.display = 'flex';
+  var slides = document.querySelectorAll('.slide');
+  var current = 0;
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, slides.length - 1));
+    slides[current].scrollIntoView({behavior: 'smooth', block: 'start'});
+    document.getElementById('slide-counter').textContent = (current+1) + ' / ' + slides.length;
+  }
+  window.prevSlide = function() { goTo(current - 1); };
+  window.nextSlide = function() { goTo(current + 1); };
+  document.getElementById('slide-counter').textContent = '1 / ' + slides.length;
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 767) { nav.style.display = 'none'; }
+    else { nav.style.display = 'flex'; }
+  });
+})();
+</script>
+</body>
+</html>
+
