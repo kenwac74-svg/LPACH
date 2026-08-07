@@ -212,11 +212,11 @@
         </div>
         <div class="card">
           <b>USDT 체인</b>
-          <p>TRON 기반 TRC20 USDT로 시작하고, 향후 BNB Chain USDT로 확장한다.</p>
+          <p>1단계는 TRC20 USDT만 지원하고, 3단계 이후 테더 주요 상위 3개 체인으로 확장한다.</p>
         </div>
         <div class="card">
           <b>출금 운영</b>
-          <p>최소 출금 15 USDT, TRC20 수수료 2 USDT, UTC 09:00 기준 1일 1회 배치 처리.</p>
+          <p>1단계 최소 출금 10 USDT, TRC20 수수료 1 USDT 고정, UTC 09:00 기준 1일 1회 배치 처리.</p>
         </div>
       </div>
     </header>
@@ -265,6 +265,44 @@
         플랫폼은 유저를 실명으로 식별하지 않는다. 따라서 리스크 통제는 지갑 주소, 자금 흐름,
         내부 Ledger 이동, 출금 주소, 서비스 제한 지역, 고위험 출처, 이상 행동 패턴을 기준으로 한다.
       </div>
+
+      <h3>단계 정의</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>단계</th>
+            <th>회원 수 기준</th>
+            <th>개발 원칙</th>
+            <th>주요 범위</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1단계</td>
+            <td>회원 100명 미만</td>
+            <td>개발자 1명이 관리 가능한 최소 입출금 테스트 구조</td>
+            <td>TRC20 USDT 입금/출금, 내부 Ledger 분리, 1단계 최소 집금 정책, 관리자 확인 기반 배치 출금</td>
+          </tr>
+          <tr>
+            <td>2단계</td>
+            <td>회원 100명 이상</td>
+            <td>입출금 안정화 및 CEX 직접 차단/리스크 필터 강화</td>
+            <td>Buffer/Vault/Payout 지갑 분리, 기본 온체인 리스크 검사, 한국 거래소 직접 입출금 자동 차단, 출금 수수료 현실화 검토</td>
+          </tr>
+          <tr>
+            <td>3단계</td>
+            <td>회원 1000명 이상</td>
+            <td>운영 자동화와 수수료 정책 재검토</td>
+            <td>Energy 임대 자동화, 지갑 유동성 알림, 고액 출금 승인 룰 고도화, 체인 확장 준비</td>
+          </tr>
+          <tr>
+            <td>3단계 이후</td>
+            <td>회원 1000명 이상 안정 운영 후</td>
+            <td>테더 사용량 기준 주요 체인 확장</td>
+            <td>TRC20 외 테더 주요 상위 3개 체인을 선정하여 순차 지원</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section>
@@ -320,6 +358,44 @@
           </tr>
         </tbody>
       </table>
+
+      <h3>1단계 최소 집금 구조</h3>
+      <p>
+        1단계에서는 완전한 3-Tier 자동 지갑 구조를 만들지는 않더라도, 집금 정책 자체는 반드시 적용한다.
+        이유는 유저 입금 자금이 회사의 출금 재원이나 CEX 계정으로 직접 흘러 들어가면, 오염 가능 자금이
+        회사 운영 지갑과 출금 지갑 전체의 리스크로 전이될 수 있기 때문이다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>1단계 정책</th>
+            <th>금지 사항</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>입금 계열</td>
+            <td>User Deposit Address → Stage-1 Collection Wallet</td>
+            <td>유저 입금 자금을 CEX, Payout Wallet, 회사 정산 지갑으로 직접 전송 금지</td>
+          </tr>
+          <tr>
+            <td>출금 계열</td>
+            <td>Payout Wallet → 유저의 승인된 출금 주소</td>
+            <td>Stage-1 Collection Wallet의 자금을 Payout Wallet로 직접 이동 금지</td>
+          </tr>
+          <tr>
+            <td>회사 자금</td>
+            <td>Payout Wallet은 회사가 별도 충전한 검증 자금으로 운영</td>
+            <td>유저 입금 자금과 회사 출금 재원을 장부상/온체인상 혼합 금지</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="notice">
+        <strong>1단계 핵심:</strong>
+        집금은 필요하지만 자동화는 최소화한다. 관리자는 집금 대상 주소와 금액을 확인한 뒤 수동 또는 반자동으로
+        Stage-1 Collection Wallet에 모은다. 이 지갑은 보관/검토용이며 출금 재원으로 직접 사용하지 않는다.
+      </div>
     </section>
 
     <section>
@@ -389,9 +465,9 @@
             <td>입출금 기본 체인. TRON Energy/TRX 비용을 반영해 수수료 정책을 운영한다.</td>
           </tr>
           <tr>
-            <td>BNB Chain USDT</td>
-            <td>추후 확장</td>
-            <td>체인별 Hot Wallet, 입금 주소, 컨펌 수, 출금 수수료, sweep 기준을 분리한다.</td>
+            <td>테더 주요 상위 3개 체인</td>
+            <td>3단계 이후 확장</td>
+            <td>지원 시점의 USDT 사용량, 유저 수요, 수수료, 운영 안정성을 기준으로 선정한다. 체인별 Hot Wallet, 입금 주소, 컨펌 수, 출금 수수료, sweep 기준은 분리한다.</td>
           </tr>
         </tbody>
       </table>
@@ -501,7 +577,115 @@
     </section>
 
     <section>
-      <h2>7. 매일 수익 분배 정책</h2>
+      <h2>7. 집금 정책</h2>
+      <p>
+        집금 정책은 1단계부터 적용한다. 단, 1단계의 목표는 자동화가 아니라 회사 자금 흐름의 안전한 분리다.
+        유저 입금 주소에 들어온 자금은 DB 반영 후에도 회사 출금 지갑이나 CEX로 직접 이동하지 않고,
+        별도의 Stage-1 Collection Wallet로만 모은다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>1단계 기본 정책</th>
+            <th>2단계 고도화 방향</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>집금 대상</td>
+            <td>19 컨펌 완료, DB 입금 기록 완료, 관리자 확인 완료 입금</td>
+            <td>Basic On-chain Risk Screening GREEN 입금만 자동 집금</td>
+          </tr>
+          <tr>
+            <td>집금 기준</td>
+            <td>관리자 수동 판단. 기본값은 주소 잔액 100 USDT 이상 또는 마지막 입금 후 7일 경과 시 집금 검토</td>
+            <td>금액 기준, 시간 기준, 리스크 점수 기준을 조합한 자동 큐</td>
+          </tr>
+          <tr>
+            <td>집금 주기</td>
+            <td>1일 1회 또는 필요 시 수동 실행</td>
+            <td>운영 부하 분산을 위한 예약/랜덤 딜레이 배치</td>
+          </tr>
+          <tr>
+            <td>집금 목적지</td>
+            <td>Stage-1 Collection Wallet</td>
+            <td>Buffer Wallet → Vault Wallet 구조로 확장</td>
+          </tr>
+          <tr>
+            <td>출금 재원 사용</td>
+            <td>집금 자금은 Payout Wallet로 직접 이동하지 않음</td>
+            <td>Vault와 Payout의 온체인 직접 연결 금지 원칙 유지</td>
+          </tr>
+          <tr>
+            <td>감사 로그</td>
+            <td>집금 실행자, 대상 주소, 금액, TxID, 사유 기록</td>
+            <td>집금 큐, 리스크 스코어, 승인자, 실패 사유까지 기록</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="notice">
+        1단계 집금 기준의 숫자값은 운영 기본값이다. 실제 운영 전 개발자와 운영자가 가스비, 입금 빈도,
+        유저 수, 관리자 처리량을 보고 조정할 수 있어야 한다.
+      </div>
+    </section>
+
+    <section>
+      <h2>8. Payout Reserve 정책</h2>
+      <p>
+        회사가 입금 받는 지갑과 유저에게 출금하는 지갑은 분리되어야 한다. 다만 상품 중도 해지와 매일 수익 지급,
+        일반 출금이 동시에 발생할 수 있으므로 Payout Wallet에는 별도의 유동성 기준이 필요하다.
+        이 정책의 목적은 유저 입금 자금을 Payout Wallet으로 직접 흘려보내지 않으면서도, 출금 지연과 회사 유동성 부족을 방지하는 것이다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>정책값</th>
+            <th>운영 설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>기준 방식</td>
+            <td>통합 Reserve 방식</td>
+            <td>상품별로 복잡한 비율을 두지 않고, 전체 확정 패키지 구매금액을 하나의 기준으로 관리한다.</td>
+          </tr>
+          <tr>
+            <td>필요 Reserve</td>
+            <td>총 확정 패키지 구매금액 × 35%</td>
+            <td>운영 인력이 적은 1~2단계에서는 단순성과 유동성 안정성을 우선한다.</td>
+          </tr>
+          <tr>
+            <td>충전 주기</td>
+            <td>매월 10일, 25일</td>
+            <td>정기적으로 Payout Wallet 또는 Payout Reserve Wallet의 잔액을 점검하고 부족분을 회사 자금으로 보충한다.</td>
+          </tr>
+          <tr>
+            <td>주의 경보</td>
+            <td>필요 Reserve의 90% 미만</td>
+            <td>관리자 대시보드에 경고를 표시하고 다음 충전일 전 보충 필요 여부를 검토한다.</td>
+          </tr>
+          <tr>
+            <td>긴급 경보</td>
+            <td>필요 Reserve의 80% 미만</td>
+            <td>회사 자금 보충, 출금 배치 속도 조정, 중도 해지 처리 일정 조정 중 하나를 즉시 검토한다.</td>
+          </tr>
+          <tr>
+            <td>자금 이동 원칙</td>
+            <td>입금 라인과 출금 라인 직접 연결 금지</td>
+            <td>Collection/Vault 계열 자금은 Payout Wallet로 직접 이동하지 않고, Payout 재원은 회사가 검증한 별도 유동성으로 충전한다.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="notice">
+        35% Reserve는 유저에게 노출하는 수익 보장 문구가 아니라 회사 내부 유동성 관리 기준이다.
+        상품 구매 화면에는 중도 해지를 의도적으로 강조하지 않으며, 중도 해지 조건은 Terms, Package Policy, FAQ에서 별도로 고지한다.
+      </div>
+    </section>
+
+    <section>
+      <h2>9. 매일 수익 분배 정책</h2>
       <p>
         패키지 수익은 매일 내부 Ledger로 분배한다. 이는 온체인 송금이 아니며, 유저별 Earnings Balance에
         장부상 적립된다. 수익 분배 후 Withdrawal Balance가 업데이트되고, 그 잔액이 출금 요청 기준이 된다.
@@ -516,7 +700,7 @@
     </section>
 
     <section>
-      <h2>8. 출금 정책</h2>
+      <h2>10. 출금 정책</h2>
       <table>
         <thead>
           <tr>
@@ -528,18 +712,18 @@
         <tbody>
           <tr>
             <td>최소 출금액</td>
-            <td>15 USDT</td>
-            <td>Flexible 상품의 월 수익이 약 3 USDT이므로, 소액 유저도 일정 기간 후 출금 가능해야 한다.</td>
+            <td>10 USDT</td>
+            <td>Flexible 상품의 월 수익이 약 3 USDT이므로, 소액 유저도 3~4개월 누적 후 출금 가능해야 한다.</td>
           </tr>
           <tr>
             <td>TRC20 출금 수수료</td>
-            <td>2 USDT</td>
-            <td>TRON 리소스 비용, 운영 검토 비용, 소액 반복 출금 억제를 고려한 시작값.</td>
+            <td>1 USDT</td>
+            <td>1단계에서는 고정 수수료로 운영한다. 실제 네트워크 비용 초과분은 초기 테스트 비용으로 회사가 감내한다. 2단계부터 네트워크 비용과 운영량을 기준으로 현실화할 수 있다.</td>
           </tr>
           <tr>
             <td>최소 실수령액</td>
-            <td>13 USDT</td>
-            <td>15 USDT 출금 요청 시 2 USDT 수수료 차감 후 수령 예상액.</td>
+            <td>9 USDT</td>
+            <td>10 USDT 출금 요청 시 1 USDT 수수료 차감 후 수령 예상액.</td>
           </tr>
           <tr>
             <td>처리 주기</td>
@@ -564,7 +748,51 @@
         </tbody>
       </table>
 
-      <h3>15 USDT 최소 출금액의 리스크와 대응</h3>
+      <h3>출금 주소 제한 정책</h3>
+      <p>
+        LONGRISE는 중앙화 거래소처럼 매 출금마다 임의의 주소를 입력하는 구조를 사용하지 않는다.
+        유저는 사전에 등록된 출금 주소로만 출금할 수 있으며, 1단계부터 출금 주소는 메인 주소 1개와
+        서브 주소 1개로 제한한다. 이 구조는 잘못된 주소 입력, 피싱 주소 전송, 한국 거래소 직접 출금,
+        반복적인 블랙리스트 검사 부담을 줄이기 위한 정책이다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>정책</th>
+            <th>운영 효과</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>등록 가능 주소</td>
+            <td>메인 출금 주소 1개 + 서브 출금 주소 1개</td>
+            <td>유저별 출금 목적지를 제한해 주소 관리 부담을 줄인다.</td>
+          </tr>
+          <tr>
+            <td>출금 가능 주소</td>
+            <td>승인 완료된 등록 주소만 가능</td>
+            <td>매 출금 시 임의 주소 입력을 차단한다.</td>
+          </tr>
+          <tr>
+            <td>주소 등록/변경</td>
+            <td>OTP 인증 + 관리자 승인 필요</td>
+            <td>계정 탈취, 주소 바꿔치기, 피싱 출금을 줄인다.</td>
+          </tr>
+          <tr>
+            <td>변경 직후 출금</td>
+            <td>운영 정책에 따라 대기 시간 적용 가능</td>
+            <td>긴급 주소 변경 후 즉시 출금되는 위험을 낮춘다.</td>
+          </tr>
+          <tr>
+            <td>블랙리스트 검사</td>
+            <td>주소 등록/변경 승인 시 집중 검사</td>
+            <td>출금 요청마다 전체 검사를 반복하는 부담을 줄인다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>10 USDT 최소 출금액의 리스크와 대응</h3>
       <table>
         <thead>
           <tr>
@@ -581,7 +809,7 @@
           </tr>
           <tr>
             <td>수수료 체감 부담</td>
-            <td>15 USDT 출금에 2 USDT 수수료는 약 13.3%로 높게 느껴질 수 있다.</td>
+            <td>10 USDT 출금에 1 USDT 수수료는 10%로 느껴질 수 있다. 단 1단계에서는 회사가 일부 비용을 부담해 소액 유저의 출금 가능성을 우선한다.</td>
             <td>출금 전 수수료와 예상 수령액을 명확히 표시한다.</td>
           </tr>
           <tr>
@@ -604,22 +832,73 @@
     </section>
 
     <section>
-      <h2>9. 출금 UI 및 유저 고지</h2>
+      <h2>11. 출금 UI 및 유저 고지</h2>
       <p>
         출금 화면은 유저가 실제 수령액과 차단 사유를 혼동하지 않도록 단순하고 명확해야 한다.
       </p>
-      <div class="policy-text">Minimum withdrawal: 15 USDT
-Network fee: 2 USDT
-You will receive: 13 USDT
+      <div class="policy-text">Minimum withdrawal: 10 USDT
+Network fee: 1 USDT
+You will receive: 9 USDT
 Withdrawals are processed once daily at 09:00 UTC.
 Completed withdrawals cannot be reversed.</div>
+
+      <div class="policy-text">The TRC20 withdrawal fee is 1 USDT during the initial phase.
+The fee may be adjusted within the 1-2 USDT range depending on TRON network conditions and operating costs.
+Any fee change will be announced before it is applied.</div>
 
       <div class="policy-text">Deposits and withdrawals directly involving exchanges located in unsupported service regions are not supported.
 Personal wallet transfers are supported unless the wallet is identified as high-risk or restricted.</div>
     </section>
 
     <section>
-      <h2>10. 내부 SEND 정책</h2>
+      <h2>12. 내부 SEND 정책</h2>
+      <p>
+        SEND는 플랫폼 내부 유저 간 USDT 이전 기능이다. 이는 외부 지갑으로 나가는 온체인 출금이 아니며,
+        플랫폼 내부 Ledger에서 송신자의 Withdrawal Balance를 차감하고 수신자의 Deposit Balance 또는
+        Internal Received Balance로 증가시키는 장부 이전이다. SEND는 입금/출금과 함께 월렛의 핵심 자금 이동
+        기능으로 취급하되, 온체인 TxID가 생성되지 않는다는 점을 명확히 구분한다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>정책</th>
+            <th>유저 화면 기준</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>전송 대상</td>
+            <td>플랫폼 내부 유저</td>
+            <td>수취 유저명 또는 플랫폼 고유번호로 확인</td>
+          </tr>
+          <tr>
+            <td>전송 자산</td>
+            <td>USDT</td>
+            <td>Withdrawal Balance에서만 전송 가능</td>
+          </tr>
+          <tr>
+            <td>사용 불가 잔액</td>
+            <td>Bonus USDT, Package Value, CNYT, 검토 중 입금액</td>
+            <td>전송 가능 잔액에 포함하지 않음</td>
+          </tr>
+          <tr>
+            <td>수수료</td>
+            <td>1단계 무료 권장</td>
+            <td>내부 장부 이전이므로 네트워크 수수료 없음</td>
+          </tr>
+          <tr>
+            <td>취소 가능 여부</td>
+            <td>완료 후 취소 불가</td>
+            <td>전송 전 수취 유저와 금액 재확인 팝업 표시</td>
+          </tr>
+          <tr>
+            <td>히스토리</td>
+            <td>Transfer History에 기록</td>
+            <td>TxID 대신 내부 Ledger ID와 상세 로그 표시</td>
+          </tr>
+        </tbody>
+      </table>
       <ul>
         <li>SEND는 온체인 송금이 아니라 내부 Ledger 이전으로 처리한다.</li>
         <li>검토 중인 입금액, 고위험 자금, Bonus USDT, CNYT는 USDT SEND 재원으로 사용할 수 없다.</li>
@@ -631,7 +910,7 @@ Personal wallet transfers are supported unless the wallet is identified as high-
     </section>
 
     <section>
-      <h2>11. CNYT 보관 및 내부 P2P 정책</h2>
+      <h2>13. CNYT 보관 및 내부 P2P 정책</h2>
       <p>
         CNYT는 외부 지갑 출금을 지원하지 않는다. 유저가 보유한 CNYT는 플랫폼 내부 Ledger 잔액으로 표시하며,
         유저 간 이전은 플랫폼 내부 P2P 게시판을 통한 장부상 이동으로만 처리한다.
@@ -665,7 +944,7 @@ Personal wallet transfers are supported unless the wallet is identified as high-
     </section>
 
     <section>
-      <h2>12. 오염 자금 및 고위험 USDT 대응</h2>
+      <h2>14. 오염 자금 및 고위험 USDT 대응</h2>
       <ol>
         <li>고위험 입금의 자동 반영을 중단한다.</li>
         <li>관련 유저의 출금과 SEND를 일시 제한한다.</li>
@@ -683,7 +962,7 @@ Personal wallet transfers are supported unless the wallet is identified as high-
     </section>
 
     <section>
-      <h2>13. 가스비 최소화 정책</h2>
+      <h2>15. 가스비 최소화 정책</h2>
       <table>
         <thead>
           <tr>
@@ -700,8 +979,8 @@ Personal wallet transfers are supported unless the wallet is identified as high-
           </tr>
           <tr>
             <td>Sweep Threshold</td>
-            <td>소액 입금마다 운영 지갑으로 이동하지 않는다.</td>
-            <td>체인별 최소 sweep 금액과 주기 설정.</td>
+            <td>소액 입금마다 이동하지 않되, 1단계부터 Stage-1 Collection Wallet로의 최소 집금 정책은 적용한다.</td>
+            <td>1단계는 수동/반자동 집금, 2단계는 Buffer/Vault 자동 집금 큐로 확장.</td>
           </tr>
           <tr>
             <td>Batch Withdrawal</td>
@@ -715,15 +994,15 @@ Personal wallet transfers are supported unless the wallet is identified as high-
           </tr>
           <tr>
             <td>Dynamic Fee Ready</td>
-            <td>초기 수수료는 2 USDT이나 운영자가 조정 가능해야 한다.</td>
-            <td>관리자 설정값으로 체인별 수수료 관리.</td>
+            <td>1단계 수수료는 1 USDT 고정. 2단계부터 출금 수수료 현실화를 검토하고, 3단계에서 Energy 임대 기반 최적화를 검토한다.</td>
+            <td>관리자 설정값으로 체인별 수수료 관리가 가능하도록 구조만 미리 둔다.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section>
-      <h2>14. 유저별 컨트랙트 지갑 검토</h2>
+      <h2>16. 유저별 컨트랙트 지갑 검토</h2>
       <p>
         중앙화 수탁형 구조에서는 유저별 컨트랙트 지갑이 기본 요구사항이 아니다. EOA 또는 HD Wallet 파생 주소를
         입금 식별용으로 사용하는 편이 비용과 운영 측면에서 적합하다. 컨트랙트 지갑은 배포 비용, 보안 감사,
@@ -758,7 +1037,7 @@ Personal wallet transfers are supported unless the wallet is identified as high-
     </section>
 
     <section>
-      <h2>15. 개발 구현 요구사항</h2>
+      <h2>17. 개발 구현 요구사항</h2>
       <table>
         <thead>
           <tr>
@@ -785,7 +1064,7 @@ Personal wallet transfers are supported unless the wallet is identified as high-
           </tr>
           <tr>
             <td>Ledger Service</td>
-            <td>Deposit, Earnings, Withdrawal, Bonus, Package, CNYT 원장 기록</td>
+            <td>Deposit, Earnings, Withdrawal, SEND, Bonus, Package, CNYT 원장 기록</td>
           </tr>
           <tr>
             <td>Daily Earnings Engine</td>
@@ -793,7 +1072,11 @@ Personal wallet transfers are supported unless the wallet is identified as high-
           </tr>
           <tr>
             <td>Withdrawal Queue</td>
-            <td>15 USDT 최소 출금, 2 USDT 수수료, UTC 09:00 배치 처리</td>
+            <td>10 USDT 최소 출금, 1 USDT 고정 수수료, UTC 09:00 배치 처리</td>
+          </tr>
+          <tr>
+            <td>SEND Transfer Service</td>
+            <td>내부 유저 간 USDT 장부 이전, 수취 유저 재확인, 잔액 부족/성공/실패 결과 팝업, Transfer History 기록</td>
           </tr>
           <tr>
             <td>CNYT P2P Manager</td>
@@ -804,6 +1087,14 @@ Personal wallet transfers are supported unless the wallet is identified as high-
             <td>sweep 기준, 배치 출금, 체인별 수수료, Hot Wallet 리밸런싱</td>
           </tr>
           <tr>
+            <td>Collection Manager</td>
+            <td>1단계 Stage-1 Collection Wallet 집금, 집금 대상 조회, 수동/반자동 실행, TxID 및 감사 로그 기록</td>
+          </tr>
+          <tr>
+            <td>Payout Reserve Manager</td>
+            <td>총 확정 패키지 구매금액 기준 35% Reserve 계산, 매월 10일/25일 충전 점검, 90%/80% 경보 및 부족분 기록</td>
+          </tr>
+          <tr>
             <td>Audit Log</td>
             <td>관리자 조작, 출금 승인, 지갑 이동, 제한 처리, 정책 예외 기록</td>
           </tr>
@@ -812,16 +1103,22 @@ Personal wallet transfers are supported unless the wallet is identified as high-
     </section>
 
     <section>
-      <h2>16. 최종 결론</h2>
+      <h2>18. 최종 결론</h2>
       <ul>
         <li>플랫폼은 KYC 없는 Web3 수탁형 지갑 구조를 기본으로 한다.</li>
         <li>유저는 이메일과 플랫폼 고유번호로 구분하며 다계정 생성을 허용한다.</li>
-        <li>USDT 입출금은 TRC20으로 시작하고, 향후 BNB Chain으로 확장한다.</li>
+        <li>1단계는 회원 100명 미만, 2단계는 100명 이상, 3단계는 1000명 이상으로 정의한다.</li>
+        <li>USDT 입출금은 TRC20으로 시작하고, 3단계 이후 테더 주요 상위 3개 체인으로 확장한다.</li>
+        <li>집금 정책은 1단계부터 적용하며, 유저 입금 자금은 Stage-1 Collection Wallet로만 모으고 Payout Wallet 또는 CEX로 직접 이동하지 않는다.</li>
+        <li>Payout Reserve는 총 확정 패키지 구매금액의 35%를 기준으로 단순 관리하며, 매월 10일과 25일에 충전 상태를 점검한다.</li>
+        <li>Payout Reserve가 필요액의 90% 미만이면 주의 경보, 80% 미만이면 긴급 경보로 처리한다.</li>
         <li>한국 거래소와의 직접 입출금만 차단하고, 개인지갑을 경유한 거래는 차단하지 않는다.</li>
+        <li>출금은 사전 등록된 메인 1개/서브 1개 주소로만 가능하며, 주소 변경은 OTP 인증과 관리자 승인을 거친다.</li>
         <li>유저의 주요 입금 수단은 Binance, Trust Wallet, imToken을 전제로 한다.</li>
         <li>매일 수익은 내부 Ledger로 분배하며, 출금은 UTC 09:00 기준 1일 1회 처리한다.</li>
-        <li>최소 출금액은 Flexible 상품 UX를 고려해 15 USDT로 설정한다.</li>
-        <li>TRC20 출금 수수료는 초기 2 USDT로 설정하되 운영자 조정 가능값으로 둔다.</li>
+        <li>SEND는 플랫폼 내부 유저 간 USDT 장부 이전으로 처리하며, 온체인 TxID 없이 내부 Ledger ID를 발급한다.</li>
+        <li>1단계 최소 출금액은 Flexible 상품 UX를 고려해 10 USDT로 설정한다.</li>
+        <li>1단계 TRC20 출금 수수료는 1 USDT 고정으로 운영하고, 2단계부터 현실화를 검토하며, 3단계에서 Energy 임대 기반 최적화를 검토한다.</li>
         <li>CNYT는 외부 지갑 출금을 지원하지 않고, 내부 P2P 게시판을 통한 Ledger 이동만 허용한다.</li>
         <li>오염 가능 자금은 정상 자금과 혼합하지 않고 Quarantine Wallet 정책으로 격리한다.</li>
       </ul>

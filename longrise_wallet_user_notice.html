@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LONGRISE Wallet Notice</title>
+  <style>
+    :root { --bg:#140404; --panel:#270707; --line:#5a1a1a; --text:#fff4f4; --muted:#d0bcbc; --gold:#f6c400; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,"Noto Sans KR",sans-serif; line-height:1.65; }
+    main { max-width:860px; margin:0 auto; padding:46px 22px 70px; }
+    h1 { margin:8px 0 14px; font-size:clamp(30px,6vw,46px); line-height:1.1; }
+    h2 { margin:30px 0 10px; color:var(--gold); font-size:22px; }
+    p, li { color:var(--muted); }
+    .eyebrow { color:var(--gold); font-weight:800; letter-spacing:4px; text-transform:uppercase; font-size:13px; }
+    .box { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:18px; margin:18px 0; }
+    strong { color:var(--text); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Wallet Notice</div>
+    <h1>입금, 출금 및 SEND 안내</h1>
+    <p>LONGRISE Wallet은 TRC20 USDT 입금, 출금, 내부 SEND를 지원합니다.</p>
+
+    <div class="box">
+      <h2>Deposit</h2>
+      <ul>
+        <li>현재 입금은 <strong>TRC20 USDT</strong>만 지원합니다.</li>
+        <li>입금은 네트워크 컨펌 확인 후 잔액에 반영됩니다.</li>
+        <li>서비스 제한 지역 소재 거래소와 직접 연결된 입금은 제한될 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Withdraw</h2>
+      <ul>
+        <li>최소 출금액은 <strong>10 USDT</strong>입니다.</li>
+        <li>출금 수수료는 <strong>1 USDT</strong>입니다.</li>
+        <li>TRC20 네트워크 상황 및 운영 비용에 따라 출금 수수료는 향후 <strong>1~2 USDT</strong> 범위에서 변경될 수 있습니다.</li>
+        <li>출금은 매일 <strong>UTC 09:00</strong> 기준 1회 처리됩니다.</li>
+        <li>출금은 사전에 승인된 <strong>메인 주소 1개</strong> 또는 <strong>서브 주소 1개</strong>로만 가능합니다.</li>
+        <li>출금 주소 등록 또는 변경 시 OTP 인증과 관리자 승인이 필요합니다.</li>
+        <li>서비스 제한 지역 소재 거래소로의 직접 출금은 지원하지 않습니다.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>SEND</h2>
+      <ul>
+        <li>SEND는 플랫폼 내부 사용자에게 USDT를 보내는 기능입니다.</li>
+        <li>SEND는 온체인 출금이 아니며, 네트워크 TxID가 생성되지 않습니다.</li>
+        <li>전송 전 수취 사용자와 금액을 반드시 확인해야 합니다.</li>
+        <li>완료된 SEND는 취소할 수 없습니다.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Balance Rules</h2>
+      <ul>
+        <li>Withdrawal Balance에 포함된 USDT만 출금 또는 SEND할 수 있습니다.</li>
+        <li>Bonus USDT는 출금 및 SEND가 불가능하며, 플랫폼 정책에 따라 정해진 용도로만 사용할 수 있습니다.</li>
+        <li>CNYT는 외부 지갑 출금을 지원하지 않으며, 플랫폼 내부 P2P를 통해서만 이동할 수 있습니다.</li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
