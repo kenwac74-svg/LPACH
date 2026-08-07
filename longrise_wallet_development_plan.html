@@ -29,96 +29,90 @@
 <body>
   <main>
     <header>
-      <div class="eyebrow">Developer Planning Document</div>
-      <h1>LONGRISE 입출금 및 SEND 개발 기획서</h1>
-      <p>본 문서는 실제 백엔드/프론트엔드 개발을 위한 구현 기준이다. 1인 개발 체제를 고려하여 1단계는 TRC20 USDT 입출금 테스트, 내부 Ledger 분리, 최소 집금 정책을 우선한다.</p>
+      <div class="eyebrow">Developer Handoff</div>
+      <h1>LONGRISE Wallet / Withdrawal / SEND 개발 지시서</h1>
+      <p>이 문서는 개발자가 서버와 프론트 기능을 연결할 때 필요한 구현 기준이다. UI/UX 화면 재기획은 기획자 업무이며, 개발자는 확정된 화면에 아래 정책과 상태값, API, 관리자 기능을 연결한다.</p>
+      <div class="notice">
+        <strong>핵심 결론:</strong> 유저 화면은 출금 주소 관리와 출금 정책 고지가 추가 재기획 대상이다. SEND와 CNYT는 기존 기능을 유지하되 확인/취소불가 고지만 보완한다. 입금/집금 관리와 Payout Reserve는 관리자툴에 구현한다.
+      </div>
     </header>
 
     <section>
-      <h2>1. 단계별 개발 범위</h2>
+      <h2>1. 업무 분리</h2>
       <table>
-        <thead><tr><th>단계</th><th>회원 수</th><th>목표</th><th>개발 범위</th></tr></thead>
+        <thead><tr><th>구분</th><th>담당</th><th>해야 할 일</th></tr></thead>
         <tbody>
-          <tr><td>1단계</td><td>100명 미만</td><td>최소 입출금 테스트</td><td>TRC20 입금 감지, 19 컨펌, Ledger 반영, 최소 집금 정책, SEND, 출금 요청, 관리자 확인, UTC 09:00 배치 처리</td></tr>
-          <tr><td>2단계</td><td>100명 이상</td><td>리스크 통제 강화</td><td>Buffer/Vault/Payout 역할 분리, 한국 거래소 직접 입출금 자동 차단, Basic On-chain Risk Screening, 출금 수수료 현실화 검토</td></tr>
-          <tr><td>3단계</td><td>1000명 이상</td><td>운영 자동화</td><td>Energy 임대 연동, 지갑 유동성 알림, 고액 출금 승인 룰 고도화</td></tr>
-          <tr><td>3단계 이후</td><td>1000명 이상 안정 운영 후</td><td>체인 확장</td><td>TRC20 외 테더 사용량 상위 3개 체인을 선정하여 순차 지원</td></tr>
+          <tr><td>유저 UI/UX 재기획</td><td>기획자</td><td>출금 주소 등록/변경 화면, 출금 정책 고지, SEND 최종 확인창, CNYT 내부 이동 화면, Terms 입출금 섹션을 설계한다.</td></tr>
+          <tr><td>서버/프론트 연동</td><td>개발자</td><td>확정된 UI에 API, DB 상태값, Ledger, OTP, 관리자 승인, 배치 출금, 히스토리 표시를 연결한다.</td></tr>
+          <tr><td>관리자툴</td><td>개발자</td><td>입금/집금 상태, 출금 주소 승인, 출금 배치, Payout Reserve 상태와 경보를 구현한다.</td></tr>
+          <tr><td>내부 개발 단계</td><td>개발/운영</td><td>1단계 100명 미만, 2단계 100명 이상, 3단계 1000명 이상 기준은 유저에게 노출하지 않고 개발 우선순위 기준으로만 사용한다.</td></tr>
         </tbody>
       </table>
     </section>
 
     <section>
-      <h2>2. 1단계 기능 스펙</h2>
+      <h2>2. 개발자가 바로 구현할 것</h2>
       <table>
-        <thead><tr><th>기능</th><th>스펙</th><th>비고</th></tr></thead>
+        <thead><tr><th>영역</th><th>구현 지시</th><th>유저 노출 여부</th></tr></thead>
         <tbody>
-          <tr><td>입금</td><td>TRC20 USDT 입금 감지, 19 confirmations 후 완료</td><td>최소 입금 인정액 1 USDT 권장</td></tr>
-          <tr><td>출금</td><td>최소 출금 10 USDT, 수수료 1 USDT 고정, UTC 09:00 1일 1회 처리</td><td>1단계는 관리자 확인 기반</td></tr>
-          <tr><td>출금 주소</td><td>메인 주소 1개 + 서브 주소 1개만 등록 가능</td><td>주소 등록/변경 시 OTP 인증 및 관리자 승인 필요</td></tr>
-          <tr><td>집금</td><td>User Deposit Address → Stage-1 Collection Wallet</td><td>집금 자금은 Payout Wallet 또는 CEX로 직접 이동 금지</td></tr>
-          <tr><td>Payout Reserve</td><td>총 확정 패키지 구매금액 × 35%</td><td>매월 10일/25일 점검, 90% 미만 주의 경보, 80% 미만 긴급 경보</td></tr>
-          <tr><td>SEND</td><td>플랫폼 내부 유저 간 USDT Ledger 이전</td><td>온체인 Tx 없음, 내부 Ledger ID 발급</td></tr>
-          <tr><td>한국 거래소 직접 차단</td><td>1단계는 출금 주소 블랙리스트 수동 관리부터 시작</td><td>개인지갑 경유는 차단하지 않음</td></tr>
-          <tr><td>CNYT</td><td>외부 출금 없음, 내부 P2P Ledger 이동만 지원</td><td>회사 중앙 CNYT 지갑은 별도 관리</td></tr>
+          <tr><td>TRC20 USDT</td><td>1단계는 TRC20 USDT 입금/출금만 우선 지원한다. 입금은 19 confirmations 후 Ledger에 반영한다.</td><td>노출</td></tr>
+          <tr><td>출금 정책</td><td>최소 출금 10 USDT, 1단계 수수료 1 USDT, UTC 09:00 기준 1일 1회 배치 처리.</td><td>노출</td></tr>
+          <tr><td>출금 주소</td><td>메인 1개 + 서브 1개만 허용. 승인된 주소 중 선택 출금만 가능. 임의 주소 직접 입력은 막는다.</td><td>노출</td></tr>
+          <tr><td>주소 변경</td><td>주소 등록/변경은 OTP 인증 후 관리자 승인 상태로 넘긴다. 승인 전까지 기존 승인 주소만 사용한다.</td><td>노출</td></tr>
+          <tr><td>SEND</td><td>내부 USDT Ledger 이전으로 처리한다. 온체인 TxID는 만들지 않는다. 수신자명/고유번호/금액 확인 후 실행한다.</td><td>노출</td></tr>
+          <tr><td>CNYT</td><td>외부 지갑 출금 기능을 만들지 않는다. 내부 P2P/Ledger 이동만 허용한다.</td><td>노출</td></tr>
+          <tr><td>집금</td><td>User Deposit Address → Stage-1 Collection Wallet 구조를 적용한다. Collection/Vault 자금은 Payout Wallet 또는 CEX로 직접 이동시키지 않는다.</td><td>관리자툴</td></tr>
+          <tr><td>Payout Reserve</td><td>총 확정 패키지 구매금액의 35%를 기준으로 필요 Reserve를 계산한다. 매월 10일/25일 점검한다.</td><td>관리자툴</td></tr>
+          <tr><td>Reserve 경보</td><td>필요액 90% 미만은 WARNING, 80% 미만은 CRITICAL로 표시한다.</td><td>관리자툴</td></tr>
+          <tr><td>한국 거래소 직접 차단</td><td>한국 거래소 직접 입출금 주소는 차단한다. 개인지갑 경유는 차단하지 않는다.</td><td>일부 고지</td></tr>
         </tbody>
       </table>
     </section>
 
     <section>
-      <h2>3. 개발자 의사결정 참고표</h2>
-      <p>아래 항목은 개발자가 구현 난이도와 운영 리스크를 함께 보고 최종 구현 순서를 판단하기 위한 비교표다. 현재 확정 정책은 1단계 최소 구현을 우선한다.</p>
+      <h2>3. UI/UX 재기획 필요 영역</h2>
       <table>
-        <thead><tr><th>항목</th><th>선택지</th><th>장점</th><th>단점</th><th>현재 결정</th></tr></thead>
+        <thead><tr><th>화면</th><th>기획자가 정할 것</th><th>개발자가 연결할 것</th></tr></thead>
         <tbody>
-          <tr>
-            <td>3-Tier 지갑 격리</td>
-            <td>1단계 즉시 적용 vs 2단계 적용</td>
-            <td>즉시 적용 시 CEX 동결/오염 자금 전염 방어가 강함</td>
-            <td>1인 개발 체제에서 Buffer/Vault/Payout 전체 자동화까지 구현하면 지갑 운용, 예외 처리, 집금 로직 부담이 큼</td>
-            <td>완전한 3-Tier는 2단계 적용. 단, 1단계부터 Stage-1 Collection Wallet 집금 정책은 적용</td>
-          </tr>
-          <tr>
-            <td>최소 출금액</td>
-            <td>10 USDT vs 50 USDT</td>
-            <td>10 USDT는 Flexible 상품 유저가 현실적으로 출금 가능. 50 USDT는 운영 부담 감소</td>
-            <td>10 USDT는 소액 출금 증가. 50 USDT는 소액 유저에게 사실상 출금 제한처럼 느껴질 수 있음</td>
-            <td>10 USDT 확정</td>
-          </tr>
-          <tr>
-            <td>출금 수수료</td>
-            <td>1 USDT vs 2.5 USDT</td>
-            <td>1 USDT는 초기 유저 친화적. 2.5 USDT는 회사 비용 방어에 유리</td>
-            <td>1 USDT는 회사가 네트워크 비용 일부를 부담할 수 있음. 2.5 USDT는 10 USDT 출금 기준 체감 수수료가 큼</td>
-            <td>1단계 1 USDT, 2단계부터 현실화 검토</td>
-          </tr>
-          <tr>
-            <td>Energy 임대</td>
-            <td>1단계 필수 vs 3단계 최적화</td>
-            <td>필수 적용 시 출금 비용 최적화 가능</td>
-            <td>API 장애, 임대 실패, 비용 산정, 예외 처리가 늘어남</td>
-            <td>3단계 검토</td>
-          </tr>
-          <tr>
-            <td>4중 AML / Risk Screening</td>
-            <td>1단계 적용 vs 2단계 적용</td>
-            <td>초기부터 자동 차단 가능</td>
-            <td>무료 API 한계, 장애 대응, 오탐/미탐 처리 부담</td>
-            <td>2단계 적용</td>
-          </tr>
-          <tr>
-            <td>출금 주소 방식</td>
-            <td>매번 임의 입력 vs 메인/서브 사전 등록</td>
-            <td>사전 등록 방식은 블랙리스트 관리, 계정 탈취 대응, 오입력 방지에 유리</td>
-            <td>유저가 주소 변경 시 OTP와 관리자 승인을 기다려야 함</td>
-            <td>메인 1개 + 서브 1개 유지</td>
-          </tr>
+          <tr><td>Withdrawal Address</td><td>메인/서브 주소 카드, 등록/변경 플로우, OTP 입력, 승인 대기/승인/반려 표시.</td><td>주소 슬롯 제한, OTP 검증, 관리자 승인 상태, 승인 주소 선택 API.</td></tr>
+          <tr><td>Withdraw</td><td>최소 출금액, 수수료, 예상 수령액, UTC 09:00 배치 안내를 사용자가 명확히 보는 구조.</td><td>수수료 계산, net amount 계산, 배치 큐 등록, 상태값 표시.</td></tr>
+          <tr><td>SEND Confirm</td><td>수신자명, 고유번호, 금액, 완료 후 취소 불가 확인창.</td><td>수신자 검증, Ledger debit/credit, 실패/성공 결과 팝업.</td></tr>
+          <tr><td>CNYT</td><td>외부 주소 입력형 출금 화면을 두지 않고 내부 이동/P2P 흐름만 설계.</td><td>CNYT 외부 출금 API 미제공, 내부 P2P Ledger 이전만 구현.</td></tr>
+          <tr><td>Terms / FAQ</td><td>입출금 정책 별도 섹션 추가. 중도 해지 정책은 상품 구매 화면에 강조하지 않는다.</td><td>약관 버전 관리, 동의 이력 저장, 공지/FAQ 표시 API.</td></tr>
         </tbody>
       </table>
     </section>
 
     <section>
-      <h2>4. Ledger 잔액 타입</h2>
-      <p>잔액을 하나의 숫자로 저장하지 않는다. 자금 성격별 원장 항목을 분리하고, 화면 잔액은 계산값으로 표시한다.</p>
+      <h2>4. 관리자툴 필요 영역</h2>
+      <table>
+        <thead><tr><th>관리 화면</th><th>표시 필드</th><th>액션</th></tr></thead>
+        <tbody>
+          <tr><td>입금/집금 관리</td><td>User Deposit Address, 입금 TxID, confirmations, Ledger 반영 상태, Stage-1 Collection 상태.</td><td>입금 확인, 리스크 검토, 집금 대기/실행/실패 처리.</td></tr>
+          <tr><td>출금 주소 승인</td><td>유저 이메일, 고유번호, 주소, 슬롯 MAIN/SUB, OTP 완료 여부, 블랙리스트 검사 결과.</td><td>승인, 반려, 비활성화, 반려 사유 기록.</td></tr>
+          <tr><td>출금 배치</td><td>REQUESTED, REVIEWING, SCHEDULED, BROADCASTED, COMPLETED, FAILED, REJECTED.</td><td>검토, 배치 등록, 온체인 송신 기록, 실패 시 Ledger rollback.</td></tr>
+          <tr><td>Payout Reserve</td><td>Total Confirmed Package Purchases, Required Reserve, Current Liquidity, Reserve Gap, Last Funding Date, Next Review Date.</td><td>스냅샷 생성, WARNING/CRITICAL 표시, 보충 기록.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. 내부 개발 단계</h2>
+      <p>아래 단계는 개발자 작업 지시와 운영 확장 기준이다. 유저 화면에는 표시하지 않는다.</p>
+      <table>
+        <thead><tr><th>단계</th><th>기준</th><th>개발 범위</th></tr></thead>
+        <tbody>
+          <tr><td>1단계</td><td>회원 100명 미만</td><td>TRC20 USDT, 19 컨펌, Ledger, SEND, 주소 승인, UTC 09:00 배치, Stage-1 Collection, 관리자 수동 확인.</td></tr>
+          <tr><td>2단계</td><td>회원 100명 이상</td><td>Buffer/Vault/Payout 역할 분리, 한국 거래소 직접 입출금 자동 차단, Basic On-chain Risk Screening, 수수료 현실화 검토.</td></tr>
+          <tr><td>3단계</td><td>회원 1000명 이상</td><td>Energy 임대 연동, 지갑 유동성 알림, 고액 출금 승인 룰 고도화.</td></tr>
+          <tr><td>3단계 이후</td><td>안정 운영 후</td><td>TRC20 외 테더 사용량 상위 3개 체인 순차 지원.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. Ledger 잔액 타입</h2>
+      <p>잔액은 하나의 숫자로 저장하지 않는다. 자금 성격별 원장 항목을 분리하고 화면 잔액은 계산값으로 표시한다.</p>
       <table>
         <thead><tr><th>balance_type</th><th>의미</th><th>출금</th><th>SEND</th></tr></thead>
         <tbody>
@@ -142,291 +136,48 @@ deposit_principal
     </section>
 
     <section>
-      <h2>5. 권장 DB 테이블</h2>
+      <h2>7. 주요 상태값</h2>
+      <table>
+        <thead><tr><th>구분</th><th>상태값</th><th>의미</th></tr></thead>
+        <tbody>
+          <tr><td>출금 주소</td><td><code>PENDING_OTP</code>, <code>PENDING_ADMIN_REVIEW</code>, <code>APPROVED</code>, <code>REJECTED</code>, <code>DISABLED</code></td><td>OTP와 관리자 승인 흐름.</td></tr>
+          <tr><td>출금 요청</td><td><code>REQUESTED</code>, <code>REVIEWING</code>, <code>SCHEDULED</code>, <code>BROADCASTED</code>, <code>COMPLETED</code>, <code>FAILED</code>, <code>REJECTED</code></td><td>신청부터 배치, 온체인 송신, 완료/실패까지.</td></tr>
+          <tr><td>SEND</td><td><code>REQUESTED</code>, <code>COMPLETED</code>, <code>FAILED</code></td><td>내부 Ledger 이전 결과. 온체인 TxID 없음.</td></tr>
+          <tr><td>집금</td><td><code>DRAFT</code>, <code>READY</code>, <code>EXECUTED</code>, <code>FAILED</code>, <code>CANCELLED</code></td><td>Stage-1 Collection 집금 실행 상태.</td></tr>
+          <tr><td>Reserve</td><td><code>OK</code>, <code>WARNING</code>, <code>CRITICAL</code></td><td>35% 필요 Reserve 대비 현재 유동성 상태.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>8. 권장 DB 테이블</h2>
       <pre>users
-- id
-- email
-- user_code
-- status
-- created_at
-
 wallet_addresses
-- id
-- user_id
-- chain
-- address
-- wallet_role
-- status
-- created_at
-
 withdrawal_addresses
-- id
-- user_id
-- chain
-- label
-- address
-- address_slot
-- status
-- otp_verified_at
-- admin_approved_at
-- admin_approved_by
-- reject_reason
-- created_at
-- updated_at
-
 ledger_entries
-- id
-- user_id
-- asset
-- balance_type
-- direction
-- amount
-- reference_type
-- reference_id
-- status
-- created_at
-
 deposit_records
-- id
-- user_id
-- chain
-- from_address
-- to_address
-- amount
-- confirmations
-- status
-- txid
-- created_at
-
 withdrawal_requests
-- id
-- user_id
-- chain
-- withdrawal_address_id
-- to_address
-- amount
-- fee_amount
-- net_amount
-- status
-- scheduled_batch_at
-- txid
-- created_at
-
 send_transfers
-- id
-- sender_user_id
-- receiver_user_id
-- amount
-- fee_amount
-- status
-- ledger_debit_id
-- ledger_credit_id
-- created_at
-
 wallet_transactions
-- id
-- chain
-- wallet_role
-- tx_type
-- amount
-- txid
-- status
-- created_at
-
 collection_batches
-- id
-- chain
-- source_wallet_role
-- destination_wallet_role
-- total_amount
-- status
-- executed_by
-- executed_at
-- txid
-- reason
-- created_at
-
 payout_reserve_snapshots
-- id
-- snapshot_date
-- total_confirmed_package_purchases
-- required_reserve_amount
-- current_payout_liquidity
-- reserve_ratio
-- reserve_gap
-- status
-- created_at
-
-payout_reserve_fundings
-- id
-- funding_date
-- amount
-- source_note
-- destination_wallet_role
-- status
-- txid
-- created_at</pre>
+payout_reserve_fundings</pre>
+      <p>필드 상세는 정책서 #01을 기준으로 하되, 이 문서의 상태값과 노출 기준을 우선 적용한다.</p>
     </section>
 
     <section>
-      <h2>6. SEND 개발 스펙</h2>
+      <h2>9. API 구현 메모</h2>
       <table>
-        <thead><tr><th>항목</th><th>구현 기준</th></tr></thead>
+        <thead><tr><th>API</th><th>역할</th><th>필수 검증</th></tr></thead>
         <tbody>
-          <tr><td>정의</td><td>플랫폼 내부 유저 간 USDT 장부 이전. 온체인 트랜잭션이 아니다.</td></tr>
-          <tr><td>수취자 식별</td><td>유저명 또는 플랫폼 고유번호로 검색. 최종 확인 팝업에는 수취자 표시명을 반드시 보여준다.</td></tr>
-          <tr><td>차감 재원</td><td>Withdrawal Balance 안의 출금 가능 USDT만 사용한다.</td></tr>
-          <tr><td>차단 재원</td><td>bonus_usdt, package_value, pending_withdrawal, locked_review, CNYT는 SEND 불가.</td></tr>
-          <tr><td>수수료</td><td>1단계 무료 권장. 네트워크 수수료 없음.</td></tr>
-          <tr><td>처리 방식</td><td>DB transaction 안에서 sender debit과 receiver credit을 동시에 기록한다.</td></tr>
-          <tr><td>실패 처리</td><td>수취자 없음, 잔액 부족, 제한 계정, 자기 자신에게 전송 시도, DB 처리 실패를 별도 에러 코드로 반환.</td></tr>
-          <tr><td>완료 후</td><td>취소 불가. Transfer History에 내부 Ledger ID와 상세 로그 표시.</td></tr>
+          <tr><td><code>GET /api/wallet/deposit-address</code></td><td>유저별 TRC20 입금 주소 반환.</td><td>유저 상태, 체인, 주소 발급 여부.</td></tr>
+          <tr><td><code>POST /api/wallet/withdrawal-addresses</code></td><td>출금 주소 등록/변경 요청.</td><td>주소 형식, MAIN/SUB 제한, OTP, 블랙리스트, 관리자 승인.</td></tr>
+          <tr><td><code>POST /api/wallet/withdrawals</code></td><td>출금 신청.</td><td>승인 주소 선택, 10 USDT 이상, 1 USDT 수수료, 잔액, 계정 제한.</td></tr>
+          <tr><td><code>POST /api/wallet/send</code></td><td>내부 USDT SEND.</td><td>수신자 존재, 잔액, 자기 자신 차단, 취소 불가 확인.</td></tr>
+          <tr><td><code>POST /api/admin/collection-batches</code></td><td>관리자 집금 실행/기록.</td><td>컨펌 완료, Ledger 반영, 관리자 권한, 감사 로그.</td></tr>
+          <tr><td><code>GET /api/admin/payout-reserve</code></td><td>Reserve 상태 조회.</td><td>확정 패키지 구매액, 현재 유동성, 경보 상태 계산.</td></tr>
         </tbody>
       </table>
-      <pre>POST /api/wallet/send
-Request:
-{
-  "receiverUserCode": "LR-10293",
-  "amount": "25.00"
-}
-
-Validation:
-- sender account active
-- receiver exists and active
-- amount > 0
-- available withdrawal balance >= amount
-- source balance types are sendable
-
-Success:
-{
-  "status": "COMPLETED",
-  "sendTransferId": "send_...",
-  "ledgerDebitId": "ledger_...",
-  "ledgerCreditId": "ledger_..."
-}</pre>
-    </section>
-
-    <section>
-      <h2>7. 출금 주소 관리 개발 스펙</h2>
-      <table>
-        <thead><tr><th>항목</th><th>구현 기준</th></tr></thead>
-        <tbody>
-          <tr><td>주소 슬롯</td><td>유저당 체인별 <code>MAIN</code> 1개, <code>SUB</code> 1개만 허용한다.</td></tr>
-          <tr><td>출금 요청</td><td>유저는 승인 완료된 출금 주소 중 하나를 선택해서 출금한다. 임의 주소 직접 입력은 제공하지 않는다.</td></tr>
-          <tr><td>주소 등록</td><td>TRON 주소 형식 검증, 한국 거래소 직접 주소 블랙리스트 검사, OTP 인증, 관리자 승인 후 <code>APPROVED</code> 처리.</td></tr>
-          <tr><td>주소 변경</td><td>기존 주소를 바로 덮어쓰지 않고 변경 요청 레코드를 생성한다. 승인 전까지 기존 승인 주소만 출금 가능.</td></tr>
-          <tr><td>관리자 승인</td><td>주소, 체인, 유저 이메일, 고유번호, 요청 시간, 블랙리스트 검사 결과를 보고 승인/거절한다.</td></tr>
-          <tr><td>보안 효과</td><td>주소 바꿔치기, 탈취 계정 출금, 한국 거래소 직접 출금, 반복 주소 검사 부담을 줄인다.</td></tr>
-        </tbody>
-      </table>
-      <pre>withdrawal_addresses.status
-- PENDING_OTP
-- PENDING_ADMIN_REVIEW
-- APPROVED
-- REJECTED
-- DISABLED
-
-address_slot
-- MAIN
-- SUB
-
-POST /api/wallet/withdrawal-addresses
-Request:
-{
-  "chain": "TRC20",
-  "slot": "MAIN",
-  "address": "T..."
-}
-
-Validation:
-- TRON Base58 address format
-- slot count limit
-- blacklist / restricted exchange check
-- OTP verification
-- admin approval before use</pre>
-    </section>
-
-    <section>
-      <h2>8. 출금 상태값</h2>
-      <table>
-        <thead><tr><th>status</th><th>의미</th><th>처리</th></tr></thead>
-        <tbody>
-          <tr><td><code>REQUESTED</code></td><td>유저 신청 완료</td><td>pending_withdrawal로 Ledger 잠금</td></tr>
-          <tr><td><code>REVIEWING</code></td><td>관리자 확인 중</td><td>1단계 기본 상태</td></tr>
-          <tr><td><code>SCHEDULED</code></td><td>UTC 09:00 배치 대기</td><td>출금 큐 포함</td></tr>
-          <tr><td><code>BROADCASTED</code></td><td>온체인 송신 완료</td><td>TxID 저장</td></tr>
-          <tr><td><code>COMPLETED</code></td><td>19 confirmations 완료</td><td>최종 완료</td></tr>
-          <tr><td><code>FAILED</code></td><td>온체인 실패</td><td>Ledger rollback</td></tr>
-          <tr><td><code>REJECTED</code></td><td>정책상 거절</td><td>잠금 해제 및 사유 기록</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h2>9. 집금 정책 개발 스펙</h2>
-      <p>집금 정책은 1단계부터 적용한다. 단, 1단계는 완전 자동화가 아니라 회사 자금 흐름을 안전하게 분리하기 위한 최소 수동/반자동 구조로 구현한다.</p>
-      <table>
-        <thead><tr><th>항목</th><th>1단계 구현</th><th>2단계 확장</th></tr></thead>
-        <tbody>
-          <tr><td>집금 경로</td><td>User Deposit Address → Stage-1 Collection Wallet</td><td>User Deposit Address → Buffer Wallet → Vault Wallet</td></tr>
-          <tr><td>출금 지갑 연결</td><td>Stage-1 Collection Wallet에서 Payout Wallet/CEX로 직접 이동 금지</td><td>Vault Wallet에서 Payout Wallet로 직접 이동 금지 유지</td></tr>
-          <tr><td>집금 조건</td><td>19 컨펌 완료, DB 반영 완료, 관리자 확인 완료</td><td>Risk Screening GREEN 조건 추가</td></tr>
-          <tr><td>집금 기준</td><td>기본값: 주소 잔액 100 USDT 이상 또는 마지막 입금 후 7일 경과 시 관리자 검토</td><td>금액+시간+리스크 점수 기반 자동 큐</td></tr>
-          <tr><td>집금 방식</td><td>관리자 수동 실행 또는 반자동 실행</td><td>예약 배치 및 랜덤 딜레이 적용 가능</td></tr>
-          <tr><td>감사 로그</td><td>실행자, 출발 주소, 목적지, 금액, TxID, 사유 기록</td><td>집금 큐, 스코어, 승인자, 실패 사유 추가 기록</td></tr>
-        </tbody>
-      </table>
-      <pre>wallet_role
-- USER_DEPOSIT
-- STAGE1_COLLECTION
-- BUFFER
-- VAULT
-- PAYOUT
-- CNYT_CENTRAL
-
-collection_batches.status
-- DRAFT
-- READY
-- EXECUTED
-- FAILED
-- CANCELLED</pre>
-    </section>
-
-    <section>
-      <h2>10. Payout Reserve 개발 스펙</h2>
-      <p>
-        Payout Reserve는 유저 화면에 노출하는 기능이 아니라 관리자 운영 기능이다. 목적은 상품 구매로 확정된 자금 규모 대비
-        회사가 출금, 매일 수익 지급, 중도 해지 대응에 사용할 별도 유동성을 충분히 보유하고 있는지 확인하는 것이다.
-      </p>
-      <table>
-        <thead><tr><th>항목</th><th>구현 기준</th></tr></thead>
-        <tbody>
-          <tr><td>필요 Reserve 계산</td><td><code>required_reserve_amount = total_confirmed_package_purchases * 0.35</code></td></tr>
-          <tr><td>현재 유동성 계산</td><td>Payout Wallet 및 별도 Payout Reserve Wallet의 사용 가능 USDT 합계</td></tr>
-          <tr><td>Reserve 비율</td><td><code>reserve_ratio = current_payout_liquidity / required_reserve_amount</code></td></tr>
-          <tr><td>정기 점검일</td><td>매월 10일과 25일에 snapshot 생성 및 부족분 계산</td></tr>
-          <tr><td>주의 경보</td><td>Reserve 비율이 90% 미만이면 관리자 대시보드에 WARNING 표시</td></tr>
-          <tr><td>긴급 경보</td><td>Reserve 비율이 80% 미만이면 CRITICAL 표시 및 회사 자금 보충 필요 알림</td></tr>
-          <tr><td>운영 단순화</td><td>1~2단계에서는 상품별 Reserve 비율을 두지 않고 전체 확정 구매금액 기준으로만 관리</td></tr>
-          <tr><td>자금 이동 제한</td><td>Collection/Vault 계열 자금을 Payout Wallet로 직접 이동시키는 로직은 만들지 않는다.</td></tr>
-        </tbody>
-      </table>
-      <div class="note">
-        관리자 대시보드에는 Total Confirmed Package Purchases, Required Payout Reserve, Current Payout Liquidity,
-        Reserve Gap, Reserve Status, Last Funding Date, Next Review Date를 표시하는 것을 권장한다.
-      </div>
-    </section>
-
-    <section>
-      <h2>11. 프론트엔드 필수 표시</h2>
-      <ul>
-        <li>Deposit: TRC20 USDT 주소, 컨펌 상태, 최소 입금 인정액.</li>
-        <li>Withdraw: 승인된 메인/서브 출금 주소 선택, 최소 출금 10 USDT, 수수료 1 USDT, 예상 수령액, UTC 09:00 처리 안내.</li>
-        <li>Fee Notice: 1단계 수수료는 1 USDT이나 TRON 네트워크 상황에 따라 향후 1~2 USDT 범위에서 변경될 수 있음을 표시.</li>
-        <li>Withdrawal Address: 메인 1개/서브 1개, OTP 인증, 관리자 승인 대기/승인/거절 상태 표시.</li>
-        <li>SEND: 수취 유저명/고유번호, 금액, 취소 불가 확인 팝업, 성공/잔액부족/실패 결과 팝업.</li>
-        <li>History: Deposit, Withdraw, SEND, Receive, Reward, Package를 구분 표시.</li>
-      </ul>
     </section>
   </main>
 </body>
