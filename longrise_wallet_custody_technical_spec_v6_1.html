@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LONGRISE Wallet Custody Technical Spec v6.1</title>
+<style>
+  @page {
+    size: A4;
+    margin: 10mm 12mm;
+    background-color: #ffffff;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Malgun Gothic', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 28px 18px 56px;
+    background: #eef2f7;
+    color: #1e293b;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #e0f2fe 0, rgba(255,255,255,0) 280px);
+    z-index: -1;
+  }
+
+  body > * {
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Header Section */
+  .header-container {
+    background: linear-gradient(135deg, #0f172a, #17324d);
+    color: #ffffff;
+    padding: 24px 26px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .22);
+  }
+
+  .header-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+  }
+
+  .header-subtitle {
+    font-size: 9pt;
+    color: #38bdf8;
+    margin: 0 0 10px 0;
+  }
+
+  .meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+    color: #cbd5e1;
+  }
+
+  .meta-table td {
+    padding: 1px 0;
+  }
+
+  .meta-label {
+    font-weight: bold;
+    color: #94a3b8;
+    width: 85px;
+  }
+
+  .doc-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .doc-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: #38bdf8;
+    color: #082f49;
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  /* Section Styling */
+  .section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .06);
+  }
+
+  .section-title {
+    font-size: 10.5pt;
+    font-weight: bold;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #0284c7;
+    display: block;
+  }
+
+  .section-subtitle {
+    font-size: 9pt;
+    font-weight: bold;
+    color: #0369a1;
+    margin: 8px 0 3px 0;
+  }
+
+  /* Specification Table */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5px 0;
+    font-size: 11px;
+  }
+
+  .spec-table th {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-weight: bold;
+    text-align: left;
+    padding: 4px 6px;
+    border: 1px solid #cbd5e1;
+  }
+
+  .spec-table td {
+    padding: 4px 6px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .spec-table tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 7pt;
+    font-weight: bold;
+  }
+
+  .badge-blue { background-color: #e0f2fe; color: #0369a1; }
+  .badge-amber { background-color: #fef3c7; color: #92400e; }
+  .badge-purple { background-color: #f3e8ff; color: #6b21a8; }
+  .badge-green { background-color: #dcfce7; color: #166534; }
+  .badge-red { background-color: #fee2e2; color: #991b1b; }
+
+  /* Boxes */
+  .callout-box {
+    background-color: #f0f9ff;
+    border-left: 3px solid #0284c7;
+    padding: 6px 8px;
+    margin: 5px 0;
+    border-radius: 0 3px 3px 0;
+    font-size: 11px;
+  }
+
+  .warning-box {
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 6px 8px;
+    margin: 5px 0;
+    font-size: 11px;
+    color: #92400e;
+  }
+
+  .biz-context-box {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 3px solid #475569;
+    border-radius: 0 3px 3px 0;
+    padding: 6px 8px;
+    margin: 5px 0;
+    font-size: 11px;
+    color: #334155;
+  }
+
+  /* Flow Lists */
+  ul, ol {
+    margin: 2px 0;
+    padding-left: 14px;
+  }
+
+  li {
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-family: Consolas, 'Courier New', monospace;
+    background-color: #f1f5f9;
+    padding: 1px 3px;
+    border-radius: 2px;
+    color: #0f172a;
+    font-size: 7.5pt;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  @media print {
+    body {
+      padding: 0;
+      background: #ffffff;
+      font-size: 8.5pt;
+      line-height: 1.4;
+    }
+    body::before { display: none; }
+    body > * { max-width: none; }
+    .header-container {
+      padding: 16px 18px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      box-shadow: none;
+    }
+    .section {
+      border-radius: 5px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      box-shadow: none;
+    }
+    .spec-table,
+    .callout-box,
+    .warning-box,
+    .biz-context-box {
+      font-size: 8pt;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Title / Banner -->
+  <div class="header-container">
+    <div class="header-title">LONGRISE 수탁형 지갑 입출금 및 자금관리 정책 기획서</div>
+    <div class="header-subtitle">최종 의사결정 완벽 반영 종합 명세서 (2026년 8월 13일 확정본)</div>
+    <table class="meta-table">
+      <tr>
+        <td class="meta-label">문서 버전:</td>
+        <td>v6.1.0 (2026년 8월 13일 최종 의사결정반영판)</td>
+        <td class="meta-label">작성 일자:</td>
+        <td><b>2026년 8월 13일</b></td>
+      </tr>
+      <tr>
+        <td class="meta-label">적용 대상:</td>
+        <td>LONGRISE 서비스 기획 / 백엔드 엔지니어 / 프론트엔드 UI / 관리자 CS</td>
+        <td class="meta-label">대상 자산:</td>
+        <td>TRON Mainnet (TRC20 USDT)</td>
+      </tr>
+    </table>
+    <div class="doc-actions">
+      <a href="longrise_wallet_custody_technical_spec_v6_1.pdf" target="_blank" rel="noopener noreferrer">PDF 원본 열기</a>
+    </div>
+  </div>
+
+  <!-- 비즈니스 맥락 -->
+  <div class="biz-context-box page-break-avoid">
+    <b>💡 비즈니스 시스템 전제 및 2026년 8월 13일 확정 지침:</b><br>
+    • <b>서비스 목적:</b> $100, $200, $500, $1,000 NFT 아이템 마켓플레이스 결제 전용 수탁 지갑 구조.<br>
+    • <b>Phase 0 (MVP) 모객 정책:</b> 모객 진입 장벽 완화를 위해 <b>최소 출금 한도를 $10.00 USDT로 하향</b>하고, <b>고정 출금 수수료를 $1.00 USDT로 인하</b>합니다. (가스 차액은 회사가 마케팅 비용 처리하며, 수수료 조정은 공지 기반 수동 적용)<br>
+    • <b>프론트엔드 UI 픽스 (UI Freeze):</b> 개발 리소스 보전을 위해 미확정 신규 UI를 일체 제외하고 <b>`[유저 전용 주소 + 복사 버튼 + 기본 QR 코드]`</b> 단일 화면으로 픽스합니다.<br>
+    • <b>용어 폐기 및 DB Status 매핑:</b> `Deposit Screening Wallet`, `Quarantine Wallet`, `Payout Reserve Wallet` 명칭을 전면 파기하고 DB status 필드로 일원화합니다.
+  </div>
+
+  <!-- 1. 월렛 구조 및 용어 정립 -->
+  <div class="section page-break-avoid">
+    <div class="section-title">1. 시스템 용어 및 지갑/상태 분류 체계 (System Architecture)</div>
+
+    <div class="section-subtitle">1.1 용어 구별 기준 (Address vs Wallet vs Status)</div>
+    <ul>
+      <li><b>Address (주소):</b> 블록체인 온체인 상의 34자리 공개키 문자열 (예: <code>T...</code>). 유저별 1:1 발급 포인트.</li>
+      <li><b>Wallet (지갑):</b> 내부적으로 Private Key / 서명 권한을 소유하고 온체인 인출/전송 트랜잭션을 실행하는 시스템 지갑 개체.</li>
+      <li><b>Deposit Status (입금 상태):</b> 입금 트랜잭션의 검증 단계 및 제재 여부를 나타내는 DB 필드. <b>(온체인 지갑 명칭 사용 금지)</b></li>
+    </ul>
+
+    <div class="section-subtitle">1.2 지갑 분류 체계 (Wallets)</div>
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>지갑명</th>
+          <th>서명/관리 메커니즘</th>
+          <th>온체인 역할 및 인출 제약 조건</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>W1</b></td>
+          <td><b>Cold Wallet</b></td>
+          <td>오프라인 2-of-3 Multisig (Ledger)</td>
+          <td>인터넷과 완벽 격리. 자산 안전 보관 및 오프라인 키 세레머니 관리. (Phase 2 도입)</td>
+        </tr>
+        <tr>
+          <td><b>W2</b></td>
+          <td><b>Warm Wallet</b></td>
+          <td>C-Level 다중 서명 (API 제한)</td>
+          <td>Cold → Hot 유동성 공급 간 충격 완화 버퍼 지갑. 필요 시 CEX 입출금 창구.</td>
+        </tr>
+        <tr>
+          <td><b>W3</b></td>
+          <td><b>Hot Wallet</b></td>
+          <td>시스템 자동 서명 (백엔드 제어)</td>
+          <td>Warm에서 보충 받고 Payout Wallet으로 전달하는 중앙 유동성 지갑. (2가지 전송만 허용)</td>
+        </tr>
+        <tr>
+          <td><b>W4</b></td>
+          <td><b>Payout Wallet</b></td>
+          <td>출금 전용 핫월렛 (System)</td>
+          <td><b>[핵심 규칙] 유저 승인 출금 및 이자 지급 전용. 유저 입금 자금(Collection) 직접 유입 절대 엄금.</b></td>
+        </tr>
+        <tr>
+          <td><b>W5</b></td>
+          <td><b>Stage-1 Collection Wallet</b></td>
+          <td>1단계 집금 지갑 (System)</td>
+          <td>유저 입금 주소에서 $200 이상 누적 시 1차 집금되는 시스템 수집 지갑. (Phase 0 단일 집금 지갑)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-subtitle">1.3 입금 DB 상태값 매핑 체계 (Deposit Statuses)</div>
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>DB Status 명칭</th>
+          <th>기존 폐기 용어</th>
+          <th>상태 정의 및 백엔드 처리 로직</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Pending_Confirmation</code></td>
+          <td>-</td>
+          <td>TRON 블록 익스플로러 상 19 Block Confirmations 진행 중 상태. (DB 가산 전)</td>
+        </tr>
+        <tr>
+          <td><code>Screening</code></td>
+          <td><strike>Deposit Screening Wallet</strike></td>
+          <td>19 컨펌 완료 후 4중 AML 및 보안 규칙 검사 진행 중 상태. (지갑 아님, DB 상태값)</td>
+        </tr>
+        <tr>
+          <td><code>Credited</code></td>
+          <td>-</td>
+          <td>정상 검증 완료. 유저 DB 잔액(`users.balance`)에 100% 가산 및 집금 큐($200 이상) 등록.</td>
+        </tr>
+        <tr>
+          <td><code>Restricted</code></td>
+          <td><strike>Quarantine Wallet</strike></td>
+          <td>의심/위험 자금 감지. <b>온체인 자금은 유저 주소 보관, DB 잔액 미가산, 집금 제외(Lock)</b>.</td>
+        </tr>
+        <tr>
+          <td><code>Restricted_Frozen</code></td>
+          <td>-</td>
+          <td>관리자 검토 결과 영구 동결 확정. 유저 DB 잔액 미가산 유지, 집금 영구 제외.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <b>⚠️ 파기 용어 명시:</b> `Deposit Screening Wallet`, `Quarantine Wallet`, `Payout Reserve Wallet` 명칭은 기획서 및 개발 스펙에서 <b>전면 파기/삭제</b>되었습니다.
+    </div>
+  </div>
+
+  <!-- 2. 입출금 및 수수료 정책 -->
+  <div class="section page-break-avoid">
+    <div class="section-title">2. 입출금 및 수수료 정책 (Deposit & Withdrawal Policy)</div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>2026년 8월 13일 확정 정책 스펙</th>
+          <th>원가 및 메커니즘</th>
+          <th>백엔드 / UI 적용 규칙</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-blue">입금 (Deposit)</span></td>
+          <td><b>수수료 $0.00 (무료)</b><br>최소 입금 인정: $1.00 USDT</td>
+          <td>오프-프리셋(Off-Preset) 입금 100% 반영<br>($1 미만 시 DB 가산 유예)</td>
+          <td>HD Wallet (`m/44'/195'/0'/0/index`) 파생 주소.<br>외부 수수료 차감 입금 시에도 <b>실 유입금액 DB 100% 가산</b>.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">출금 (Withdrawal)</span></td>
+          <td><b>수수료 고정 $1.00 USDT</b><br><b>최소 출금: $10.00 USDT</b></td>
+          <td>실 원가($0.85~$1.70) 대비 차액은<br><b>회사가 영업/마케팅 비용 전액 부담</b></td>
+          <td><code>actual_transfer_amount = req_amount - 1.00</code><br>req_amount &lt; 10.00 요청 시 HTTP 400 반환.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-purple">수수료 제어</span></td>
+          <td><b>사전 공지 기반 수동 조정</b></td>
+          <td>가스비 기계적 연동이 아닌<br>공지 고지 후 수동 수수료 변경</td>
+          <td>시장 상황 변경 시 사전 공지 후 관리자가 수수료 변수 수동 업데이트.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-red">고액 출금</span></td>
+          <td><b>$500.00 USDT 이상</b></td>
+          <td>관리자 수동 승인 제도</td>
+          <td>$500 이상 출금 신청 시 자동 송금을 멈추고 Admin 대시보드 승인 대기로 전환.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. Restricted 처리 및 어드민/CS 프로세스 -->
+  <div class="section page-break-avoid page-break-before">
+    <div class="section-title">3. Restricted (의심/문제 입금건) 처리 및 운영 정책</div>
+
+    <div class="callout-box">
+      <b>[Restricted 문제 입금건 처리 상태 파이프라인]</b><br>
+      • <b>자금 온체인 위치:</b> 유저 개별 입금 주소에 자금이 온체인 상으로 <b>그대로 보관</b> (집금 스케줄러 자동 제외)<br>
+      • <b>유저 DB 잔액 반영:</b> 유저 DB 잔액(`users.balance`)에 <b>가산되지 않음</b> (미지급 상태 유지)<br>
+      • <b>유저 화면 UX:</b> 내역 리스트 상에 <i>"보안 심사 중 (고객센터 문의)"</i> 상태로 표시
+    </div>
+
+    <div class="section-subtitle">3.1 관리자(Admin) 승인/동결 처리 액션 스펙</div>
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>어드민 처리 버튼</th>
+          <th>실행 API 스펙</th>
+          <th>백엔드 처리 및 자금 이동 로직</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>`[수동 승인]`</b></td>
+          <td><code>POST /api/v1/admin/deposits/{id}/approve</code></td>
+          <td>1. `deposits.deposit_status = 'Credited'`로 UPDATE<br>2. `users.balance = users.balance + deposit.amount` 가산<br>3. 백엔드 집금 큐($200 이상 누적 시 배치 집금) 등록</td>
+        </tr>
+        <tr>
+          <td><b>`[영구 동결]`</b></td>
+          <td><code>POST /api/v1/admin/deposits/{id}/freeze</code></td>
+          <td>1. `deposits.deposit_status = 'Restricted_Frozen'`으로 UPDATE<br>2. 유저 DB 잔액 미가산 유지, 집금 대상 영구 제외 유지</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. 개발자 전달용 개발지시서 (픽스 스펙) -->
+  <div class="section page-break-avoid">
+    <div class="section-title">4. 프론트엔드 & 백엔드 개발지시서 (2026-08-13 픽스 스펙)</div>
+
+    <div class="section-subtitle">4.1 프론트엔드(Frontend UI) 픽스 스펙 (기존 화면 유지)</div>
+    <ul>
+      <li><b>입금 화면 (Deposit Screen):</b> 신규 프리셋 버튼이나 딥링크 결제 버튼 등 미확정 UI는 일체 개발하지 않고, <b>`[유저 전용 TRC20 입금 주소 + 복사 버튼 + 기본 QR 코드]`</b> 기존 화면으로 픽스.
+        <br><i>안내 문구: "최소 입금 인정 금액은 $1.00 USDT이며, 입금된 자금은 계정 잔액에 100% 가산됩니다."</i></li>
+      <li><b>출금 신청 화면 (Withdrawal Screen):</b>
+        <br><i>안내 문구: "최소 출금 신청 가능 금액은 $10.00 USDT이며, 고정 수수료 $1.00 USDT가 차감되어 송금됩니다."</i>
+        <br><i>각주 문구: "고정 출금 수수료는 시장 상황에 따라 사전 공지 후 변경될 수 있습니다."</i></li>
+      <li><b>입금 내역 화면 (Deposit History):</b>
+        <br>`Pending_Confirmation` / `Screening` → <b>"입금 진행 중"</b>
+        <br>`Credited` → <b>"입금 완료"</b>
+        <br>`Restricted` / `Restricted_Frozen` → <b>"보안 심사 중 (고객센터 문의)"</b></li>
+    </ul>
+
+    <div class="section-subtitle">4.2 백엔드(Backend) 출금 API 핵심 계산 코드</div>
+    <div class="callout-box">
+<code>def process_withdrawal_request(user_id, req_amount, withdraw_address):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 1. 최소 출금액 검증 ($10.00 USDT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if req_amount < 10.00:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return raise_http_400("최소 출금 신청 가능 금액은 $10.00 USDT 입니다.")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 2. 유저 DB 잔액 검증<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user = get_user(user_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if user.balance < req_amount:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return raise_http_400("잔액이 부족합니다.")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 3. 유저 DB 잔액 차감<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user.balance -= req_amount<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 4. 실제 온체인 송금액 산정 (고정 수수료 $1.00 차감)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actual_transfer_amount = req_amount - 1.00<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 5. $500.00 이상 고액 출금 수동 승인 전환<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if req_amount >= 500.00:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_withdrawal_record(user_id, req_amount, actual_transfer_amount, status="Pending_Admin_Approval")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return response_success("고액 출금건으로 관리자 승인 후 송금됩니다.")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 6. $500.00 미만 즉시 송금 (Payout Wallet)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tx_hash = send_trc20_usdt(from_wallet=PAYOUT_WALLET, to=withdraw_address, amount=actual_transfer_amount)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_withdrawal_record(user_id, req_amount, actual_transfer_amount, tx_hash=tx_hash, status="Completed")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return response_success("출금이 완료되었습니다.")</code>
+    </div>
+  </div>
+
+  <!-- 5. 누적 유입금액 마일스톤 로드맵 요약 -->
+  <div class="section page-break-avoid page-break-before">
+    <div class="section-title">5. 누적 유입 금액(AUM)별 단계적 개발 로드맵 (Milestone Roadmap)</div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>단계</th>
+          <th>누적 매출/유입 기준</th>
+          <th>개발 목표 및 개발 공수</th>
+          <th>핵심 구현 스펙 (백엔드 / 프론트엔드)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-green">Phase 0</span></td>
+          <td><b>$0 ~ $10만 미만</b><br>(오픈 ~ 초기)</td>
+          <td><b>최단기 MVP 서비스 오픈</b><br>(개발 공수 80% 절감)</td>
+          <td>• HD Wallet 파생 주소 생성 및 19컨펌 감지<br>• 오프-프리셋 실입금 100% DB 반영<br>• 최소 출금 $10, 수수료 $1 (차액 회사 부담)<br>• 단일 집금 지갑 (`Collection` 1개)<br>• 관리자 $500 이상 고액 출금 수동 승인<br>• 프론트 기존 입금 화면 (주소 + 복사 + QR)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">Phase 1</span></td>
+          <td><b>$10만 ~ $50만</b><br>(초기 성장기)</td>
+          <td><b>CEX 동결 방지 & 자동 AML</b><br>(1차 고도화)</td>
+          <td>• 3-Tier 지갑 물리 격리 (`Payout Wallet` 분리)<br>• $200 + 24~48h 대기 무작위 배치 집금<br>• Tether Contract `isBlackListed` + GoPlus AML API<br>• 출금 주소 변경 시 24시간 버튼 Cooldown 락 UI</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">Phase 2</span></td>
+          <td><b>$50만 ~ $300만</b><br>(스케일업기)</td>
+          <td><b>콜드월렛 SOP & 자동 유동성</b><br>(2차 고도화)</td>
+          <td>• Ledger 3대 2-of-3 Multisig 콜드월렛 키 세레머니<br>• Payout Reserve 잔액 자동 충전 스케줄러<br>• Slack/Telegram 핫월렛 잔액 및 예치금 알림 봇</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-purple">Phase 3</span></td>
+          <td><b>$300만 이상</b><br>(엔터프라이즈)</td>
+          <td><b>기관급 커스터디 연동</b><br>(최종 고도화)</td>
+          <td>• Fireblocks / Cobo 엔터프라이즈 MPC 커스터디 연동<br>• ISMS / SOC2 보안 인증 대응 체계 구축</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. Phase 0 개발 R&R 및 체크리스트 -->
+  <div class="section page-break-avoid">
+    <div class="section-title">6. Phase 0 (MVP) 개발 R&R 및 체크리스트</div>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>백엔드(Backend) 개발 과제</th>
+          <th>프론트엔드(Frontend UI) 개발 과제</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>입금</b></td>
+          <td>• HD Wallet 파생 주소 발급 API<br>• 19 Block Confirmations 감지 및 DB 가산<br>• 오프-프리셋 금액 DB 100% 반영<br>• 단일 Collection 지갑 $200 집금</td>
+          <td>• 기존 입금 화면 (주소 + 복사버튼 + 기본 QR)<br>• 입금 내역 상태 표기 ("입금 완료", "보안 심사 중")<br>• 부족 금액 가이드 안내 문구 출력</td>
+        </tr>
+        <tr>
+          <td><b>출금</b></td>
+          <td>• 최소 출금($10) & 고정 수수료($1) 계산 로직<br>• $500 이상 관리자 수동 승인 대기 로직<br>• Out of Energy 발생 시 DB 롤백</td>
+          <td>• 기존 출금 신청 화면 (최소 $10, 수수료 $1 안내)<br>• 사전 공지 수수료 변경 각주 문구 표기</td>
+        </tr>
+        <tr>
+          <td><b>어드민</b></td>
+          <td>• `Restricted` 건 `[수동 승인]` / `[영구 동결]` API<br>• $500 이상 고액 출금 `[출금 승인]` API</td>
+          <td>• 관리자 대시보드 내 입출금 승인/동결 처리 버튼 2개</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
